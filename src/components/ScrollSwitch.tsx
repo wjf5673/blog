@@ -14,7 +14,8 @@ const ScrollSwitch: React.FC<ScrollSwitchProps> = ({
   // 计算每个项目的宽度 - 考虑响应式
   const calculateItemWidth = () => {
     // 获取容器宽度，减去padding等
-    const containerWidth = window.innerWidth * 0.95;
+    const containerWidth = window.innerWidth * 0.9;
+    console.log('containerWidth', window.innerWidth);
     // 在小屏幕上可能需要调整
     return Math.min(containerWidth, 800);
   };
@@ -40,7 +41,6 @@ const ScrollSwitch: React.FC<ScrollSwitchProps> = ({
       <div className="scroll-switch-wrapper">
         {/* 滚动内容区域 */}
         <div 
-          ref={containerRef}
           className="scroll-switch-content"
           style={{
             height,
@@ -48,6 +48,7 @@ const ScrollSwitch: React.FC<ScrollSwitchProps> = ({
           }}
         >
           <div 
+            ref={containerRef}
             className="scroll-switch-track"
             style={{
               width: `${items.length * itemWidth}px`,
@@ -120,7 +121,7 @@ const ScrollSwitch: React.FC<ScrollSwitchProps> = ({
           ))}
         </div>
       </div>
-      
+
       <div className="scroll-hint">
         <span>↑↓ 滚动鼠标滚轮切换</span>
       </div>

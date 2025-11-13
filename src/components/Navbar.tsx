@@ -30,7 +30,8 @@ const Navbar: React.FC = () => {
         gsap.to(logoRef.current, {
           scale: 0.9,
           duration: 0.3,
-          ease: 'power2.inOut'
+          ease: 'power2.inOut',
+          transformOrigin: '0% 0%' // 设置缩放原点为左上角，防止间距变化
         });
       } else {
         setIsScrolled(false);
@@ -38,7 +39,8 @@ const Navbar: React.FC = () => {
         gsap.to(logoRef.current, {
           scale: 1,
           duration: 0.3,
-          ease: 'power2.inOut'
+          ease: 'power2.inOut',
+          transformOrigin: '0% 0%' // 保持缩放原点一致
         });
       }
     };

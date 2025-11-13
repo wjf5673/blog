@@ -63,11 +63,6 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
           </div>
           
           <div className="blog-post-content">
-            <div className="blog-post-meta">
-              <span className="post-author">{post.author}</span>
-              <span className="post-date">{post.date}</span>
-              <span className="post-read-time">{post.readTime} 阅读</span>
-            </div>
             
             <h2 className="blog-post-title">
               {post.title}
