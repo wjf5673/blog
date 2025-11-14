@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 // 内联SVG组件
 const TwitterIcon = () => (
@@ -29,6 +30,7 @@ const ArrowUpIcon = () => (
 );
 
 const Footer: React.FC = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
   
   const socialLinks = [
@@ -49,13 +51,6 @@ const Footer: React.FC = () => {
     }
   ];
   
-  const footerLinks = [
-    { name: '关于我', path: '/about' },
-    { name: '联系方式', path: '/contact' },
-    { name: '隐私政策', path: '/privacy' },
-    { name: '使用条款', path: '/terms' }
-  ];
-  
   const handleBackToTop = () => {
     window.scrollTo({
       top: 0,
@@ -69,35 +64,25 @@ const Footer: React.FC = () => {
         <div className="footer-content">
           <div className="footer-brand">
             <h2 className="footer-logo">
-              <span className="logo-text">BlogSpark</span>
+              <span className="logo-text">{t('footer.brand')}</span>
             </h2>
             <p className="footer-description">
-              记录生活，分享知识，探索创意的无限可能。
+              {t('footer.description')}
             </p>
           </div>
           
           <div className="footer-links">
-            <h3 className="footer-heading">快速链接</h3>
-            <ul className="footer-link-list">
-              {footerLinks.map((link, index) => (
-                <li key={index}>
-                  <a 
-                    href={link.path} 
-                    className="footer-link"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      console.log(`Navigate to ${link.path}`);
-                    }}
-                  >
-                    {link.name}
-                  </a>
-                </li>
-              ))}
+            <h4 className="footer-links-title">{t('footer.quickLinks')}</h4>
+            <ul className="footer-links-list">
+              <li><a href="#" className="footer-link">{t('footer.about')}</a></li>
+              <li><a href="#" className="footer-link">{t('footer.contact')}</a></li>
+              <li><a href="#" className="footer-link">{t('footer.privacy')}</a></li>
+              <li><a href="#" className="footer-link">{t('footer.terms')}</a></li>
             </ul>
           </div>
           
           <div className="footer-social">
-            <h3 className="footer-heading">关注我</h3>
+            <h3 className="footer-heading">{t('footer.followMe')}</h3>
             <div className="social-icons">
               {socialLinks.map((social, index) => (
                 <a 
@@ -121,14 +106,14 @@ const Footer: React.FC = () => {
         
         <div className="footer-bottom">
           <div className="footer-copyright">
-            <p>&copy; {currentYear} BlogSpark. All rights reserved.</p>
+            <p>{t('footer.copyright', { year: currentYear })}</p>
           </div>
           
           <div className="footer-back-to-top">
             <button 
               className="back-to-top-btn"
               onClick={handleBackToTop}
-              aria-label="返回顶部"
+              aria-label={t('footer.backToTop')}
             >
               <ArrowUpIcon />
             </button>

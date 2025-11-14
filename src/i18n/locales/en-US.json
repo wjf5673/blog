@@ -1,0 +1,128 @@
+{
+  "navbar": {
+    "home": "Home",
+    "articles": "Articles",
+    "about": "About",
+    "contact": "Contact",
+    "closeMenu": "Close Menu",
+    "openMenu": "Open Menu"
+  },
+  "hero": {
+    "title": "Explore the Infinite <span class=\"hero-highlight\">Possibilities</span> of Creativity",
+    "subtitle": "<strong>Welcome to my personal blog!</strong><span class=\"highlight-text\">This is where I record my thoughts, learning, and creations as a frontend developer.</span>In this space, I will share with you the latest frontend development technologies, cutting-edge AI trends, Web3 developments, and other industry insights. Whether exploring technical depth or discussing the future of the industry, I hope to discover the exciting frontiers together with you.<br /><em>Additionally, I've set up a special sticky note wall where everyone is welcome to leave your footprints, questions, or ideas. together here!</em>",
+    "button": "Start Exploring"
+  },
+  "sections": {
+    "featuredProjects": "Featured Projects",
+    "latestArticles": "Latest Articles",
+    "articlesDescription": "Explore the latest technical articles and development tips",
+    "about": "About This Blog",
+    "aboutDescription1": "This is a sharing platform focused on frontend development and industry trends. Here, I will explore the depth of frontend technologies with everyone, share the latest developments in AI, Web3 and other fields, and document my learning and creative journey.",
+    "aboutDescription2": "Whether you are a beginner or an experienced developer, there is content suitable for you here. Welcome to bookmark my blog to get the latest technical insights and practical development tips, and also welcome to leave your footprints and questions on the sticky note wall, let's grow together.",
+    "learnMore": "Learn More",
+    "aboutImageAlt": "About Blog"
+  },
+  "blog": {
+    "title": "Latest Articles",
+    "subtitle": "Explore the latest technical articles and development tips",
+    "readMore": "Read More",
+    "readTime": "min read",
+    "tags": {
+      "React": "React",
+      "Performance": "Performance",
+      "Frontend": "Frontend",
+      "GSAP": "GSAP",
+      "Animation": "Animation",
+      "UIDesign": "UI Design",
+      "Responsive": "Responsive",
+      "CSS": "CSS",
+      "Mobile": "Mobile",
+      "TypeScript": "TypeScript",
+      "TypeSystem": "Type System",
+      "BestPractices": "Best Practices"
+    },
+    "posts": [
+      {
+        "title": "5 Key Strategies for Modern React Performance Optimization",
+        "excerpt": "Explore practical tips for React application performance optimization, from component design to state management, to improve your application performance and user experience.",
+        "author": "Zhang San",
+        "tags": ["React", "Performance", "Frontend"]
+      },
+      {
+        "title": "GSAP Animation Library in Action: Creating Smooth User Interfaces",
+        "excerpt": "Deep dive into the powerful features of the GSAP animation library and learn how to create engaging animation effects to enhance user experience.",
+        "author": "Li Si",
+        "tags": ["GSAP", "Animation", "UIDesign"]
+      },
+      {
+        "title": "Responsive Design: Perfect Adaptation from Mobile to Desktop",
+        "excerpt": "Learn modern responsive design principles and techniques to ensure your website provides an excellent user experience on any device.",
+        "author": "Wang Wu",
+        "tags": ["Responsive", "CSS", "Mobile"]
+      },
+      {
+        "title": "Advanced TypeScript: Type System and Best Practices",
+        "excerpt": "Master advanced TypeScript type features and learn how to write type-safe code to improve development efficiency and code quality.",
+        "author": "Zhao Liu",
+        "tags": ["TypeScript", "TypeSystem", "BestPractices"]
+      }
+    ]
+  },
+  "projects": {
+    "title": "Featured Projects"
+  },
+  "scroll": {
+    "scrollHint": "↑↓ Scroll to switch projects",
+    "items": [
+      {
+        "title": "Creative Design Trends",
+        "description": "Explore the most cutting-edge web design and UI/UX trends of 2024, and learn how to create eye-catching user experiences."
+      },
+      {
+        "title": "Frontend Development Tips",
+        "description": "Master advanced techniques of modern frontend frameworks like React and Vue to improve development efficiency and code quality."
+      },
+      {
+        "title": "Responsive Design Practices",
+        "description": "Learn how to create responsive websites that adapt to various devices, providing a consistent user experience."
+      },
+      {
+        "title": "Performance Optimization Strategies",
+        "description": "Deep dive into website performance optimization best practices to improve page load speed and user experience."
+      },
+      {
+        "title": "Color Theory and Application",
+        "description": "Master color psychology and color schemes to inject emotion and professionalism into your designs."
+      },
+      {
+        "title": "Micro-interaction Design",
+        "description": "Learn how to design effective micro-interactions to enhance user engagement and product experience."
+      },
+      {
+        "title": "Accessibility Design Guide",
+        "description": "Create websites that are usable by everyone, and understand accessibility design standards and best practices."
+      },
+      {
+        "title": "Animation Effect Principles",
+        "description": "Deeply understand animation principles and add smooth and natural animation effects to your website."
+      }
+    ]
+  },
+  "footer": {
+    "brand": "BlogSpark",
+    "description": "Record life, share knowledge, and explore the infinite possibilities of creativity.",
+    "quickLinks": "Quick Links",
+    "followMe": "Follow Me",
+    "about": "About",
+    "contact": "Contact",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "backToTop": "Back to Top",
+    "copyright": "© {{year}} BlogSpark. All rights reserved."
+  },
+  "language": {
+    "switch": "Switch Language",
+    "chinese": "中文",
+    "english": "English"
+  }
+}

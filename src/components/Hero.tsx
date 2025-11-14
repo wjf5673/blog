@@ -1,7 +1,9 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import gsap from 'gsap';
 
 const Hero: React.FC = () => {
+  const { t } = useTranslation();
   const heroRef = useRef<HTMLElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
@@ -210,15 +212,11 @@ const Hero: React.FC = () => {
       <div className="hero-container">
         <div className="hero-content">
           <h1 ref={titleRef} className="hero-title">
-            探索 <span className="hero-highlight">创意</span> 的无限可能
+            <span dangerouslySetInnerHTML={{ __html: t('hero.title') }} />
           </h1>
           
           <p ref={subtitleRef} className="hero-subtitle text-gradient">
-            <strong>欢迎来到我的个人博客！</strong>
-            <span className="highlight-text">这里是我作为一名前端开发者的思考、学习和创作的记录地。</span>
-            在这个空间里，我将与大家分享前端开发的最新技术、AI的前沿动态、Web3的发展趋势等行业资讯。无论是探索技术深度，还是讨论行业未来，我都希望能与你一起发现前沿的精彩。
-            <br />
-            <em>此外，我还特别设立了便签墙，欢迎大家留下你的足迹、问题或想法。together here!</em>
+            <span dangerouslySetInnerHTML={{ __html: t('hero.subtitle') }} />
           </p>
           
           <button 
@@ -226,7 +224,7 @@ const Hero: React.FC = () => {
             className="hero-button"
             onClick={handleScrollDown}
           >
-            开始探索
+            {t('hero.button')}
             <span className="button-arrow">→</span>
           </button>
         </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useScrollSwitch } from '../hooks/useScrollSwitch';
 import type { ScrollItem } from '../types/blog';
 
@@ -9,8 +10,9 @@ interface ScrollSwitchProps {
 
 const ScrollSwitch: React.FC<ScrollSwitchProps> = ({ 
   items, 
-  height = '500px' 
+  height = 'auto' 
 }) => {
+  const { t } = useTranslation();
   // 计算每个项目的宽度 - 考虑响应式
   const calculateItemWidth = () => {
     // 获取容器宽度，减去padding等
@@ -43,7 +45,7 @@ const ScrollSwitch: React.FC<ScrollSwitchProps> = ({
         <div 
           className="scroll-switch-content"
           style={{
-            height,
+            minHeight: height === 'auto' ? '400px' : height,
             width: `${itemWidth}px`
           }}
         >
@@ -77,7 +79,7 @@ const ScrollSwitch: React.FC<ScrollSwitchProps> = ({
                     <h3 className="scroll-item-title">{item.title}</h3>
                     <p className="scroll-item-description">{item.description}</p>
                     <button className="scroll-item-button">
-                      了解更多
+                      {t('sections.learnMore')}
                     </button>
                   </div>
                 </div>
@@ -123,7 +125,7 @@ const ScrollSwitch: React.FC<ScrollSwitchProps> = ({
       </div>
 
       <div className="scroll-hint">
-        <span>↑↓ 滚动鼠标滚轮切换</span>
+        <span>{t('scroll.scrollHint')}</span>
       </div>
     </div>
   );

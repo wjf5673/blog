@@ -1,0 +1,127 @@
+{
+  "navbar": {
+    "home": "首页",
+    "articles": "文章",
+    "about": "关于",
+    "contact": "联系",
+    "closeMenu": "关闭菜单",
+    "openMenu": "打开菜单"
+  },
+  "hero": {
+    "title": "探索 <span class=\"hero-highlight\">创意</span> 的无限可能",
+    "subtitle": "<strong>欢迎来到我的个人博客！</strong><span class=\"highlight-text\">这里是我作为一名前端开发者的思考、学习和创作的记录地。</span>在这个空间里，我将与大家分享前端开发的最新技术、AI的前沿动态、Web3的发展趋势等行业资讯。无论是探索技术深度，还是讨论行业未来，我都希望能与你一起发现前沿的精彩。<br /><em>此外，我还特别设立了便签墙，欢迎大家留下你的足迹、问题或想法。together here!</em>",
+    "button": "开始探索"
+  },
+  "sections": {
+    "featured": "精选项目",
+    "blog": "最新文章",
+    "about": "关于这个博客",
+    "aboutDescription1": "这是一个专注于前端开发及行业趋势的分享平台。在这里，我将与大家共同探索前端技术的深度，分享AI、Web3等领域的最新动态，并记录我的学习与创作历程。",
+    "aboutDescription2": "无论你是初学者还是有经验的开发者，这里都有适合你的内容。欢迎收藏我的博客，获取最新的技术洞察和实用的开发技巧，同时也欢迎你在便签墙上留下你的足迹和问题，让我们一起成长。",
+    "learnMore": "了解更多",
+    "aboutImageAlt": "关于博客"
+  },
+  "blog": {
+    "title": "最新文章",
+    "subtitle": "探索最新的技术文章和开发技巧",
+    "readMore": "阅读全文",
+    "readTime": "分钟",
+    "tags": {
+      "React": "React",
+      "Performance": "性能优化",
+      "Frontend": "前端开发",
+      "GSAP": "GSAP",
+      "Animation": "动画",
+      "UIDesign": "UI设计",
+      "Responsive": "响应式设计",
+      "CSS": "CSS",
+      "Mobile": "移动端",
+      "TypeScript": "TypeScript",
+      "TypeSystem": "类型系统",
+      "BestPractices": "最佳实践"
+    },
+    "posts": [
+      {
+        "title": "现代React性能优化的5个关键策略",
+        "excerpt": "探索React应用性能优化的实用技巧，从组件设计到状态管理，提升你的应用性能和用户体验。",
+        "author": "张三",
+        "tags": ["React", "Performance", "Frontend"]
+      },
+      {
+        "title": "GSAP动画库实战：创建流畅的用户界面",
+        "excerpt": "深入了解GSAP动画库的强大功能，学习如何创建引人入胜的动画效果，提升用户体验。",
+        "author": "李四",
+        "tags": ["GSAP", "Animation", "UIDesign"]
+      },
+      {
+        "title": "响应式设计：从移动端到桌面端的完美适配",
+        "excerpt": "学习现代响应式设计原则和技术，确保你的网站在任何设备上都能提供出色的用户体验。",
+        "author": "王五",
+        "tags": ["Responsive", "CSS", "Mobile"]
+      },
+      {
+        "title": "TypeScript进阶：类型系统和最佳实践",
+        "excerpt": "掌握TypeScript的高级类型特性，学习如何编写类型安全的代码，提高开发效率和代码质量。",
+        "author": "赵六",
+        "tags": ["TypeScript", "TypeSystem", "BestPractices"]
+      }
+    ]
+  },
+  "projects": {
+    "title": "精选项目"
+  },
+  "scroll": {
+    "scrollHint": "↑↓ 滚动鼠标滚轮切换项目",
+    "items": [
+      {
+        "title": "创意设计趋势",
+        "description": "探索2024年最前沿的网页设计和UI/UX趋势，了解如何打造引人注目的用户体验。"
+      },
+      {
+        "title": "前端开发技巧",
+        "description": "掌握React、Vue等现代前端框架的高级技巧，提升开发效率和代码质量。"
+      },
+      {
+        "title": "响应式设计实践",
+        "description": "学习如何创建适配各种设备的响应式网站，提供一致的用户体验。"
+      },
+      {
+        "title": "性能优化策略",
+        "description": "深入了解网站性能优化的最佳实践，提升页面加载速度和用户体验。"
+      },
+      {
+        "title": "色彩理论与应用",
+        "description": "掌握色彩心理学和配色方案，为你的设计注入情感和专业感。"
+      },
+      {
+        "title": "微交互设计",
+        "description": "学习如何设计有效的微交互，提升用户参与度和产品体验。"
+      },
+      {
+        "title": "无障碍设计指南",
+        "description": "创建人人可用的网站，了解无障碍设计标准和最佳实践。"
+      },
+      {
+        "title": "动画效果原理",
+        "description": "深入理解动画原理，为你的网站添加流畅自然的动画效果。"
+      }
+    ]
+  },
+  "footer": {
+    "brand": "BlogSpark",
+    "description": "记录生活，分享知识，探索创意的无限可能。",
+    "quickLinks": "快速链接",
+    "followMe": "关注我",
+    "about": "关于我",
+    "contact": "联系方式",
+    "privacy": "隐私政策",
+    "terms": "使用条款",
+    "backToTop": "返回顶部",
+    "copyright": "© {{year}} BlogSpark. 保留所有权利。"
+  },
+  "language": {
+    "switch": "切换语言",
+    "chinese": "中文",
+    "english": "English"
+  }
+}

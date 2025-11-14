@@ -1,20 +1,56 @@
 import { useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useSparkEffect } from './hooks/useSparkEffect';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BlogList from './components/BlogList';
 import ScrollSwitch from './components/ScrollSwitch';
 import Footer from './components/Footer';
-import { mockBlogPosts, mockScrollItems } from './utils/mockData';
 import { useIntersectionObserver } from './hooks/useIntersectionObserver';
 import gsap from 'gsap';
 import './App.css';
 
 function App() {
+  const { t, i18n } = useTranslation();
   // 添加鼠标点击火花效果
   useSparkEffect();
   // 使用IntersectionObserver来检测元素是否可见，指定HTMLHeadingElement类型
   const { ref: titleRef, isIntersecting } = useIntersectionObserver<HTMLHeadingElement>({ threshold: 0.1, once: true });
+
+  // 根据当前语言选择相应的数据
+  const blogPostsData = t('blog.posts', { returnObjects: true }) as Array<{
+    title: string;
+    excerpt: string;
+    author: string;
+    tags: string[];
+  }>;
+  
+  // 将翻译数据转换为BlogPost格式，添加id和其他必要字段
+  const currentBlogPosts = blogPostsData.map((post, index) => ({
+    id: index + 1,
+    title: post.title,
+    excerpt: post.excerpt,
+    content: 'This is the complete article content...', // 默认内容
+    author: post.author,
+    date: '2024-01-15', // 默认日期
+    tags: post.tags,
+    readTime: i18n.language === 'en' ? '5 min' : '5分钟', // 根据语言设置阅读时间
+    imageUrl: `https://picsum.photos/seed/blog${index + 1}/800/500`
+  }));
+  
+  // 从翻译文件中获取滚动项目数据
+  const scrollItems = t('scroll.items', { returnObjects: true }) as Array<{
+    title: string;
+    description: string;
+  }>;
+  
+  // 将翻译数据转换为ScrollItem格式，添加id和imageUrl
+  const currentScrollItems = scrollItems.map((item, index) => ({
+    id: index + 1,
+    title: item.title,
+    description: item.description,
+    imageUrl: `https://picsum.photos/id/${index + 1}/800/600`
+  }));
 
   // 当元素进入可视区域时触发动画
   useEffect(() => {
@@ -96,20 +132,23 @@ function App() {
         
         <section className="featured-section">
           <div className="container">
-            <h2 className="section-title">精选项目</h2>
-            <ScrollSwitch items={mockScrollItems} height="500px" />
-          </div>
+              <h2 className="section-title">{t('projects.title')}</h2>
+              <ScrollSwitch 
+                items={currentScrollItems}
+                height="500px" 
+              />
+            </div>
         </section>
         
         <section className="blog-section">
           <div className="container">
             <div className="section-header">
-              <h2 className="section-title">最新文章</h2>
+              <h2 className="section-title">{t('blog.title')}</h2>
               <p className="section-description">
-                探索最新的技术文章和开发技巧
+                {t('blog.subtitle')}
               </p>
             </div>
-            <BlogList posts={mockBlogPosts} />
+            <BlogList posts={currentBlogPosts} />
           </div>
         </section>
         
@@ -117,21 +156,19 @@ function App() {
           <div className="container">
             <div className="about-content">
               <div className="about-text">
-                <h2 className="section-title" ref={titleRef}>关于这个博客</h2>
+                <h2 className="section-title" ref={titleRef}>{t('sections.about')}</h2>
                 <p>
-                  这是一个专注于前端开发及行业趋势的分享平台。
-                  在这里，我将与大家共同探索前端技术的深度，分享AI、Web3等领域的最新动态，并记录我的学习与创作历程。
+                  {t('sections.aboutDescription1')}
                 </p>
                 <p>
-                  无论你是初学者还是有经验的开发者，这里都有适合你的内容。
-                  欢迎收藏我的博客，获取最新的技术洞察和实用的开发技巧，同时也欢迎你在便签墙上留下你的足迹和问题，让我们一起成长。
+                  {t('sections.aboutDescription2')}
                 </p>
-                <button className="about-button">了解更多</button>
+                <button className="about-button">{t('sections.learnMore')}</button>
               </div>
               <div className="about-image">
                 <img 
                   src="https://picsum.photos/seed/about/600/400" 
-                  alt="关于博客" 
+                  alt={t('sections.aboutImageAlt')} 
                   loading="lazy"
                 />
               </div>

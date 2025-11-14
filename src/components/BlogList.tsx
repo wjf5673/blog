@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import type { BlogPost } from '../types/blog';
 import { fadeIn } from '../utils/animationUtils';
 
@@ -7,6 +8,7 @@ interface BlogListProps {
 }
 
 const BlogList: React.FC<BlogListProps> = ({ posts }) => {
+  const { t } = useTranslation();
   // 使用ref来引用每个文章卡片，用于动画
   const postRefs = useRef<(HTMLDivElement | null)[]>([]);
   
@@ -90,7 +92,7 @@ const BlogList: React.FC<BlogListProps> = ({ posts }) => {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                阅读全文
+                {t('blog.readMore')}
                 <svg className="link-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none">
                   <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>

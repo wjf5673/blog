@@ -48,6 +48,54 @@ export const mockBlogPosts: BlogPost[] = [
   }
 ];
 
+// 英文版本的博客文章数据
+export const mockBlogPostsEn: BlogPost[] = [
+  {
+    id: 1,
+    title: '5 Key Strategies for Modern React Performance Optimization',
+    excerpt: 'Explore practical tips for React application performance optimization, from component design to state management, to enhance your app performance and user experience.',
+    content: 'This is the complete article content...',
+    author: 'John Smith',
+    date: '2024-01-15',
+    tags: ['React', 'Performance', 'Frontend Development'],
+    readTime: '5 min',
+    imageUrl: 'https://picsum.photos/seed/react1/800/500'
+  },
+  {
+    id: 2,
+    title: 'GSAP Animation Library in Action: Creating Smooth User Interfaces',
+    excerpt: 'Deep dive into the powerful features of GSAP animation library, learn how to create engaging animation effects and enhance user experience.',
+    content: 'This is the complete article content...',
+    author: 'Sarah Johnson',
+    date: '2024-01-10',
+    tags: ['GSAP', 'Animation', 'UI Design'],
+    readTime: '7 min',
+    imageUrl: 'https://picsum.photos/seed/gsap1/800/500'
+  },
+  {
+    id: 3,
+    title: 'Responsive Design: Perfect Adaptation from Mobile to Desktop',
+    excerpt: 'Learn modern responsive design principles and techniques to ensure your website provides excellent user experience on any device.',
+    content: 'This is the complete article content...',
+    author: 'Mike Wilson',
+    date: '2024-01-05',
+    tags: ['Responsive Design', 'CSS', 'Mobile'],
+    readTime: '6 min',
+    imageUrl: 'https://picsum.photos/seed/responsive1/800/500'
+  },
+  {
+    id: 4,
+    title: 'Advanced TypeScript: Type System and Best Practices',
+    excerpt: 'Master advanced TypeScript type features, learn how to write type-safe code to improve development efficiency and code quality.',
+    content: 'This is the complete article content...',
+    author: 'Emily Davis',
+    date: '2024-01-01',
+    tags: ['TypeScript', 'Type System', 'Best Practices'],
+    readTime: '8 min',
+    imageUrl: 'https://picsum.photos/seed/typescript1/800/500'
+  }
+];
+
 // 模拟滚动切换项目数据
 export const mockScrollItems: ScrollItem[] = [
   {
@@ -96,6 +144,58 @@ export const mockScrollItems: ScrollItem[] = [
     id: 8,
     title: '动画效果原理',
     description: '深入理解动画原理，为你的网站添加流畅自然的动画效果。',
+    imageUrl: 'https://picsum.photos/id/8/800/600'
+  }
+];
+
+// 英文版本的滚动切换项目数据
+export const mockScrollItemsEn: ScrollItem[] = [
+  {
+    id: 1,
+    title: 'Creative Design Trends',
+    description: 'Explore the most cutting-edge web design and UI/UX trends of 2024, learn how to create eye-catching user experiences.',
+    imageUrl: 'https://picsum.photos/id/1/800/600'
+  },
+  {
+    id: 2,
+    title: 'Frontend Development Tips',
+    description: 'Master advanced techniques for modern frontend frameworks like React and Vue to improve development efficiency and code quality.',
+    imageUrl: 'https://picsum.photos/id/2/800/600'
+  },
+  {
+    id: 3,
+    title: 'Responsive Design Practice',
+    description: 'Learn how to create responsive websites that adapt to various devices, providing consistent user experience.',
+    imageUrl: 'https://picsum.photos/id/3/800/600'
+  },
+  {
+    id: 4,
+    title: 'Performance Optimization Strategies',
+    description: 'Deep dive into website performance optimization best practices to improve page loading speed and user experience.',
+    imageUrl: 'https://picsum.photos/id/4/800/600'
+  },
+  {
+    id: 5,
+    title: 'Color Theory and Application',
+    description: 'Master color psychology and color schemes to inject emotion and professionalism into your designs.',
+    imageUrl: 'https://picsum.photos/id/5/800/600'
+  },
+  {
+    id: 6,
+    title: 'Micro-interaction Design',
+    description: 'Learn how to design effective micro-interactions to enhance user engagement and product experience.',
+    imageUrl: 'https://picsum.photos/id/6/800/600'
+  },
+  {
+    id: 7,
+    title: 'Accessibility Design Guide',
+    description: 'Create websites that everyone can use, understand accessibility design standards and best practices.',
+    imageUrl: 'https://picsum.photos/id/7/800/600'
+  },
+  {
+    id: 8,
+    title: 'Animation Effect Principles',
+    description: 'Deeply understand animation principles to add smooth and natural animation effects to your website.',
     imageUrl: 'https://picsum.photos/id/8/800/600'
   }
 ];

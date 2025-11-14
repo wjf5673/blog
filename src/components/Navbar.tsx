@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { gsap } from 'gsap';
+import LanguageSwitcher from './LanguageSwitcher';
 
 // 内联SVG组件
 interface BlogLogoProps {
@@ -17,6 +19,7 @@ const BlogLogo: React.FC<BlogLogoProps> = ({ className = '' }) => (
 );
 
 const Navbar: React.FC = () => {
+  const { t } = useTranslation();
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const logoRef = useRef<HTMLDivElement>(null);
@@ -62,10 +65,10 @@ const Navbar: React.FC = () => {
   }, [isOpen]);
   
   const navItems = [
-    { name: '首页', path: '/' },
-    { name: '文章', path: '/articles' },
-    { name: '关于', path: '/about' },
-    { name: '联系', path: '/contact' }
+    { name: t('navbar.home'), path: '/' },
+    { name: t('navbar.articles'), path: '/articles' },
+    { name: t('navbar.about'), path: '/about' },
+    { name: t('navbar.contact'), path: '/contact' }
   ];
   
   return (
@@ -101,13 +104,15 @@ const Navbar: React.FC = () => {
               </li>
             ))}
           </ul>
+          {/* 添加语言切换器 */}
+          <LanguageSwitcher />
         </div>
         
         {/* 移动端导航按钮 */}
         <button 
           className="navbar-toggle"
           onClick={() => setIsOpen(!isOpen)}
-          aria-label={isOpen ? '关闭菜单' : '打开菜单'}
+          aria-label={isOpen ? t('navbar.closeMenu') : t('navbar.openMenu')}
         >
           <span className={`toggle-icon ${isOpen ? 'open' : ''}`}></span>
         </button>
@@ -134,6 +139,10 @@ const Navbar: React.FC = () => {
               </li>
             ))}
           </ul>
+          {/* 移动端语言切换器 */}
+          <div className="mobile-language-switcher">
+            <LanguageSwitcher />
+          </div>
         </div>
       )}
     </nav>
