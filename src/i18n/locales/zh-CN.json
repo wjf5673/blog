@@ -123,5 +123,27 @@
     "switch": "切换语言",
     "chinese": "中文",
     "english": "English"
+  },
+  "stickyNotes": {
+    "title": "便签墙",
+    "description": "在这里留下你的足迹，分享你的想法和感受。每一张便签都是一个故事，每一次停留都是一份温暖。",
+    "addNote": "留下我的足迹",
+    "loading": "正在加载便签...",
+    "loadError": "加载便签失败，显示模拟数据",
+    "submitError": "提交便签失败，请稍后重试",
+    "validationError": "请填写完整的姓名和留言内容",
+    "formTitle": "留下你的足迹",
+    "nameLabel": "你的名字",
+    "namePlaceholder": "请输入你的名字",
+    "messageLabel": "留言内容",
+    "messagePlaceholder": "分享你的想法、感受或祝福...",
+    "submit": "发布便签",
+    "submitting": "发布中...",
+    "cancel": "取消",
+    "mockNotes": {
+      "note1": "这个博客真的很棒！学到了很多前端开发的知识，感谢分享！",
+      "note2": "便签墙的想法很有创意，让人感觉很温暖。希望能在这里认识更多朋友。",
+      "note3": "GSAP动画效果太酷了！请问有什么学习资源推荐吗？"
+    }
   }
 }

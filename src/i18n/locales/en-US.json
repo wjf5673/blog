@@ -124,5 +124,27 @@
     "switch": "Switch Language",
     "chinese": "中文",
     "english": "English"
+  },
+  "stickyNotes": {
+    "title": "Sticky Note Wall",
+    "description": "Leave your footprint here, share your thoughts and feelings. Every note is a story, every visit is a warmth.",
+    "addNote": "Leave My Footprint",
+    "loading": "Loading notes...",
+    "loadError": "Failed to load notes, showing mock data",
+    "submitError": "Failed to submit note, please try again later",
+    "validationError": "Please fill in your name and message",
+    "formTitle": "Leave Your Footprint",
+    "nameLabel": "Your Name",
+    "namePlaceholder": "Enter your name",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Share your thoughts, feelings or wishes...",
+    "submit": "Post Note",
+    "submitting": "Posting...",
+    "cancel": "Cancel",
+    "mockNotes": {
+      "note1": "This blog is awesome! Learned a lot about frontend development, thanks for sharing!",
+      "note2": "The sticky note wall idea is very creative and makes people feel warm. Hope to meet more friends here.",
+      "note3": "The GSAP animation effects are so cool! Do you have any learning resources to recommend?"
+    }
   }
 }

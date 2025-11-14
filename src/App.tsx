@@ -4,6 +4,7 @@ import { useSparkEffect } from './hooks/useSparkEffect';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BlogList from './components/BlogList';
+import StickyNoteWall from './components/StickyNoteWall';
 import ScrollSwitch from './components/ScrollSwitch';
 import Footer from './components/Footer';
 import { useIntersectionObserver } from './hooks/useIntersectionObserver';
@@ -151,6 +152,9 @@ function App() {
             <BlogList posts={currentBlogPosts} />
           </div>
         </section>
+
+        {/* 便签墙部分 */}
+        <StickyNoteWall />
         
         <section className="about-section">
           <div className="container">
