@@ -1,4 +1,5 @@
-name: Deploy to GitHub Pages
+# 替代方案：使用SSH密钥部署到wjf5673.github.io仓库
+name: Deploy to GitHub Pages (Alternative)
 
 on:
   push:
@@ -7,8 +8,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 jobs:
   build-and-deploy:
@@ -29,14 +28,10 @@ jobs:
       - name: Build project
         run: npm run build
       
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-          
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          external_repository: wjf5673/wjf5673.github.io
+          publish_branch: main
+          publish_dir: ./dist
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
