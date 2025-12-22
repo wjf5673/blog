@@ -1,6 +1,11 @@
 # 个人博客项目
 
-这是一个使用现代前端技术栈构建的个人博客网站，项目代码托管在`blog`仓库，打包后的静态文件可部署到`wjf5673.github.io`域名进行访问。
+这是一个使用现代前端技术栈构建的个人博客网站，项目代码托管在`blog`仓库，已成功部署到`wjf5673.github.io`域名进行访问。
+
+## 🌐 在线访问
+
+博客已成功部署，可通过以下地址访问：
+**[https://wjf5673.github.io/blog/](https://wjf5673.github.io/blog/)**
 
 ## 项目概述
 
@@ -44,6 +49,35 @@ src/
 2. **动态动画效果**：使用GSAP实现流畅的页面加载和滚动动画
 3. **响应式设计**：适配各种屏幕尺寸，提供良好的移动端体验
 4. **交互式导航**：支持滚动监听和动态导航效果
+
+## 🚀 部署配置
+
+### 重要：Vite配置中的base路径
+
+为了确保网站在GitHub Pages上正确运行，项目在`vite.config.ts`中配置了重要的base路径：
+
+```typescript
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  base: '/blog/',  // ⚠️ 重要：配置GitHub Pages子路径
+})
+```
+
+**为什么需要这个配置？**
+- GitHub Pages将网站部署到子路径`/blog/`下
+- `base: '/blog/'`确保所有静态资源路径正确
+- 避免404错误和资源加载失败
+
+### GitHub Actions自动化部署
+
+项目已配置GitHub Actions自动化部署流程，当代码推送到main分支时，会自动：
+
+1. 构建项目
+2. 部署到`wjf5673.github.io`仓库的`/blog/`路径
+3. 更新网站内容
+
+部署流程配置在`.github/workflows/deploy.yml`文件中。
 
 ## 博客文章数据结构
 
@@ -103,12 +137,6 @@ yarn preview
 
 预览构建后的网站效果。
 
-## 部署说明
-
-1. 构建项目：`npm run build`
-2. 将`dist`目录中的内容上传到`wjf5673.github.io`仓库
-3. 确保GitHub Pages已正确配置，指向主分支
-
 ## 代码规范
 
 项目使用ESLint进行代码规范检查：
@@ -118,6 +146,12 @@ npm run lint
 # 或
 yarn lint
 ```
+
+## 📝 部署注意事项
+
+1. **base路径配置**：确保`vite.config.ts`中的`base`设置为`'/blog/'`
+2. **GitHub Actions权限**：确保仓库有正确的Actions权限设置
+3. **目标仓库**：确保`wjf5673.github.io`仓库存在并可访问
 
 ## 许可证
 
