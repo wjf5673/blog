@@ -1,265 +1,138 @@
-import React, { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import gsap from 'gsap';
+import { motion } from "motion/react";
 
-const Hero: React.FC = () => {
-  const { t } = useTranslation();
-  const heroRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const decorRef = useRef<HTMLDivElement>(null);
-  const circleRefs = useRef<(HTMLDivElement | null)[]>([]);
-  
-  // 随机颜色动画效果
-  useEffect(() => {
-    // 生成随机颜色的函数
-    const getRandomColor = () => {
-      const colors = [
-        '#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', 
-        '#FFEAA7', '#DFF9FB', '#FF7675', '#6C5CE7',
-        '#FD79A8', '#FDCB6E', '#6C5CE7', '#00B894',
-        '#0984E3', '#E17055', '#A29BFE', '#FF9FF3'
-      ];
-      return colors[Math.floor(Math.random() * colors.length)];
-    };
-
-    // 为高亮文本创建实时随机颜色变化
-    const updateTextColor = () => {
-      const highlightElements = subtitleRef.current?.querySelectorAll('.highlight-text');
-      if (highlightElements) {
-        highlightElements.forEach((element: Element) => {
-          const randomColor = getRandomColor();
-          (element as HTMLElement).style.color = randomColor;
-          
-          // 添加发光效果
-          (element as HTMLElement).style.textShadow = `0 0 5px ${randomColor}, 0 0 10px ${randomColor}80`;
-        });
-      }
-    };
-
-    // 初始设置颜色
-    updateTextColor();
-    
-    // 每秒更新一次颜色
-    const colorInterval = setInterval(updateTextColor, 1000);
-
-    return () => {
-      clearInterval(colorInterval);
-    };
-  }, []);
-
-  // 页面加载动画
-  useEffect(() => {
-    if (heroRef.current && titleRef.current && subtitleRef.current && buttonRef.current) {
-      // 首先确保所有元素可见
-      gsap.set([titleRef.current, subtitleRef.current, buttonRef.current], { opacity: 1 });
-      
-      // 创建动画序列
-      const tl = gsap.timeline();
-      
-      tl.fromTo(titleRef.current, 
-        { opacity: 0, y: 30 }, // 初始状态
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          ease: 'power3.out' 
-        }
-      )
-      .fromTo(subtitleRef.current, 
-        { opacity: 0, y: 20 }, // 初始状态
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          ease: 'power3.out' 
-        }, '-=0.3')
-      .fromTo(buttonRef.current, 
-        { opacity: 0, y: 20 }, // 初始状态
-        { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.8, 
-          ease: 'power3.out' 
-        }, '-=0.3')
-      // 安全地检查并使用子元素
-      if (decorRef.current && decorRef.current.children.length > 0) {
-        const decorElements = Array.from(decorRef.current.children);
-        // 确保装饰元素可见
-        gsap.set(decorElements, { opacity: 1 });
-        tl.fromTo(decorElements, 
-          { opacity: 0, scale: 0.8 }, // 初始状态
-          { 
-            opacity: 1, 
-            scale: 1, 
-            duration: 1, 
-            stagger: 0.1, 
-            ease: 'power2.out' 
-          }, '-=0.5');
-      } else {
-        tl.to({}, { duration: 0.1 }); // 占位动画，确保时间线正常
-      }
-      
-      // 自动播放的循环动画 - 装饰圆脉动效果
-      const pulseAnimation = gsap.timeline({
-        repeat: -1,
-        repeatType: 'reverse',
-        delay: 2
-      });
-      
-      pulseAnimation.to(circleRefs.current.filter(Boolean), {
-        scale: 1.1,
-        opacity: 0.8,
-        duration: 3,
-        stagger: 0.5,
-        ease: 'power2.inOut'
-      });
-      
-      // 网格线动画
-      const gridElement = decorRef.current?.querySelector('.decor-grid');
-      const gridAnimation = gridElement ? gsap.to(gridElement, {
-        // 使用gsap.to的from/to形式而不是数组
-        backgroundPositionX: '50px',
-        backgroundPositionY: '50px',
-        duration: 20,
-        repeat: -1,
-        ease: 'linear'
-      }) : null;
-      
-      // 标题文字动画
-      const titleAnimation = gsap.timeline({
-        repeat: -1,
-        repeatDelay: 5,
-        delay: 1
-      });
-      
-      const highlightElement = titleRef.current?.querySelector('.hero-highlight');
-      if (highlightElement) {
-        titleAnimation.to(highlightElement, {
-          color: '#4cc9f0',
-          duration: 1,
-          ease: 'power2.inOut'
-        })
-        .to(highlightElement, {
-          color: '#4361ee',
-          duration: 1,
-          ease: 'power2.inOut'
-        });
-      }
-      
-      return () => {
-        tl.kill();
-        pulseAnimation.kill();
-        gridAnimation?.kill();
-        titleAnimation.kill();
-      };
-    }
-  }, []);
-  
-  const handleScrollDown = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: 'smooth'
-    });
-  };
-  
-  const handleHeroHover = () => {
-    // Hover效果 - 装饰圆扩散
-    gsap.to(circleRefs.current.filter(Boolean), {
-      scale: 1.2,
-      opacity: 0.9,
-      duration: 0.5,
-      ease: 'power2.out'
-    });
-    
-    // 标题放大效果 - 添加空值检查
-    if (titleRef.current) {
-      gsap.to(titleRef.current, {
-        scale: 1.02,
-        duration: 0.3,
-        ease: 'power2.out'
-      });
-    }
-  };
-  
-  const handleHeroLeave = () => {
-    // 鼠标离开恢复效果
-    gsap.to(circleRefs.current.filter(Boolean), {
-      scale: 1,
-      opacity: 1,
-      duration: 0.5,
-      ease: 'power2.in'
-    });
-    
-    // 添加空值检查
-    if (titleRef.current) {
-      gsap.to(titleRef.current, {
-        scale: 1,
-        duration: 0.3,
-        ease: 'power2.in'
-      });
-    }
-  };
+export function Hero() {
+  const words = ["前端开发", "Web3", "人工智能"];
   
   return (
-    <section 
-      className="hero" 
-      ref={heroRef}
-      onMouseEnter={handleHeroHover}
-      onMouseLeave={handleHeroLeave}
-    >
-      <div className="hero-container">
-        <div className="hero-content">
-          <h1 ref={titleRef} className="hero-title">
-            <span dangerouslySetInnerHTML={{ __html: t('hero.title') }} />
-          </h1>
-          
-          <p ref={subtitleRef} className="hero-subtitle text-gradient">
-            <span dangerouslySetInnerHTML={{ __html: t('hero.subtitle') }} />
-          </p>
-          
-          <button 
-            ref={buttonRef}
-            className="hero-button"
-            onClick={handleScrollDown}
-          >
-            {t('hero.button')}
-            <span className="button-arrow">→</span>
-          </button>
-        </div>
-        
-        <div ref={decorRef} className="hero-decoration">
-          <div 
-            className="decor-circle decor-circle-1" 
-            ref={(el) => {
-              circleRefs.current[0] = el;
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-2 h-2 bg-indigo-400 rounded-full opacity-20"
+            animate={{
+              y: [0, -1000],
+              x: Math.random() * 100 - 50,
+              opacity: [0, 0.5, 0],
             }}
-          ></div>
-          <div 
-            className="decor-circle decor-circle-2" 
-            ref={(el) => {
-              circleRefs.current[1] = el;
+            transition={{
+              duration: Math.random() * 10 + 10,
+              repeat: Infinity,
+              delay: Math.random() * 5,
             }}
-          ></div>
-          <div 
-            className="decor-circle decor-circle-3" 
-            ref={(el) => {
-              circleRefs.current[2] = el;
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `100%`,
             }}
-          ></div>
-          <div className="decor-grid"></div>
-        </div>
+          />
+        ))}
       </div>
-      
-      {/* 滚动提示 */}
-      <div className="scroll-indicator">
-        <div className="scroll-line">
-          <div className="scroll-dot"></div>
-        </div>
+
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <motion.div
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-5xl md:text-7xl mb-6">
+            <motion.span
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="block mb-2"
+            >
+              探索技术前沿
+            </motion.span>
+            <motion.span
+              className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent inline-block"
+              animate={{
+                backgroundPosition: ["0%", "100%", "0%"],
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+              style={{
+                backgroundSize: "200% 100%",
+              }}
+            >
+              分享技术热情
+            </motion.span>
+          </h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="text-xl md:text-2xl text-gray-600 mb-8"
+          >
+            专注于
+            {words.map((word, index) => (
+              <motion.span
+                key={word}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{
+                  delay: 0.6 + index * 0.2,
+                  duration: 0.5,
+                }}
+                className="mx-2 text-indigo-600"
+              >
+                {word}
+              </motion.span>
+            ))}
+          </motion.p>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8 }}
+            className="flex gap-4 justify-center"
+          >
+            <motion.a
+              href="#news"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors"
+            >
+              探索内容
+            </motion.a>
+            <motion.a
+              href="#messages"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-8 py-3 border-2 border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors"
+            >
+              留言交流
+            </motion.a>
+          </motion.div>
+        </motion.div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2 }}
+          className="absolute left-1/2 transform -translate-x-1/2"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center gap-2"
+          >
+            <span className="text-sm text-gray-400">向下滑动</span>
+            <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center">
+              <motion.div
+                animate={{ y: [0, 12, 0], opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 2, repeat: Infinity }}
+                className="w-1.5 h-1.5 bg-indigo-600 rounded-full mt-2"
+              />
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
-};
-
-export default Hero;
+}

@@ -1,187 +1,73 @@
-import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
+import { useState, useEffect } from 'react';
 import { useSparkEffect } from './hooks/useSparkEffect';
-import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import BlogList from './components/BlogList';
-import StickyNoteWall from './components/StickyNoteWall';
-import ScrollSwitch from './components/ScrollSwitch';
-import Footer from './components/Footer';
-import { useIntersectionObserver } from './hooks/useIntersectionObserver';
-import gsap from 'gsap';
-import './App.css';
+import { Toaster } from "./components/ui/sonner";
+import { Header } from "./components/Header";
+import { Hero } from "./components/Hero";
+import { NewsSection } from "./components/NewsSection";
+import { TechSection } from "./components/TechSection";
+import { MessageWall } from "./components/MessageWall";
+import { FunZone } from "./components/FunZone";
+import { Footer } from "./components/Footer";
+import { ArticleDetail } from "./components/ArticleDetail";
+import { ArticleList } from "./components/ArticleList";
+import { NewsDetail } from "./components/NewsDetail";
 
 function App() {
-  const { t, i18n } = useTranslation();
   // 添加鼠标点击火花效果
   useSparkEffect();
-  // 使用IntersectionObserver来检测元素是否可见，指定HTMLHeadingElement类型
-  const { ref: titleRef, isIntersecting } = useIntersectionObserver<HTMLHeadingElement>({ threshold: 0.1, once: true });
 
-  // 根据当前语言选择相应的数据
-  const blogPostsData = t('blog.posts', { returnObjects: true }) as Array<{
-    title: string;
-    excerpt: string;
-    author: string;
-    tags: string[];
-  }>;
-  
-  // 将翻译数据转换为BlogPost格式，添加id和其他必要字段
-  const currentBlogPosts = blogPostsData.map((post, index) => ({
-    id: index + 1,
-    title: post.title,
-    excerpt: post.excerpt,
-    content: 'This is the complete article content...', // 默认内容
-    author: post.author,
-    date: '2024-01-15', // 默认日期
-    tags: post.tags,
-    readTime: i18n.language === 'en' ? '5 min' : '5分钟', // 根据语言设置阅读时间
-    imageUrl: `https://picsum.photos/seed/blog${index + 1}/800/500`
-  }));
-  
-  // 从翻译文件中获取滚动项目数据
-  const scrollItems = t('scroll.items', { returnObjects: true }) as Array<{
-    title: string;
-    description: string;
-  }>;
-  
-  // 将翻译数据转换为ScrollItem格式，添加id和imageUrl
-  const currentScrollItems = scrollItems.map((item, index) => ({
-    id: index + 1,
-    title: item.title,
-    description: item.description,
-    imageUrl: `https://picsum.photos/id/${index + 1}/800/600`
-  }));
+  const [currentPage, setCurrentPage] = useState("home");
 
-  // 当元素进入可视区域时触发动画
   useEffect(() => {
-    if (isIntersecting && titleRef.current) {
-      // 为了避免下划线跟随动画，我们创建一个span来包裹文本内容
-      const titleElement = titleRef.current;
-      const originalText = titleElement.textContent;
-      
-      // 创建一个span来包裹文本内容，只对文本应用动画
-      const textSpan = document.createElement('span');
-      textSpan.textContent = originalText;
-      textSpan.style.display = 'inline-block';
-      textSpan.style.position = 'relative';
-      
-      // 清空原元素内容并添加span
-      titleElement.textContent = '';
-      titleElement.appendChild(textSpan);
-      
-      // 使用GSAP的timeline功能创建流畅的动画序列
-      // timeline可以确保动画之间平滑过渡，避免卡顿
-      const tl = gsap.timeline();
-      
-      // 1. 从左上角掉落
-      tl.fromTo(
-        textSpan,
-        {
-          // 起始状态：位于左上角，不可见
-          x: -100,
-          y: -100,
-          opacity: 0,
-          rotation: -5
-        },
-        {
-          // 中间状态：掉落超过目标位置
-          x: 0,
-          y: 40,  // 增加掉落距离以增强弹跳效果
-          opacity: 1,
-          rotation: 0,
-          duration: 0.8,  // 调整时间使动画更流畅
-          ease: 'power2.out'  // 平滑的缓动函数
-        }
-      );
-      
-      // 2. 自然弹跳动画 - 使用bounce.out缓动实现连续弹跳
-      // 直接使用单个bounce.out缓动函数可以创建更自然的弹跳效果
-      tl.to(
-        textSpan,
-        {
-          y: 0,
-          duration: 1.2,  // 延长弹跳时间使效果更明显
-          ease: 'bounce.out(1.2, 0.3)'  // 参数调整使弹跳更自然：1.2是强度，0.3是弹性
-        }
-      );
-      
-      // 可以选择性地添加一些微妙的旋转效果来增强自然感
-      // 使用keyframes属性来实现多步旋转，这是GSAP中正确的方式
-      tl.to(
-        textSpan,
-        {
-          keyframes: [
-            { rotation: 0, duration: 0.2 },
-            { rotation: 2, duration: 0.2 },
-            { rotation: -2, duration: 0.2 },
-            { rotation: 0, duration: 0.2 }
-          ],
-          ease: 'power2.inOut'
-        },
-        0.8  // 与弹跳动画同时开始
-      );
+    // Handle hash changes for navigation
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1); // Remove the # symbol
+      if (hash.startsWith("article-detail") || hash.startsWith("news-detail") || hash.startsWith("article-list")) {
+        setCurrentPage(hash);
+      } else {
+        setCurrentPage("home");
+      }
+    };
+
+    // Listen to hash changes
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange(); // Check initial hash
+
+    return () => window.removeEventListener("hashchange", handleHashChange);
+  }, []);
+
+  // Render different pages based on currentPage
+  const renderPage = () => {
+    if (currentPage === "article-detail") {
+      return <ArticleDetail />;
     }
-  }, [isIntersecting, titleRef]);
+    if (currentPage === "article-list") {
+      return <ArticleList />;
+    }
+    if (currentPage === "news-detail") {
+      return <NewsDetail />;
+    }
+    
+    // Default home page
+    return (
+      <>
+        <Hero />
+        <NewsSection />
+        <TechSection />
+        <FunZone />
+        <MessageWall />
+      </>
+    );
+  };
 
   return (
-    <div className="app">
-      <Navbar />
-      
-      <main className="main-content">
-        <Hero />
-        
-        <section className="featured-section">
-          <div className="container">
-              <h2 className="section-title">{t('projects.title')}</h2>
-              <ScrollSwitch 
-                items={currentScrollItems}
-                height="500px" 
-              />
-            </div>
-        </section>
-        
-        <section className="blog-section">
-          <div className="container">
-            <div className="section-header">
-              <h2 className="section-title">{t('blog.title')}</h2>
-              <p className="section-description">
-                {t('blog.subtitle')}
-              </p>
-            </div>
-            <BlogList posts={currentBlogPosts} />
-          </div>
-        </section>
-
-        {/* 便签墙部分 */}
-        <StickyNoteWall />
-        
-        <section className="about-section">
-          <div className="container">
-            <div className="about-content">
-              <div className="about-text">
-                <h2 className="section-title" ref={titleRef}>{t('sections.about')}</h2>
-                <p>
-                  {t('sections.aboutDescription1')}
-                </p>
-                <p>
-                  {t('sections.aboutDescription2')}
-                </p>
-                <button className="about-button">{t('sections.learnMore')}</button>
-              </div>
-              <div className="about-image">
-                <img 
-                  src="https://picsum.photos/seed/about/600/400" 
-                  alt={t('sections.aboutImageAlt')} 
-                  loading="lazy"
-                />
-              </div>
-            </div>
-          </div>
-        </section>
+    <div className="min-h-screen">
+      <Header />
+      <main>
+        {renderPage()}
       </main>
-      
       <Footer />
+      <Toaster position="top-center" />
     </div>
   );
 }
