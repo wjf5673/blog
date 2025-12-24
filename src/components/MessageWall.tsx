@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useRef } from "react";
 import { MessageCircle, Send, Trash2, User, ChevronLeft, ChevronRight, Settings } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslation } from "react-i18next";
 
 interface Message {
   id: number;
@@ -23,50 +24,64 @@ const avatarColors = [
 const MESSAGES_PER_PAGE = 5;
 
 export function MessageWall() {
-  const [messages, setMessages] = useState<Message[]>([
+  const { t, i18n } = useTranslation();
+  
+  // Function to get initial messages with current language
+  const getInitialMessages = (): Message[] => [
     {
       id: 1,
-      name: "张三",
-      content: "这个博客设计得太棒了！动效很流畅，内容也很有深度。",
+      name: t('messageWall.initialMessages.message1.name'),
+      content: t('messageWall.initialMessages.message1.content'),
       timestamp: new Date("2025-12-22T10:30:00"),
       color: avatarColors[0],
     },
     {
       id: 2,
-      name: "李四",
-      content: "期待更多关于 Web3 的技术分享，这个领域太有趣了！",
+      name: t('messageWall.initialMessages.message2.name'),
+      content: t('messageWall.initialMessages.message2.content'),
       timestamp: new Date("2025-12-22T11:15:00"),
       color: avatarColors[1],
     },
     {
       id: 3,
-      name: "王五",
-      content: "React Hooks 那篇文章写得非常好，帮我解决了很多疑惑。",
+      name: t('messageWall.initialMessages.message3.name'),
+      content: t('messageWall.initialMessages.message3.content'),
       timestamp: new Date("2025-12-22T12:00:00"),
       color: avatarColors[2],
     },
     {
       id: 4,
-      name: "赵六",
-      content: "留言墙的分页功能做得很棒，用户体验很好！",
+      name: t('messageWall.initialMessages.message4.name'),
+      content: t('messageWall.initialMessages.message4.content'),
       timestamp: new Date("2025-12-22T13:00:00"),
       color: avatarColors[3],
     },
     {
       id: 5,
-      name: "孙七",
-      content: "视差效果真的很酷，让页面更有层次感了。",
+      name: t('messageWall.initialMessages.message5.name'),
+      content: t('messageWall.initialMessages.message5.content'),
       timestamp: new Date("2025-12-22T14:00:00"),
       color: avatarColors[4],
     },
     {
       id: 6,
-      name: "周八",
-      content: "趣味玩法模块很有创意，期待更多互动功能！",
+      name: t('messageWall.initialMessages.message6.name'),
+      content: t('messageWall.initialMessages.message6.content'),
       timestamp: new Date("2025-12-22T15:00:00"),
       color: avatarColors[5],
     },
-  ]);
+  ];
+
+  const [messages, setMessages] = useState<Message[]>(getInitialMessages());
+  
+  // Update messages when language changes
+  useEffect(() => {
+    // Only update initial messages (ids 1-6), keep user-added messages
+    setMessages(prevMessages => {
+      const userMessages = prevMessages.filter(msg => msg.id > 6);
+      return [...getInitialMessages(), ...userMessages];
+    });
+  }, [i18n.language]);
 
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
@@ -101,9 +116,9 @@ export function MessageWall() {
       setIsAdminMode(!isAdminMode);
       setClickCount(0);
       if (!isAdminMode) {
-        toast.success("管理员模式已激活 🔧");
+        toast.success(t('messageWall.adminMode.activated'));
       } else {
-        toast.info("管理员模式已退出");
+        toast.info(t('messageWall.adminMode.deactivated'));
       }
     }
   };
@@ -121,7 +136,7 @@ export function MessageWall() {
     e.preventDefault();
     
     if (!name.trim() || !content.trim()) {
-      toast.error("请填写姓名和留言内容");
+      toast.error(t('messageWall.validation.required'));
       return;
     }
 
@@ -137,7 +152,7 @@ export function MessageWall() {
     setName("");
     setContent("");
     setCurrentPage(1);
-    toast.success("留言成功！");
+    toast.success(t('messageWall.success.posted'));
   };
 
   const deleteMessage = (id: number) => {
@@ -149,7 +164,7 @@ export function MessageWall() {
       setCurrentPage(newTotalPages);
     }
     
-    toast.success("留言已删除");
+    toast.success(t('messageWall.success.deleted'));
   };
 
   const formatTime = (date: Date) => {
@@ -159,10 +174,10 @@ export function MessageWall() {
     const hours = Math.floor(diff / 3600000);
     const days = Math.floor(diff / 86400000);
 
-    if (minutes < 1) return "刚刚";
-    if (minutes < 60) return `${minutes}分钟前`;
-    if (hours < 24) return `${hours}小时前`;
-    return `${days}天前`;
+    if (minutes < 1) return t('messageWall.time.justNow');
+    if (minutes < 60) return t('messageWall.time.minutesAgo', { count: minutes });
+    if (hours < 24) return t('messageWall.time.hoursAgo', { count: hours });
+    return t('messageWall.time.daysAgo', { count: days });
   };
 
   const goToPage = (page: number) => {
@@ -172,7 +187,7 @@ export function MessageWall() {
   };
 
   return (
-    <section id="messages" className="py-20 bg-white">
+    <section id="messages" className="py-20 bg-white dark:bg-gray-900">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -187,12 +202,12 @@ export function MessageWall() {
           >
             <MessageCircle className={`w-8 h-8 ${isAdminMode ? 'text-red-600' : 'text-indigo-600'}`} />
             <h2 className="text-4xl">
-              {isAdminMode ? "🔧 留言墙 (管理员模式)" : "留言墙"}
+              {isAdminMode ? `🔧 ${t('messageWall.title')} (${t('messageWall.adminMode.title')})` : t('messageWall.title')}
             </h2>
             {isAdminMode && <Settings className="w-6 h-6 text-red-600" />}
           </div>
-          <p className="text-xl text-gray-600">
-            {isAdminMode ? "管理员模式：您可以删除任何留言" : "分享你的想法，与其他开发者交流"}
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            {isAdminMode ? t('messageWall.adminMode.description') : t('messageWall.subtitle')}
           </p>
         </motion.div>
 
@@ -202,7 +217,7 @@ export function MessageWall() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-8 mb-12"
+          className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-2xl p-8 mb-12"
         >
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -210,8 +225,8 @@ export function MessageWall() {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="你的昵称"
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                placeholder={t('messageWall.form.namePlaceholder')}
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900/30 outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 maxLength={20}
               />
             </div>
@@ -219,12 +234,12 @@ export function MessageWall() {
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="写下你的想法..."
+                placeholder={t('messageWall.form.messagePlaceholder')}
                 rows={4}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all resize-none"
+                className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900/30 outline-none transition-all resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 maxLength={200}
               />
-              <div className="text-right text-sm text-gray-500 mt-1">
+              <div className="text-right text-sm text-gray-500 dark:text-gray-400 mt-1">
                 {content.length}/200
               </div>
             </div>
@@ -232,10 +247,10 @@ export function MessageWall() {
               type="submit"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 bg-indigo-600 dark:bg-indigo-500 text-white rounded-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2"
             >
               <Send className="w-5 h-5" />
-              发送留言
+              {t('messageWall.form.submit')}
             </motion.button>
           </form>
         </motion.div>
@@ -251,8 +266,8 @@ export function MessageWall() {
                 exit={{ opacity: 0, x: 50 }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 whileHover={{ scale: 1.01 }}
-                className={`bg-white rounded-2xl p-6 shadow-md hover:shadow-lg transition-all group ${
-                  isAdminMode ? 'border-2 border-red-200' : ''
+                className={`bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all group ${
+                  isAdminMode ? 'border-2 border-red-200 dark:border-red-800' : ''
                 }`}
               >
                 <div className="flex items-start gap-4">
@@ -267,8 +282,8 @@ export function MessageWall() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-3">
-                        <h4 className="font-semibold">{message.name}</h4>
-                        <span className="text-sm text-gray-500">
+                        <h4 className="font-semibold text-gray-900 dark:text-white">{message.name}</h4>
+                        <span className="text-sm text-gray-500 dark:text-gray-400">
                           {formatTime(message.timestamp)}
                         </span>
                       </div>
@@ -278,19 +293,19 @@ export function MessageWall() {
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
                           onClick={() => {
-                            if (window.confirm(`确定要删除 "${message.name}" 的留言吗？`)) {
+                            if (window.confirm(t('messageWall.adminMode.deleteConfirm', { name: message.name }))) {
                               deleteMessage(message.id);
                             }
                           }}
                           className="opacity-100 text-red-500 hover:text-red-600 transition-colors"
-                          title="删除留言"
+                          title={t('messageWall.adminMode.deleteButton')}
                         >
                           <Trash2 className="w-4 h-4" />
                         </motion.button>
                       )}
                     </div>
                     
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                       {message.content}
                     </p>
                   </div>
@@ -314,8 +329,8 @@ export function MessageWall() {
               disabled={currentPage === 1}
               className={`p-2 rounded-lg ${
                 currentPage === 1
-                  ? "text-gray-300 cursor-not-allowed"
-                  : "text-indigo-600 hover:bg-indigo-50"
+                  ? "text-gray-300 dark:text-gray-600 cursor-not-allowed"
+                  : "text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
               }`}
             >
               <ChevronLeft className="w-5 h-5" />
@@ -330,8 +345,8 @@ export function MessageWall() {
                   onClick={() => goToPage(page)}
                   className={`w-10 h-10 rounded-lg transition-all ${
                     currentPage === page
-                      ? "bg-indigo-600 text-white"
-                      : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                      ? "bg-indigo-600 dark:bg-indigo-500 text-white"
+                      : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                   }`}
                 >
                   {page}
@@ -346,8 +361,8 @@ export function MessageWall() {
               disabled={currentPage === totalPages}
               className={`p-2 rounded-lg ${
                 currentPage === totalPages
-                  ? "text-gray-300 cursor-not-allowed"
-                  : "text-indigo-600 hover:bg-indigo-50"
+                  ? "text-gray-300 dark:text-gray-600 cursor-not-allowed"
+                  : "text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20"
               }`}
             >
               <ChevronRight className="w-5 h-5" />
@@ -359,9 +374,9 @@ export function MessageWall() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-12 text-gray-400"
+            className="text-center py-12 text-gray-400 dark:text-gray-500"
           >
-            还没有留言，快来留下第一条消息吧！
+            {t('messageWall.empty')}
           </motion.div>
         )}
       </div>

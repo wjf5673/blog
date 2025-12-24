@@ -1,114 +1,5 @@
 {
-  "navbar": {
-    "home": "Home",
-    "articles": "Articles",
-    "about": "About",
-    "contact": "Contact",
-    "closeMenu": "Close Menu",
-    "openMenu": "Open Menu"
-  },
-  "hero": {
-    "title": "Explore the Infinite <span class=\"hero-highlight\">Possibilities</span> of Creativity",
-    "subtitle": "<strong>Welcome to my personal blog!</strong><span class=\"highlight-text\">This is where I record my thoughts, learning, and creations as a frontend developer.</span>In this space, I will share with you the latest frontend development technologies, cutting-edge AI trends, Web3 developments, and other industry insights. Whether exploring technical depth or discussing the future of the industry, I hope to discover the exciting frontiers together with you.<br /><em>Additionally, I've set up a special sticky note wall where everyone is welcome to leave your footprints, questions, or ideas. together here!</em>",
-    "button": "Start Exploring"
-  },
-  "sections": {
-    "featuredProjects": "Featured Projects",
-    "latestArticles": "Latest Articles",
-    "articlesDescription": "Explore the latest technical articles and development tips",
-    "about": "About This Blog",
-    "aboutDescription1": "This is a sharing platform focused on frontend development and industry trends. Here, I will explore the depth of frontend technologies with everyone, share the latest developments in AI, Web3 and other fields, and document my learning and creative journey.",
-    "aboutDescription2": "Whether you are a beginner or an experienced developer, there is content suitable for you here. Welcome to bookmark my blog to get the latest technical insights and practical development tips, and also welcome to leave your footprints and questions on the sticky note wall, let's grow together.",
-    "learnMore": "Learn More",
-    "aboutImageAlt": "About Blog"
-  },
-  "blog": {
-    "title": "Latest Articles",
-    "subtitle": "Explore the latest technical articles and development tips",
-    "readMore": "Read More",
-    "readTime": "min read",
-    "tags": {
-      "React": "React",
-      "Performance": "Performance",
-      "Frontend": "Frontend",
-      "GSAP": "GSAP",
-      "Animation": "Animation",
-      "UIDesign": "UI Design",
-      "Responsive": "Responsive",
-      "CSS": "CSS",
-      "Mobile": "Mobile",
-      "TypeScript": "TypeScript",
-      "TypeSystem": "Type System",
-      "BestPractices": "Best Practices"
-    },
-    "posts": [
-      {
-        "title": "5 Key Strategies for Modern React Performance Optimization",
-        "excerpt": "Explore practical tips for React application performance optimization, from component design to state management, to improve your application performance and user experience.",
-        "author": "Zhang San",
-        "tags": ["React", "Performance", "Frontend"]
-      },
-      {
-        "title": "GSAP Animation Library in Action: Creating Smooth User Interfaces",
-        "excerpt": "Deep dive into the powerful features of the GSAP animation library and learn how to create engaging animation effects to enhance user experience.",
-        "author": "Li Si",
-        "tags": ["GSAP", "Animation", "UIDesign"]
-      },
-      {
-        "title": "Responsive Design: Perfect Adaptation from Mobile to Desktop",
-        "excerpt": "Learn modern responsive design principles and techniques to ensure your website provides an excellent user experience on any device.",
-        "author": "Wang Wu",
-        "tags": ["Responsive", "CSS", "Mobile"]
-      },
-      {
-        "title": "Advanced TypeScript: Type System and Best Practices",
-        "excerpt": "Master advanced TypeScript type features and learn how to write type-safe code to improve development efficiency and code quality.",
-        "author": "Zhao Liu",
-        "tags": ["TypeScript", "TypeSystem", "BestPractices"]
-      }
-    ]
-  },
-  "projects": {
-    "title": "Featured Projects"
-  },
-  "scroll": {
-    "scrollHint": "↑↓ Scroll to switch projects",
-    "items": [
-      {
-        "title": "Creative Design Trends",
-        "description": "Explore the most cutting-edge web design and UI/UX trends of 2024, and learn how to create eye-catching user experiences."
-      },
-      {
-        "title": "Frontend Development Tips",
-        "description": "Master advanced techniques of modern frontend frameworks like React and Vue to improve development efficiency and code quality."
-      },
-      {
-        "title": "Responsive Design Practices",
-        "description": "Learn how to create responsive websites that adapt to various devices, providing a consistent user experience."
-      },
-      {
-        "title": "Performance Optimization Strategies",
-        "description": "Deep dive into website performance optimization best practices to improve page load speed and user experience."
-      },
-      {
-        "title": "Color Theory and Application",
-        "description": "Master color psychology and color schemes to inject emotion and professionalism into your designs."
-      },
-      {
-        "title": "Micro-interaction Design",
-        "description": "Learn how to design effective micro-interactions to enhance user engagement and product experience."
-      },
-      {
-        "title": "Accessibility Design Guide",
-        "description": "Create websites that are usable by everyone, and understand accessibility design standards and best practices."
-      },
-      {
-        "title": "Animation Effect Principles",
-        "description": "Deeply understand animation principles and add smooth and natural animation effects to your website."
-      }
-    ]
-  },
-  "footer": {
+  "common": {
     "brand": "BlogSpark",
     "description": "Record life, share knowledge, and explore the infinite possibilities of creativity.",
     "quickLinks": "Quick Links",
@@ -123,28 +14,527 @@
   "language": {
     "switch": "Switch Language",
     "chinese": "中文",
-    "english": "English"
+    "english": "English",
+    "currentLang": "Current Language",
+    "switchTo": "Switch to"
   },
-  "stickyNotes": {
+  "theme": {
+    "switch": "Switch Theme",
+    "light": "Light Theme",
+    "dark": "Dark Theme",
+    "currentTheme": "Current Theme",
+    "switchToLight": "Switch to Light",
+    "switchToDark": "Switch to Dark"
+  },
+  "hero": {
+    "title": {
+      "line1": "Exploring Technology Frontiers",
+      "line2": "Tech Blog"
+    },
+    "subtitle": {
+      "prefix": "Sharing Technology Passion, Exploring",
+      "words": {
+        "frontend": "Frontend Development",
+        "web3": "Web3",
+        "ai": "Artificial Intelligence"
+      }
+    },
+    "buttons": {
+      "explore": "Explore Content",
+      "messages": "Message Exchange"
+    },
+    "scrollIndicator": "Scroll Down"
+  },
+  "header": {
+    "navigation": "Navigation",
+    "home": "Home",
+    "news": "Industry News",
+    "tech": "Tech Sharing",
+    "funZone": "Fun Zone",
+    "messages": "Message Wall"
+  },
+  "funZone": {
+    "title": "Code Typing Challenge",
+    "subtitle": "Test your coding speed and accuracy in this fun typing challenge!",
+    "score": "Score",
+    "timeLeft": "Time Left",
+    "challengeTitle": "Ready to test your coding speed?",
+    "challengeDescription": "Type the code snippets as fast and accurately as you can. Each correct snippet earns you 10 points!",
+    "startChallenge": "Start Challenge",
+    "gameOver": "Challenge Complete!",
+    "points": "points",
+    "playAgain": "Play Again",
+    "typeCode": "Type this code:",
+    "placeholder": "Start typing here...",
+    "feedback": {
+      "excellent": "Amazing! You're a coding master!",
+      "good": "Great job! Keep practicing!",
+      "keepTrying": "Good effort! Try again to improve!"
+    },
+    "achievements": {
+      "title": "Achievements",
+      "beginner": "Beginner Coder",
+      "beginnerDesc": "Score 50 points or more",
+      "intermediate": "Code Warrior",
+      "intermediateDesc": "Score 100 points or more",
+      "master": "Code Master",
+      "masterDesc": "Score 200 points or more"
+    },
+    "tips": {
+      "title": "Pro Tips",
+      "description": "Focus on accuracy first, then speed. The more you practice, the better you'll get!"
+    }
+  },
+  "footer": {
+    "brand": {
+      "title": "Tech Blog",
+      "description": "A technology sharing platform focused on frontend, Web3, and AI"
+    },
+    "quickLinks": {
+      "title": "Quick Links",
+      "home": "Home",
+      "news": "Industry News",
+      "tech": "Tech Sharing",
+      "messages": "Message Wall"
+    },
+    "followUs": {
+      "title": "Follow Us"
+    },
+    "copyright": {
+      "madeWith": "Made with",
+      "by": "Tech Blog",
+      "rights": "© 2025 Tech Blog. All rights reserved."
+    }
+  },
+  "messageWall": {
     "title": "Sticky Note Wall",
-    "description": "Leave your footprint here, share your thoughts and feelings. Every note is a story, every visit is a warmth.",
-    "addNote": "Leave My Footprint",
-    "loading": "Loading notes...",
-    "loadError": "Failed to load notes, showing mock data",
-    "submitError": "Failed to submit note, please try again later",
-    "validationError": "Please fill in your name and message",
-    "formTitle": "Leave Your Footprint",
-    "nameLabel": "Your Name",
-    "namePlaceholder": "Enter your name",
-    "messageLabel": "Message",
-    "messagePlaceholder": "Share your thoughts, feelings or wishes...",
-    "submit": "Post Note",
-    "submitting": "Posting...",
-    "cancel": "Cancel",
-    "mockNotes": {
-      "note1": "This blog is awesome! Learned a lot about frontend development, thanks for sharing!",
-      "note2": "The sticky note wall idea is very creative and makes people feel warm. Hope to meet more friends here.",
-      "note3": "The GSAP animation effects are so cool! Do you have any learning resources to recommend?"
+    "subtitle": "Leave your footprint here, share your thoughts and feelings. Every note is a story, every visit is a warmth.",
+    "initialMessages": {
+      "message1": {
+        "name": "Frontend Developer",
+        "content": "This blog is awesome! Learned a lot about frontend development, thanks for sharing!"
+      },
+      "message2": {
+        "name": "Creative Designer",
+        "content": "The sticky note wall idea is very creative and makes people feel warm. Hope to meet more friends here."
+      },
+      "message3": {
+        "name": "Tech Enthusiast",
+        "content": "The GSAP animation effects are so cool! Do you have any learning resources to recommend?"
+      },
+      "message4": {
+        "name": "React Developer",
+        "content": "The article on React Hooks is very well written. I finally understand the principles of Hooks!"
+      },
+      "message5": {
+        "name": "Web3 Builder",
+        "content": "Web3 content is very practical. I successfully deployed my first smart contract following the tutorial."
+      },
+      "message6": {
+        "name": "UI/UX Designer",
+        "content": "The parallax effects are really cool, they add more depth to the page."
+      }
+    },
+    "adminMode": {
+      "title": "Admin Mode",
+      "description": "Administrator mode activated. You can now delete messages.",
+      "activated": "Admin mode activated",
+      "deactivated": "Admin mode deactivated",
+      "deleteButton": "Delete message",
+      "deleteConfirm": "Are you sure you want to delete {{name}}'s message?"
+    },
+    "validation": {
+      "required": "Please fill in your name and message"
+    },
+    "success": {
+      "posted": "Message posted successfully",
+      "deleted": "Message deleted successfully"
+    },
+    "time": {
+      "justNow": "Just now",
+      "minutesAgo": "{{count}} minutes ago",
+      "hoursAgo": "{{count}} hours ago",
+      "daysAgo": "{{count}} days ago"
+    },
+    "form": {
+      "namePlaceholder": "Enter your name",
+      "messagePlaceholder": "Share your thoughts, feelings or wishes...",
+      "submit": "Post Note"
+    },
+    "empty": "No messages yet. Be the first to leave a message!"
+  },
+  "newsDetail": {
+    "backToNews": "Back to Industry News",
+    "title": "React 19 Officially Released",
+    "author": "React Team",
+    "date": "December 20, 2025",
+    "readTime": "5 min read",
+    "intro": "The React team today officially released React 19, one of the most important updates in React's history. The new version brings brand-new compiler optimizations, enhanced concurrency features, and a comprehensive improvement in developer experience.",
+    "features": {
+      "title": "Key New Features",
+      "compiler": {
+        "title": "1. React Compiler",
+        "description": "React 19 introduces a brand-new compiler that can automatically optimize component rendering performance. Developers no longer need to manually use optimization hooks like useMemo and useCallback - the compiler will intelligently handle this work for you."
+      },
+      "serverComponents": {
+        "title": "2. Enhanced Server Components",
+        "description": "Server Components have been significantly enhanced, now supporting more complex data flows and state management. This makes building high-performance server-side rendered applications much simpler."
+      },
+      "concurrentRendering": {
+        "title": "3. Concurrent Rendering Improvements",
+        "description": "React 19 further optimizes the concurrent rendering mechanism, providing more fine-grained control. The new startTransition API allows developers to better control priority updates to the user interface."
+      },
+      "formHandling": {
+        "title": "4. Simplified Form Handling",
+        "description": "The new version introduces native form handling capabilities, greatly simplifying form state management and validation. Built-in form Actions make data submission more intuitive and type-safe."
+      }
+    },
+    "performance": {
+      "title": "Performance Improvements",
+      "description": "According to React team's benchmark tests, React 19 shows significant performance improvements in multiple areas:",
+      "firstRender": "40% faster initial rendering",
+      "rerender": "30% better re-rendering performance",
+      "bundleSize": "25% smaller bundle size",
+      "memory": "20% lower memory usage"
+    },
+    "migration": {
+      "title": "Migration Guide",
+      "description": "The React team promises to maintain backward compatibility, and most applications can seamlessly upgrade to React 19. For projects using deprecated APIs, the team provides detailed migration tools and documentation."
+    },
+    "feedback": {
+      "title": "Developer Feedback",
+      "description": "Community feedback on React 19 has been very positive. Many developers report that the new compiler significantly reduces their time spent on performance optimization, while server component improvements make building full-stack applications more enjoyable."
+    },
+    "conclusion": {
+      "title": "Conclusion",
+      "description": "React 19 is a milestone version that not only brings powerful new features but also maintains React's consistent simplicity and elegance. For frontend developers, this is an exciting update and an excellent opportunity to learn and master modern web development."
+    },
+    "navigation": {
+      "title": "News Navigation",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "relatedNews": "Related News",
+    "category": {
+      "frontend": "Frontend",
+      "ai": "AI"
+    },
+    "relatedItems": {
+      "tailwind": {
+        "title": "Tailwind CSS 4.0 Released"
+      },
+      "ai": {
+        "title": "New Standards for AI Programming Assistants"
+      }
+    }
+  },
+  "newsSection": {
+    "title": "Industry News",
+    "subtitle": "Track the latest developments in frontend, Web3, and AI",
+    "all": "All",
+    "readMore": "Read More",
+    "categories": {
+      "frontend": "Frontend",
+      "web3": "Web3",
+      "ai": "AI"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next",
+      "stats": "{{total}} news items total, page {{current}} / {{totalPages}}"
+    },
+    "noNews": "No news available in this category",
+    "newsItems": {
+      "react19": {
+        "title": "React 19 Officially Released",
+        "description": "Facebook releases React 19, bringing revolutionary React Compiler and enhanced server component support"
+      },
+      "gpt5": {
+        "title": "GPT-5 Multimodal Capabilities Breakthrough",
+        "description": "OpenAI announces GPT-5 achieves significant breakthrough in multimodal understanding, supporting real-time image and video analysis"
+      },
+      "ethereum": {
+        "title": "Ethereum Completes Major Upgrade",
+        "description": "Ethereum successfully completes the Dencun upgrade, transaction costs reduced by 90%"
+      },
+      "tailwind": {
+        "title": "Tailwind CSS 4.0 Released",
+        "description": "Popular CSS framework releases 4.0 version, introducing new container queries and native engine support"
+      },
+      "vite": {
+        "title": "Vite 6.0 Performance Breakthrough",
+        "description": "Next-gen build tool Vite 6.0 released, development server speed increased by 300%"
+      },
+      "typescript": {
+        "title": "TypeScript 5.8 Decorators Stable",
+        "description": "Microsoft releases TypeScript 5.8, decorator feature finally reaches stable stage"
+      },
+      "nextjs": {
+        "title": "Next.js 15 App Router Optimization",
+        "description": "Vercel releases Next.js 15, App Router performance improved by 40%"
+      },
+      "chromium": {
+        "title": "Chromium Adds WebAssembly GC",
+        "description": "Chrome browser adds WebAssembly GC support, significantly improving WASM performance"
+      },
+      "apple": {
+        "title": "Apple VisionOS 2.0 Open to Developers",
+        "description": "Apple releases VisionOS 2.0 developer preview, opening new possibilities for web AR development"
+      },
+      "github": {
+        "title": "GitHub Copilot Chat Goes Live",
+        "description": "GitHub's AI programming assistant Copilot Chat officially launches, supporting real-time collaborative programming"
+      },
+      "firefox": {
+        "title": "Firefox 130 Performance Breakthrough",
+        "description": "Mozilla releases Firefox 130, JavaScript execution speed increased by 25%"
+      },
+      "safari": {
+        "title": "Safari 18 WebKit Update",
+        "description": "Apple releases Safari 18, WebKit engine adds new CSS and JavaScript features"
+      }
+    }
+  },
+  "articleList": {
+    "backButton": "Back to Home",
+    "title": "Technical Articles",
+    "subtitle": "Explore the latest frontend, Web3, and AI technologies",
+    "searchPlaceholder": "Search articles...",
+    "allCategories": "All Categories",
+    "resultsCount": "Showing {{displayed}} / {{total}} articles",
+    "readMore": "Read More",
+    "loading": "Loading...",
+    "allArticlesLoaded": "All articles loaded",
+    "noArticlesFound": "No matching articles found",
+    "articles": {
+      "article1": {
+        "title": "Deep Understanding of React Hooks Design Principles",
+        "excerpt": "Analyze the implementation mechanism of Hooks from source code perspective, understand how core APIs like useState and useEffect work.",
+        "category": "React",
+        "readTime": "8 min"
+      },
+      "article2": {
+        "title": "Web3 Smart Contract Development in Practice",
+        "excerpt": "Step-by-step guide to developing your first DApp with Solidity, including complete contract deployment and frontend interaction code.",
+        "category": "Web3",
+        "readTime": "15 min"
+      },
+      "article3": {
+        "title": "10 Tips for Building High-Performance Frontend Applications",
+        "excerpt": "From code splitting and lazy loading to performance monitoring, comprehensively improve your web application performance.",
+        "category": "Performance",
+        "readTime": "12 min"
+      },
+      "article4": {
+        "title": "AI-Assisted Programming: A New Paradigm for Development Efficiency",
+        "excerpt": "Explore how AI tools are changing traditional programming workflows, allowing developers to focus on creative work.",
+        "category": "AI",
+        "readTime": "10 min"
+      },
+      "article5": {
+        "title": "TypeScript Advanced Type System Deep Dive",
+        "excerpt": "Master TypeScript's advanced type features including conditional types, mapped types, and template literal types.",
+        "category": "TypeScript",
+        "readTime": "18 min"
+      },
+      "article6": {
+        "title": "Modern CSS Layout Techniques Complete Guide",
+        "excerpt": "From Flexbox to Grid, master modern CSS layout techniques and build responsive web applications.",
+        "category": "CSS",
+        "readTime": "14 min"
+      },
+      "article7": {
+        "title": "Node.js Performance Optimization Best Practices",
+        "excerpt": "Learn how to optimize Node.js application performance, including memory management and concurrency handling.",
+        "category": "Node.js",
+        "readTime": "16 min"
+      },
+      "article8": {
+        "title": "GraphQL vs REST: Choosing the Right API Design",
+        "excerpt": "Compare GraphQL and REST APIs, understand their pros and cons, and choose the right solution for your project.",
+        "category": "API",
+        "readTime": "11 min"
+      },
+      "article9": {
+        "title": "Docker Containerization for Frontend Applications",
+        "excerpt": "Learn how to containerize frontend applications with Docker, ensuring consistent deployment across environments.",
+        "category": "DevOps",
+        "readTime": "13 min"
+      },
+      "article10": {
+        "title": "Web Security Best Practices for Modern Applications",
+        "excerpt": "Essential security practices for modern web applications, including XSS protection and secure authentication.",
+        "category": "Security",
+        "readTime": "17 min"
+      },
+      "article11": {
+        "title": "Microservices Architecture with Frontend Applications",
+        "excerpt": "Design and implement microservices architecture for frontend applications, improving scalability and maintainability.",
+        "category": "Architecture",
+        "readTime": "20 min"
+      },
+      "article12": {
+        "title": "Progressive Web Apps: Building Modern Web Experiences",
+        "excerpt": "Create Progressive Web Apps that provide native app-like experiences with offline capabilities and push notifications.",
+        "category": "PWA",
+        "readTime": "15 min"
+      },
+      "article13": {
+        "title": "Vue 3 Composition API Complete Guide",
+        "excerpt": "Master Vue 3's Composition API and build reactive, maintainable applications with modern Vue.js.",
+        "category": "Vue",
+        "readTime": "12 min"
+      },
+      "article14": {
+        "title": "Blockchain Development Fundamentals",
+        "excerpt": "Understanding blockchain technology basics and how to build decentralized applications.",
+        "category": "Blockchain",
+        "readTime": "19 min"
+      },
+      "article15": {
+        "title": "Machine Learning for Frontend Developers",
+        "excerpt": "Introduction to machine learning concepts and how to integrate ML models into web applications.",
+        "category": "Machine Learning",
+        "readTime": "22 min"
+      },
+      "article16": {
+        "title": "WebAssembly: High-Performance Web Applications",
+        "excerpt": "Learn WebAssembly basics and how to use it to build high-performance web applications.",
+        "category": "WebAssembly",
+        "readTime": "16 min"
+      },
+      "article17": {
+        "title": "Serverless Architecture for Modern Web Apps",
+        "excerpt": "Build scalable serverless applications using modern cloud platforms and edge computing.",
+        "category": "Serverless",
+        "readTime": "14 min"
+      },
+      "article18": {
+        "title": "Real-time Communication with WebSockets",
+        "excerpt": "Implement real-time features in web applications using WebSockets and modern messaging protocols.",
+        "category": "Real-time",
+        "readTime": "13 min"
+      },
+      "article19": {
+        "title": "Testing Strategies for Modern JavaScript Applications",
+        "excerpt": "Comprehensive testing strategies including unit tests, integration tests, and end-to-end testing.",
+        "category": "Testing",
+        "readTime": "15 min"
+      },
+      "article20": {
+        "title": "Accessibility Best Practices for Web Applications",
+        "excerpt": "Build accessible web applications that work for everyone, following WCAG guidelines and modern standards.",
+        "category": "Accessibility",
+        "readTime": "11 min"
+      },
+      "performance": {
+        "title": "10 Tips for Building High-Performance Frontend Applications",
+        "excerpt": "From code splitting and lazy loading to performance monitoring, comprehensively improve your web application performance.",
+        "category": "Performance",
+        "readTime": "12 min"
+      },
+      "web3": {
+        "title": "Web3 Smart Contract Development in Practice",
+        "excerpt": "Step-by-step guide to developing your first DApp with Solidity, including complete contract deployment and frontend interaction code.",
+        "category": "Web3",
+        "readTime": "15 min"
+      },
+      "typescript": {
+        "title": "TypeScript Advanced Type System Deep Dive",
+        "excerpt": "Master TypeScript's advanced type features including conditional types, mapped types, and template literal types.",
+        "category": "TypeScript",
+        "readTime": "18 min"
+      },
+      "hooks": {
+        "title": "Deep Understanding of React Hooks Design Principles",
+        "excerpt": "Analyze the implementation mechanism of Hooks from source code perspective, understand how core APIs like useState and useEffect work.",
+        "category": "React",
+        "readTime": "8 min"
+      },
+      "ai": {
+        "title": "AI-Assisted Programming: A New Paradigm for Development Efficiency",
+        "excerpt": "Explore how AI tools are changing traditional programming workflows, allowing developers to focus on creative work.",
+        "category": "AI",
+        "readTime": "10 min"
+      }
+    }
+  },
+  "techSection": {
+    "title": "Tech Sharing",
+    "subtitle": "In-depth technical articles to help you become a better developer",
+    "readArticle": "Read Article",
+    "viewMoreArticles": "View More Articles",
+    "articles": {
+      "hooks": {
+        "title": "Deep Understanding of React Hooks Design Principles",
+        "excerpt": "Analyze the implementation mechanism of Hooks from source code perspective, understand how core APIs like useState and useEffect work.",
+        "category": "React",
+        "readTime": "8 min"
+      },
+      "web3": {
+        "title": "Web3 Smart Contract Development in Practice",
+        "excerpt": "Step-by-step guide to developing your first DApp with Solidity, including complete contract deployment and frontend interaction code.",
+        "category": "Web3",
+        "readTime": "15 min"
+      },
+      "performance": {
+        "title": "10 Tips for Building High-Performance Frontend Applications",
+        "excerpt": "From code splitting and lazy loading to performance monitoring, comprehensively improve your web application performance.",
+        "category": "Performance",
+        "readTime": "12 min"
+      },
+      "ai": {
+        "title": "AI-Assisted Programming: A New Paradigm for Development Efficiency",
+        "excerpt": "Explore how AI tools are changing traditional programming workflows, allowing developers to focus on creative work.",
+        "category": "AI",
+        "readTime": "10 min"
+      }
+    }
+  },
+  "articleDetail": {
+    "backButton": "Back to Article List",
+    "title": "Deep Understanding of React Hooks Design Principles",
+    "category": "React",
+    "author": "Tech Blogger",
+    "date": "December 20, 2025",
+    "readTime": "8 min read",
+    "content": {
+      "hooksNeeded": {
+        "title": "Why Do We Need Hooks?",
+        "paragraph1": "Before React 16.8, function components were called \"stateless components\" - they couldn't have their own state or use lifecycle methods. This meant that if you needed to use state or side effects in a component, you had to rewrite the function component as a class component.",
+        "paragraph2": "This limitation brought many inconveniences: class component code is often more verbose, the this binding issue confuses beginners, and in large applications, logic reuse becomes difficult. The emergence of Hooks is to solve these problems."
+      },
+      "useState": {
+        "title": "Implementation Principle of useState",
+        "description": "useState is the most basic and commonly used Hook. Its core idea is to maintain a state array in function components, and each time useState is called, React stores and reads state in the array according to the call order.",
+        "code": "function useState(initialValue) {\n  const currentIndex = hookIndex++;\n  hooks[currentIndex] = hooks[currentIndex] || initialValue;\n  \n  const setState = (newValue) => {\n    hooks[currentIndex] = newValue;\n    render();\n  };\n  \n  return [hooks[currentIndex], setState];\n}"
+      },
+      "useEffect": {
+        "title": "How useEffect Works",
+        "paragraph1": "useEffect allows you to perform side effect operations in function components. It executes asynchronously after the component is rendered to the screen, so it doesn't block the browser's drawing process.",
+        "paragraph2": "React compares whether the values in the dependency array have changed, and if they have changed, it executes the effect. This comparison is shallow, using Object.is to determine."
+      },
+      "customHooks": {
+        "title": "Custom Hooks",
+        "paragraph1": "Custom Hooks are one of the most powerful features of React Hooks. By extracting component logic into reusable functions, we can share state logic between different components.",
+        "paragraph2": "A custom Hook is essentially a function whose name starts with \"use\" and can call other Hooks internally. This pattern makes code reuse elegant and natural."
+      },
+      "conclusion": {
+        "title": "Summary",
+        "description": "React Hooks have completely changed the way we write React components. They give function components all the capabilities of class components while maintaining the simplicity of functional programming. Understanding the design principles of Hooks helps us write better React code."
+      }
+    },
+    "navigation": {
+      "title": "Article Navigation",
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "relatedArticles": {
+      "title": "Related Articles",
+      "articles": [
+        { "title": "10 Tips for Building High-Performance Frontend Applications", "category": "Performance Optimization" },
+        { "title": "Web3 Smart Contract Development in Practice", "category": "Web3" }
+      ]
     }
   }
 }

@@ -3,7 +3,7 @@ import { useSparkEffect } from './hooks/useSparkEffect';
 import { Toaster } from "./components/ui/sonner";
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { NewsSection } from "./components/NewsSection";
+import NewsSection from "./components/NewsSection";
 import { TechSection } from "./components/TechSection";
 import { MessageWall } from "./components/MessageWall";
 import { FunZone } from "./components/FunZone";
@@ -11,6 +11,7 @@ import { Footer } from "./components/Footer";
 import { ArticleDetail } from "./components/ArticleDetail";
 import { ArticleList } from "./components/ArticleList";
 import { NewsDetail } from "./components/NewsDetail";
+import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
   // 添加鼠标点击火花效果
@@ -70,14 +71,16 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen">
-      <Header />
-      <main>
-        {renderPage()}
-      </main>
-      <Footer />
-      <Toaster position="top-center" />
-    </div>
+    <ThemeProvider>
+      <div className="min-h-screen">
+        <Header />
+        <main>
+          {renderPage()}
+        </main>
+        <Footer />
+        <Toaster position="top-center" />
+      </div>
+    </ThemeProvider>
   );
 }
 

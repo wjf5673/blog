@@ -1,7 +1,9 @@
 import { motion } from "motion/react";
 import { Github, Twitter, Linkedin, Mail, Heart } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export function Footer() {
+  const { t } = useTranslation();
   const socialLinks = [
     { icon: Github, href: "#", label: "GitHub" },
     { icon: Twitter, href: "#", label: "Twitter" },
@@ -19,9 +21,9 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <h3 className="text-xl mb-4">Tech Blog</h3>
+            <h3 className="text-xl mb-4">{t('footer.brand.title')}</h3>
             <p className="text-gray-400">
-              专注于前端、Web3 和 AI 领域的技术分享平台
+              {t('footer.brand.description')}
             </p>
           </motion.div>
 
@@ -31,12 +33,12 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <h3 className="text-xl mb-4">快速链接</h3>
+            <h3 className="text-xl mb-4">{t('footer.quickLinks.title')}</h3>
             <ul className="space-y-2 text-gray-400">
-              <li><a href="#home" className="hover:text-white transition-colors">首页</a></li>
-              <li><a href="#news" className="hover:text-white transition-colors">行业动态</a></li>
-              <li><a href="#tech" className="hover:text-white transition-colors">技术分享</a></li>
-              <li><a href="#messages" className="hover:text-white transition-colors">留言墙</a></li>
+              <li><a href="#home" className="hover:text-white transition-colors">{t('footer.quickLinks.home')}</a></li>
+              <li><a href="#news" className="hover:text-white transition-colors">{t('footer.quickLinks.news')}</a></li>
+              <li><a href="#tech" className="hover:text-white transition-colors">{t('footer.quickLinks.tech')}</a></li>
+              <li><a href="#messages" className="hover:text-white transition-colors">{t('footer.quickLinks.messages')}</a></li>
             </ul>
           </motion.div>
 
@@ -46,7 +48,7 @@ export function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <h3 className="text-xl mb-4">关注我们</h3>
+            <h3 className="text-xl mb-4">{t('footer.followUs.title')}</h3>
             <div className="flex gap-4">
               {socialLinks.map((link) => {
                 const Icon = link.icon;
@@ -76,9 +78,9 @@ export function Footer() {
           className="border-t border-gray-800 pt-8 text-center text-gray-400"
         >
           <p className="flex items-center justify-center gap-2">
-            Made with <Heart className="w-4 h-4 text-red-500 fill-red-500" /> by Tech Blog
+            {t('footer.copyright.madeWith')} <Heart className="w-4 h-4 text-red-500 fill-red-500" /> {t('footer.copyright.by')}
           </p>
-          <p className="mt-2">© 2025 Tech Blog. All rights reserved.</p>
+          <p className="mt-2">{t('footer.copyright.rights')}</p>
         </motion.div>
       </div>
     </footer>

@@ -1,16 +1,18 @@
 import { motion } from "motion/react";
+import { useTranslation } from "react-i18next";
 
 export function Hero() {
-  const words = ["前端开发", "Web3", "人工智能"];
+  const { t } = useTranslation();
+  const words = [t('hero.subtitle.words.frontend'), t('hero.subtitle.words.web3'), t('hero.subtitle.words.ai')];
   
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute w-2 h-2 bg-indigo-400 rounded-full opacity-20"
+            className="absolute w-2 h-2 bg-indigo-400 dark:bg-indigo-600 rounded-full opacity-20 dark:opacity-30"
             animate={{
               y: [0, -1000],
               x: Math.random() * 100 - 50,
@@ -42,7 +44,7 @@ export function Hero() {
               transition={{ delay: 0.2 }}
               className="block mb-2"
             >
-              探索技术前沿
+              {t('hero.title.line1')}
             </motion.span>
             <motion.span
               className="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 bg-clip-text text-transparent inline-block"
@@ -58,7 +60,7 @@ export function Hero() {
                 backgroundSize: "200% 100%",
               }}
             >
-              分享技术热情
+              {t('hero.title.line2')}
             </motion.span>
           </h1>
 
@@ -66,9 +68,9 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="text-xl md:text-2xl text-gray-600 mb-8"
+            className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8"
           >
-            专注于
+            {t('hero.subtitle.prefix')}
             {words.map((word, index) => (
               <motion.span
                 key={word}
@@ -78,7 +80,7 @@ export function Hero() {
                   delay: 0.6 + index * 0.2,
                   duration: 0.5,
                 }}
-                className="mx-2 text-indigo-600"
+                className="mx-2 text-indigo-600 dark:text-indigo-400"
               >
                 {word}
               </motion.span>
@@ -95,17 +97,17 @@ export function Hero() {
               href="#news"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition-colors"
+              className="px-8 py-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 dark:bg-indigo-500 dark:hover:bg-indigo-600 transition-colors"
             >
-              探索内容
+              {t('hero.buttons.explore')}
             </motion.a>
             <motion.a
               href="#messages"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-8 py-3 border-2 border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-50 transition-colors"
+              className="px-8 py-3 border-2 border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-50 dark:border-indigo-400 dark:text-indigo-400 dark:hover:bg-indigo-900/30 transition-colors"
             >
-              留言交流
+              {t('hero.buttons.messages')}
             </motion.a>
           </motion.div>
         </motion.div>
@@ -122,12 +124,12 @@ export function Hero() {
             transition={{ duration: 2, repeat: Infinity }}
             className="flex flex-col items-center gap-2"
           >
-            <span className="text-sm text-gray-400">向下滑动</span>
-            <div className="w-6 h-10 border-2 border-gray-300 rounded-full flex justify-center">
+            <span className="text-sm text-gray-400 dark:text-gray-500">{t('hero.scrollIndicator')}</span>
+            <div className="w-6 h-10 border-2 border-gray-300 dark:border-gray-600 rounded-full flex justify-center">
               <motion.div
                 animate={{ y: [0, 12, 0], opacity: [0.5, 1, 0.5] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="w-1.5 h-1.5 bg-indigo-600 rounded-full mt-2"
+                className="w-1.5 h-1.5 bg-indigo-600 dark:bg-indigo-400 rounded-full mt-2"
               />
             </div>
           </motion.div>

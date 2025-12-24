@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Search, Filter, Clock, Heart, ArrowLeft, ChevronDown, Loader2 } from "lucide-react";
 import { useState, useRef, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
 
 interface Article {
   id: number;
@@ -14,6 +15,7 @@ interface Article {
 }
 
 export function ArticleList() {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [isSelectOpen, setIsSelectOpen] = useState(false);
@@ -49,200 +51,200 @@ export function ArticleList() {
   const articles: Article[] = [
     {
       id: 1,
-      title: "深入理解 React Hooks 设计原理",
-      excerpt: "从源码角度解析 Hooks 的实现机制，理解 useState、useEffect 等核心 API 的工作原理。",
-      category: "React",
-      readTime: "8 分钟",
+      title: t('articleList.articles.hooks.title'),
+      excerpt: t('articleList.articles.hooks.excerpt'),
+      category: t('articleList.articles.hooks.category'),
+      readTime: t('articleList.articles.hooks.readTime'),
       likes: 234,
       date: "2025-12-20",
       image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?w=400",
     },
     {
       id: 2,
-      title: "Web3 智能合约开发实战",
-      excerpt: "手把手教你使用 Solidity 开发第一个 DApp，包含完整的合约部署和前端交互代码。",
-      category: "Web3",
-      readTime: "15 分钟",
+      title: t('articleList.articles.web3.title'),
+      excerpt: t('articleList.articles.web3.excerpt'),
+      category: t('articleList.articles.web3.category'),
+      readTime: t('articleList.articles.web3.readTime'),
       likes: 189,
       date: "2025-12-19",
       image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?w=400",
     },
     {
       id: 3,
-      title: "打造高性能前端应用的 10 个技巧",
-      excerpt: "从代码分割、懒加载到性能监控，全面提升你的 Web 应用性能。",
-      category: "性能优化",
-      readTime: "12 分钟",
+      title: t('articleList.articles.performance.title'),
+      excerpt: t('articleList.articles.performance.excerpt'),
+      category: t('articleList.articles.performance.category'),
+      readTime: t('articleList.articles.performance.readTime'),
       likes: 567,
       date: "2025-12-18",
       image: "https://images.unsplash.com/photo-1595623654300-b27329804025?w=400",
     },
     {
       id: 4,
-      title: "AI 辅助编程：提升开发效率的新范式",
-      excerpt: "探索 AI 工具如何改变传统的编程工作流，让开发者专注于创造性工作。",
-      category: "人工智能",
-      readTime: "10 分钟",
+      title: t('articleList.articles.ai.title'),
+      excerpt: t('articleList.articles.ai.excerpt'),
+      category: t('articleList.articles.ai.category'),
+      readTime: t('articleList.articles.ai.readTime'),
       likes: 423,
       date: "2025-12-17",
       image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?w=400",
     },
     {
       id: 5,
-      title: "TypeScript 高级类型系统详解",
-      excerpt: "掌握 TypeScript 的高级类型特性，让你的代码更加类型安全。",
-      category: "TypeScript",
-      readTime: "15 分钟",
+      title: t('articleList.articles.typescript.title'),
+      excerpt: t('articleList.articles.typescript.excerpt'),
+      category: t('articleList.articles.typescript.category'),
+      readTime: t('articleList.articles.typescript.readTime'),
       likes: 312,
       date: "2025-12-16",
       image: "https://images.unsplash.com/photo-1595623654300-b27329804025?w=400",
     },
     {
       id: 6,
-      title: "CSS Grid 布局完全指南",
-      excerpt: "从基础到高级，全面掌握 CSS Grid 布局系统。",
-      category: "CSS",
-      readTime: "10 分钟",
+      title: t('articleList.articles.article6.title'),
+      excerpt: t('articleList.articles.article6.excerpt'),
+      category: t('articleList.articles.article6.category'),
+      readTime: t('articleList.articles.article6.readTime'),
       likes: 278,
       date: "2025-12-15",
       image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?w=400",
     },
     {
       id: 7,
-      title: "Vue 3 Composition API 最佳实践",
-      excerpt: "深入了解 Vue 3 的 Composition API，学习如何构建可维护的大型应用。",
-      category: "Vue",
-      readTime: "12 分钟",
+      title: t('articleList.articles.article13.title'),
+      excerpt: t('articleList.articles.article13.excerpt'),
+      category: t('articleList.articles.article13.category'),
+      readTime: t('articleList.articles.article13.readTime'),
       likes: 198,
       date: "2025-12-14",
       image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400",
     },
     {
       id: 8,
-      title: "Node.js 微服务架构设计",
-      excerpt: "使用 Node.js 构建可扩展的微服务架构，包含服务发现、负载均衡等核心概念。",
-      category: "Node.js",
-      readTime: "18 分钟",
+      title: t('articleList.articles.article7.title'),
+      excerpt: t('articleList.articles.article7.excerpt'),
+      category: t('articleList.articles.article7.category'),
+      readTime: t('articleList.articles.article7.readTime'),
       likes: 445,
       date: "2025-12-13",
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400",
     },
     {
       id: 9,
-      title: "GraphQL vs REST API 对比分析",
-      excerpt: "深入比较 GraphQL 和 REST API 的优缺点，帮助你选择合适的 API 设计方案。",
-      category: "API设计",
-      readTime: "14 分钟",
+      title: t('articleList.articles.article8.title'),
+      excerpt: t('articleList.articles.article8.excerpt'),
+      category: t('articleList.articles.article8.category'),
+      readTime: t('articleList.articles.article8.readTime'),
       likes: 321,
       date: "2025-12-12",
       image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400",
     },
     {
       id: 10,
-      title: "Docker 容器化部署完整指南",
-      excerpt: "从 Docker 基础到生产环境部署，掌握容器化技术的方方面面。",
-      category: "DevOps",
-      readTime: "20 分钟",
+      title: t('articleList.articles.article9.title'),
+      excerpt: t('articleList.articles.article9.excerpt'),
+      category: t('articleList.articles.article9.category'),
+      readTime: t('articleList.articles.article9.readTime'),
       likes: 512,
       date: "2025-12-11",
       image: "https://images.unsplash.com/photo-1603380404222-149f2b80daca?w=400",
     },
     {
       id: 11,
-      title: "React Native 跨平台开发实战",
-      excerpt: "使用 React Native 开发 iOS 和 Android 应用，一套代码多端运行。",
-      category: "React",
-      readTime: "16 分钟",
+      title: t('articleList.articles.article11.title'),
+      excerpt: t('articleList.articles.article11.excerpt'),
+      category: t('articleList.articles.article11.category'),
+      readTime: t('articleList.articles.article11.readTime'),
       likes: 289,
       date: "2025-12-10",
       image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=400",
     },
     {
       id: 12,
-      title: "Kubernetes 集群管理详解",
-      excerpt: "学习如何在 Kubernetes 中部署、管理和扩展容器化应用程序。",
-      category: "DevOps",
-      readTime: "22 分钟",
+      title: t('articleList.articles.article12.title'),
+      excerpt: t('articleList.articles.article12.excerpt'),
+      category: t('articleList.articles.article12.category'),
+      readTime: t('articleList.articles.article12.readTime'),
       likes: 367,
       date: "2025-12-09",
       image: "https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=400",
     },
     {
       id: 13,
-      title: "JavaScript 异步编程进阶",
-      excerpt: "深入理解 Promise、async/await 和事件循环机制。",
-      category: "JavaScript",
-      readTime: "11 分钟",
+      title: t('articleList.articles.article19.title'),
+      excerpt: t('articleList.articles.article19.excerpt'),
+      category: t('articleList.articles.article19.category'),
+      readTime: t('articleList.articles.article19.readTime'),
       likes: 434,
       date: "2025-12-08",
       image: "https://images.unsplash.com/photo-1579468118864-1b9ea3c0db4a?w=400",
     },
     {
       id: 14,
-      title: "以太坊智能合约安全最佳实践",
-      excerpt: "学习如何编写安全的智能合约，避免常见的安全漏洞。",
-      category: "Web3",
-      readTime: "17 分钟",
+      title: t('articleList.articles.article14.title'),
+      excerpt: t('articleList.articles.article14.excerpt'),
+      category: t('articleList.articles.article14.category'),
+      readTime: t('articleList.articles.article14.readTime'),
       likes: 256,
       date: "2025-12-07",
       image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400",
     },
     {
       id: 15,
-      title: "Webpack 5 模块联邦详解",
-      excerpt: "探索 Webpack 5 的模块联邦功能，实现微前端架构。",
-      category: "工程化",
-      readTime: "13 分钟",
+      title: t('articleList.articles.article16.title'),
+      excerpt: t('articleList.articles.article15.excerpt'),
+      category: t('articleList.articles.article15.category'),
+      readTime: t('articleList.articles.article15.readTime'),
       likes: 178,
       date: "2025-12-06",
       image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400",
     },
     {
       id: 16,
-      title: "Flutter 状态管理解决方案对比",
-      excerpt: "比较 Provider、Bloc、Riverpod 等状态管理方案的优缺点。",
-      category: "Flutter",
-      readTime: "15 分钟",
+      title: t('articleList.articles.article17.title'),
+      excerpt: t('articleList.articles.article17.excerpt'),
+      category: t('articleList.articles.article17.category'),
+      readTime: t('articleList.articles.article17.readTime'),
       likes: 203,
       date: "2025-12-05",
       image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400",
     },
     {
       id: 17,
-      title: "Redis 性能优化实战技巧",
-      excerpt: "学习如何优化 Redis 性能，包括内存管理、持久化和集群配置。",
-      category: "数据库",
-      readTime: "14 分钟",
+      title: t('articleList.articles.article20.title'),
+      excerpt: t('articleList.articles.article20.excerpt'),
+      category: t('articleList.articles.article20.category'),
+      readTime: t('articleList.articles.article20.readTime'),
       likes: 389,
       date: "2025-12-04",
       image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400",
     },
     {
       id: 18,
-      title: "Svelte 4 新特性深度解析",
-      excerpt: "了解 Svelte 4 的最新特性，包括性能改进和开发体验提升。",
-      category: "Svelte",
-      readTime: "9 分钟",
+      title: t('articleList.articles.article18.title'),
+      excerpt: t('articleList.articles.article18.excerpt'),
+      category: t('articleList.articles.article18.category'),
+      readTime: t('articleList.articles.article18.readTime'),
       likes: 145,
       date: "2025-12-03",
       image: "https://images.unsplash.com/photo-1517180102446-f3ece453e6d4?w=400",
     },
     {
       id: 19,
-      title: "MongoDB 聚合管道完全指南",
-      excerpt: "掌握 MongoDB 聚合管道的使用方法，实现复杂的数据分析查询。",
-      category: "数据库",
-      readTime: "16 分钟",
+      title: t('articleList.articles.article10.title'),
+      excerpt: t('articleList.articles.article10.excerpt'),
+      category: t('articleList.articles.article10.category'),
+      readTime: t('articleList.articles.article10.readTime'),
       likes: 298,
       date: "2025-12-02",
       image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=400",
     },
     {
       id: 20,
-      title: "Next.js 13 App Router 迁移指南",
-      excerpt: "从 Pages Router 迁移到 App Router，了解新的路由系统和服务器组件。",
-      category: "React",
-      readTime: "19 分钟",
+      title: t('articleList.articles.article20.title'),
+      excerpt: t('articleList.articles.article20.excerpt'),
+      category: t('articleList.articles.article20.category'),
+      readTime: t('articleList.articles.article20.readTime'),
       likes: 412,
       date: "2025-12-01",
       image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=400",
@@ -308,17 +310,17 @@ export function ArticleList() {
   const displayedArticles = filteredArticles.slice(0, currentPage * ITEMS_PER_PAGE);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.a
           href="#tech"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 mb-8"
+          className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
-          返回首页
+          {t('articleList.backButton')}
         </motion.a>
 
         {/* Header */}
@@ -327,9 +329,9 @@ export function ArticleList() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-5xl mb-4">技术文章</h1>
-          <p className="text-xl text-gray-600">
-            探索最新的前端、Web3 和 AI 技术
+          <h1 className="text-5xl mb-4 text-gray-900 dark:text-white">{t('articleList.title')}</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400">
+            {t('articleList.subtitle')}
           </p>
         </motion.div>
 
@@ -338,7 +340,7 @@ export function ArticleList() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-lg p-6 mb-12"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-12"
         >
           <div className="flex flex-col md:flex-row gap-4">
             {/* Search */}
@@ -346,10 +348,10 @@ export function ArticleList() {
               <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
               <input
                 type="text"
-                placeholder="搜索文章..."
+                placeholder={t('articleList.searchPlaceholder')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                className="w-full pl-12 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
               />
             </div>
 
@@ -364,9 +366,9 @@ export function ArticleList() {
                     setIsSelectOpen(false);
                   }}
                   onMouseDown={() => setIsSelectOpen(!isSelectOpen)}
-                  className="pl-4 pr-10 py-3 border border-gray-300 rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all appearance-none bg-white cursor-pointer"
+                  className="pl-4 pr-10 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-xl focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all appearance-none cursor-pointer"
                 >
-                  <option value="all">所有分类</option>
+                  <option value="all">{t('articleList.allCategories')}</option>
                   {categories.slice(1).map((category) => (
                     <option key={category} value={category}>
                       {category}
@@ -385,8 +387,11 @@ export function ArticleList() {
           </div>
 
           {/* Results Count */}
-          <div className="mt-4 text-gray-600">
-            显示 {displayedArticles.length} / {filteredArticles.length} 篇文章
+          <div className="mt-4 text-gray-600 dark:text-gray-400">
+            {t('articleList.resultsCount', { 
+              displayed: displayedArticles.length, 
+              total: filteredArticles.length 
+            })}
           </div>
         </motion.div>
 
@@ -402,7 +407,7 @@ export function ArticleList() {
                 duration: 0.2,
                 ease: "easeOut"
               }}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group"
+              className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all group"
             >
               <div className="relative h-48 overflow-hidden">
                 <motion.img
@@ -418,7 +423,7 @@ export function ArticleList() {
               </div>
 
               <div className="p-6">
-                <div className="flex items-center gap-4 text-sm text-gray-500 mb-3">
+                <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-3">
                   <span>{article.date}</span>
                   <div className="flex items-center gap-1">
                     <Clock className="w-4 h-4" />
@@ -426,22 +431,22 @@ export function ArticleList() {
                   </div>
                 </div>
 
-                <h3 className="text-xl mb-2 group-hover:text-indigo-600 transition-colors">
+                <h3 className="text-xl mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors text-gray-900 dark:text-white line-clamp-2 leading-6">
                   {article.title}
                 </h3>
-                <p className="text-gray-600 mb-4 line-clamp-2">{article.excerpt}</p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">{article.excerpt}</p>
 
                 <div className="flex items-center justify-between">
                   <motion.a
                     href="#article-detail"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    className="text-indigo-600 hover:text-indigo-700"
+                    className="text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300"
                   >
-                    阅读更多 →
+                    {t('articleList.readMore')} →
                   </motion.a>
 
-                  <div className="flex items-center gap-1 text-gray-500">
+                  <div className="flex items-center gap-1 text-gray-500 dark:text-gray-400">
                     <Heart className="w-4 h-4" />
                     <span>{article.likes}</span>
                   </div>
@@ -457,10 +462,10 @@ export function ArticleList() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex items-center gap-2 text-indigo-600"
+              className="flex items-center gap-2 text-indigo-600 dark:text-indigo-400"
             >
               <Loader2 className="w-5 h-5 animate-spin" />
-              <span>加载中...</span>
+              <span>{t('articleList.loading')}</span>
             </motion.div>
           )}
         </div>
@@ -470,9 +475,9 @@ export function ArticleList() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="text-center py-8 text-gray-500"
+            className="text-center py-8 text-gray-500 dark:text-gray-400"
           >
-            <p>已显示全部文章</p>
+            <p>{t('articleList.allArticlesLoaded')}</p>
           </motion.div>
         )}
 
@@ -482,7 +487,7 @@ export function ArticleList() {
             animate={{ opacity: 1 }}
             className="text-center py-20"
           >
-            <p className="text-xl text-gray-400">没有找到匹配的文章</p>
+            <p className="text-xl text-gray-400 dark:text-gray-500">{t('articleList.noArticlesFound')}</p>
           </motion.div>
         )}
       </div>

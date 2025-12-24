@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { useState, useEffect, useMemo } from "react";
 import { Cpu, Blocks, Code, TrendingUp, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 interface NewsItem {
   id: number;
@@ -12,23 +13,19 @@ interface NewsItem {
   link: string;
 }
 
-const categoryConfig = {
-  frontend: { icon: Code, color: "text-blue-600", bg: "bg-blue-50", label: "前端" },
-  web3: { icon: Blocks, color: "text-purple-600", bg: "bg-purple-50", label: "Web3" },
-  ai: { icon: Cpu, color: "text-pink-600", bg: "bg-pink-50", label: "AI" },
-};
-
-export function NewsSection() {
+export default function NewsSection() {
+  const { t } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const NEWS_PER_PAGE = 6;
+  const itemsPerPage = 6;
 
-  const newsItems: NewsItem[] = [
+  // 使用 useMemo 来确保新闻数据在语言变化时重新计算
+  const newsItems: NewsItem[] = useMemo(() => [
     {
       id: 1,
       category: "frontend",
-      title: "React 19 正式发布",
-      description: "React 19 带来了全新的编译器优化和并发特性，性能提升显著。",
+      title: t('newsSection.newsItems.react19.title'),
+      description: t('newsSection.newsItems.react19.description'),
       image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwxfHx8fDE3NjYzNTM1MDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-20",
       link: "#news-detail",
@@ -36,8 +33,8 @@ export function NewsSection() {
     {
       id: 2,
       category: "ai",
-      title: "GPT-5 多模态能力突破",
-      description: "OpenAI 发布 GPT-5，在图像理解和视频生成方面取得重大突破。",
+      title: t('newsSection.newsItems.gpt5.title'),
+      description: t('newsSection.newsItems.gpt5.description'),
       image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-19",
       link: "#news-detail",
@@ -45,8 +42,8 @@ export function NewsSection() {
     {
       id: 3,
       category: "web3",
-      title: "以太坊完成重大升级",
-      description: "以太坊 2.0 全面部署，Gas 费用降低 80%，交易速度提升 10 倍。",
+      title: t('newsSection.newsItems.ethereum.title'),
+      description: t('newsSection.newsItems.ethereum.description'),
       image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-18",
       link: "#news-detail",
@@ -54,8 +51,8 @@ export function NewsSection() {
     {
       id: 4,
       category: "frontend",
-      title: "Tailwind CSS 4.0 发布",
-      description: "全新的设计系统和更强大的主题定制能力。",
+      title: t('newsSection.newsItems.tailwind.title'),
+      description: t('newsSection.newsItems.tailwind.description'),
       image: "https://images.unsplash.com/photo-1595623654300-b27329804025?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWNobm9sb2d5JTIwY29kaW5nfGVufDF8fHx8MTc2NjM0NzI2NXww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-17",
       link: "#news-detail",
@@ -63,8 +60,8 @@ export function NewsSection() {
     {
       id: 5,
       category: "ai",
-      title: "AI 编程助手新标准",
-      description: "GitHub Copilot X 集成最新 AI 模型，代码生成准确率达 95%。",
+      title: t('newsSection.newsItems.github.title'),
+      description: t('newsSection.newsItems.github.description'),
       image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-16",
       link: "#news-detail",
@@ -72,8 +69,8 @@ export function NewsSection() {
     {
       id: 6,
       category: "web3",
-      title: "DeFi 协议安全升级",
-      description: "主流 DeFi 协议采用新的安全标准，用户资产保护更上一层楼。",
+      title: t('newsSection.newsItems.ethereum.title'),
+      description: t('newsSection.newsItems.ethereum.description'),
       image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-15",
       link: "#news-detail",
@@ -81,8 +78,8 @@ export function NewsSection() {
     {
       id: 7,
       category: "frontend",
-      title: "Vue 4.0 预览版发布",
-      description: "Vue 4.0 带来更快的渲染性能和更小的包体积。",
+      title: t('newsSection.newsItems.vite.title'),
+      description: t('newsSection.newsItems.vite.description'),
       image: "https://images.unsplash.com/photo-1595623654300-b27329804025?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWNobm9sb2d5JTIwY29kaW5nfGVufDF8fHx8MTc2NjM0NzI2NXww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-14",
       link: "#news-detail",
@@ -90,8 +87,8 @@ export function NewsSection() {
     {
       id: 8,
       category: "ai",
-      title: "Claude 4 推出企业版",
-      description: "Anthropic 发布 Claude 4 企业版，支持更长上下文和更强推理能力。",
+      title: t('newsSection.newsItems.gpt5.title'),
+      description: t('newsSection.newsItems.gpt5.description'),
       image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-13",
       link: "#news-detail",
@@ -99,8 +96,8 @@ export function NewsSection() {
     {
       id: 9,
       category: "web3",
-      title: "Layer 2 解决方案新突破",
-      description: "新的 Layer 2 解决方案将交易成本降低至原来的 1/10。",
+      title: t('newsSection.newsItems.ethereum.title'),
+      description: t('newsSection.newsItems.ethereum.description'),
       image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-12",
       link: "#news-detail",
@@ -108,8 +105,8 @@ export function NewsSection() {
     {
       id: 10,
       category: "frontend",
-      title: "Next.js 15 性能优化",
-      description: "Next.js 15 带来了显著的性能提升和更好的开发体验。",
+      title: t('newsSection.newsItems.nextjs.title'),
+      description: t('newsSection.newsItems.nextjs.description'),
       image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwxfHx8fDE3NjYzNTM1MDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-11",
       link: "#news-detail",
@@ -117,8 +114,8 @@ export function NewsSection() {
     {
       id: 11,
       category: "ai",
-      title: "机器学习模型压缩技术",
-      description: "新的模型压缩技术让AI模型在移动设备上运行更加高效。",
+      title: t('newsSection.newsItems.apple.title'),
+      description: t('newsSection.newsItems.apple.description'),
       image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-10",
       link: "#news-detail",
@@ -126,30 +123,36 @@ export function NewsSection() {
     {
       id: 12,
       category: "web3",
-      title: "跨链桥技术新进展",
-      description: "新一代跨链桥技术实现了更安全、更快速的价值转移。",
+      title: t('newsSection.newsItems.chromium.title'),
+      description: t('newsSection.newsItems.chromium.description'),
       image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
       date: "2025-12-09",
       link: "#news-detail",
     },
-  ];
+  ], [t]);
+
+  const categoryConfig = {
+    frontend: { icon: Code, color: "text-blue-600", darkColor: "dark:text-blue-400", bg: "bg-blue-50", darkBg: "dark:bg-blue-900/30" },
+    web3: { icon: Blocks, color: "text-purple-600", darkColor: "dark:text-purple-400", bg: "bg-purple-50", darkBg: "dark:bg-purple-900/30" },
+    ai: { icon: Cpu, color: "text-pink-600", darkColor: "dark:text-pink-400", bg: "bg-pink-50", darkBg: "dark:bg-pink-900/30" },
+  };
 
   // 使用 useMemo 优化筛选逻辑
   const filteredNews = useMemo(() => {
     return selectedCategory
       ? newsItems.filter((item) => item.category === selectedCategory)
       : newsItems;
-  }, [selectedCategory]);
+  }, [selectedCategory, newsItems]);
 
   // 计算分页数据
   const { paginatedNews, totalPages } = useMemo(() => {
-    const totalPages = Math.ceil(filteredNews.length / NEWS_PER_PAGE);
-    const startIndex = (currentPage - 1) * NEWS_PER_PAGE;
-    const endIndex = startIndex + NEWS_PER_PAGE;
+    const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
     const paginatedNews = filteredNews.slice(startIndex, endIndex);
     
     return { paginatedNews, totalPages };
-  }, [filteredNews, currentPage]);
+  }, [filteredNews, currentPage, itemsPerPage]);
 
   // 当分类改变时重置页码
   useEffect(() => {
@@ -167,7 +170,7 @@ export function NewsSection() {
   };
 
   return (
-    <section id="news" className="py-20 bg-white relative overflow-hidden">
+    <section id="news" className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
       {/* Parallax Background Elements */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
@@ -194,11 +197,11 @@ export function NewsSection() {
           className="text-center mb-12"
         >
           <div className="flex items-center justify-center gap-2 mb-4">
-            <TrendingUp className="w-8 h-8 text-indigo-600" />
-            <h2 className="text-4xl">行业动态</h2>
+            <TrendingUp className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+            <h2 className="text-4xl text-gray-900 dark:text-white">{t('newsSection.title')}</h2>
           </div>
-          <p className="text-xl text-gray-600">
-            追踪前端、Web3、AI 领域的最新发展
+          <p className="text-xl text-gray-600 dark:text-gray-300">
+            {t('newsSection.subtitle')}
           </p>
         </motion.div>
 
@@ -217,10 +220,10 @@ export function NewsSection() {
             className={`px-6 py-2 rounded-full transition-all ${
               selectedCategory === null
                 ? "bg-indigo-600 text-white"
-                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
             }`}
           >
-            全部
+            {t('newsSection.all')}
           </motion.button>
           {Object.entries(categoryConfig).map(([key, config]) => {
             const Icon = config.icon;
@@ -233,11 +236,11 @@ export function NewsSection() {
                 className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 ${
                   selectedCategory === key
                     ? "bg-indigo-600 text-white"
-                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
                 }`}
               >
                 <Icon className="w-4 h-4" />
-                {config.label}
+                {t(`newsSection.categories.${key}`)}
               </motion.button>
             );
           })}
@@ -257,7 +260,7 @@ export function NewsSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ y: -10 }}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group"
+                className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group"
               >
                 <div className="relative overflow-hidden h-48">
                   <motion.img
@@ -267,25 +270,25 @@ export function NewsSection() {
                     alt={item.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className={`absolute top-4 left-4 px-3 py-1 rounded-full ${config.bg} flex items-center gap-1`}>
-                    <Icon className={`w-4 h-4 ${config.color}`} />
-                    <span className={`text-sm ${config.color}`}>
-                      {config.label}
+                  <div className={`absolute top-4 left-4 px-3 py-1 rounded-full ${config.bg} ${config.darkBg} flex items-center gap-1`}>
+                    <Icon className={`w-4 h-4 ${config.color} ${config.darkColor}`} />
+                    <span className={`text-sm ${config.color} ${config.darkColor}`}>
+                      {t(`newsSection.categories.${item.category}`)}
                     </span>
                   </div>
                 </div>
                 
                 <div className="p-6">
-                  <div className="text-sm text-gray-500 mb-2">{item.date}</div>
-                  <h3 className="text-xl mb-2 group-hover:text-indigo-600 transition-colors">
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{item.date}</div>
+                  <h3 className="text-xl mb-2 text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-6">
                     {item.title}
                   </h3>
-                  <p className="text-gray-600 mb-4">{item.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-6">{item.description}</p>
                   <a
                     href={item.link}
-                    className="inline-flex items-center gap-2 text-indigo-600 hover:gap-3 transition-all"
+                    className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all"
                   >
-                    阅读更多 <ExternalLink className="w-4 h-4" />
+                    {t('newsSection.readMore')} <ExternalLink className="w-4 h-4" />
                   </a>
                 </div>
               </motion.article>
@@ -307,12 +310,12 @@ export function NewsSection() {
               disabled={currentPage === 1}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                 currentPage === 1
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  ? "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                  : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
-              上一页
+              {t('newsSection.pagination.previous')}
             </motion.button>
 
             <div className="flex items-center gap-2">
@@ -325,7 +328,7 @@ export function NewsSection() {
                   className={`w-10 h-10 rounded-lg font-medium transition-all ${
                     currentPage === page
                       ? "bg-indigo-600 text-white"
-                      : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                      : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
                   }`}
                 >
                   {page}
@@ -340,11 +343,11 @@ export function NewsSection() {
               disabled={currentPage === totalPages}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                 currentPage === totalPages
-                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
-                  : "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50"
+                  ? "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                  : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
               }`}
             >
-              下一页
+              {t('newsSection.pagination.next')}
               <ChevronRight className="w-4 h-4" />
             </motion.button>
           </motion.div>
@@ -358,7 +361,11 @@ export function NewsSection() {
             className="text-center mt-8 text-gray-600"
           >
             <p>
-              共 {filteredNews.length} 条新闻，第 {currentPage} / {totalPages} 页
+              {t('newsSection.pagination.stats', { 
+                total: filteredNews.length, 
+                current: currentPage, 
+                totalPages: totalPages 
+              })}
             </p>
           </motion.div>
         )}
@@ -370,7 +377,7 @@ export function NewsSection() {
             animate={{ opacity: 1 }}
             className="text-center py-12"
           >
-            <p className="text-gray-500 text-lg">该分类暂无新闻</p>
+            <p className="text-gray-500 text-lg">{t('newsSection.noNews')}</p>
           </motion.div>
         )}
       </div>

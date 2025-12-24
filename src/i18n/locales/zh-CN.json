@@ -1,113 +1,5 @@
 {
-  "navbar": {
-    "home": "首页",
-    "articles": "文章",
-    "about": "关于",
-    "contact": "联系",
-    "closeMenu": "关闭菜单",
-    "openMenu": "打开菜单"
-  },
-  "hero": {
-    "title": "探索 <span class=\"hero-highlight\">创意</span> 的无限可能",
-    "subtitle": "<strong>欢迎来到我的个人博客！</strong><span class=\"highlight-text\">这里是我作为一名前端开发者的思考、学习和创作的记录地。</span>在这个空间里，我将与大家分享前端开发的最新技术、AI的前沿动态、Web3的发展趋势等行业资讯。无论是探索技术深度，还是讨论行业未来，我都希望能与你一起发现前沿的精彩。<br /><em>此外，我还特别设立了便签墙，欢迎大家留下你的足迹、问题或想法。together here!</em>",
-    "button": "开始探索"
-  },
-  "sections": {
-    "featured": "精选项目",
-    "blog": "最新文章",
-    "about": "关于这个博客",
-    "aboutDescription1": "这是一个专注于前端开发及行业趋势的分享平台。在这里，我将与大家共同探索前端技术的深度，分享AI、Web3等领域的最新动态，并记录我的学习与创作历程。",
-    "aboutDescription2": "无论你是初学者还是有经验的开发者，这里都有适合你的内容。欢迎收藏我的博客，获取最新的技术洞察和实用的开发技巧，同时也欢迎你在便签墙上留下你的足迹和问题，让我们一起成长。",
-    "learnMore": "了解更多",
-    "aboutImageAlt": "关于博客"
-  },
-  "blog": {
-    "title": "最新文章",
-    "subtitle": "探索最新的技术文章和开发技巧",
-    "readMore": "阅读全文",
-    "readTime": "分钟",
-    "tags": {
-      "React": "React",
-      "Performance": "性能优化",
-      "Frontend": "前端开发",
-      "GSAP": "GSAP",
-      "Animation": "动画",
-      "UIDesign": "UI设计",
-      "Responsive": "响应式设计",
-      "CSS": "CSS",
-      "Mobile": "移动端",
-      "TypeScript": "TypeScript",
-      "TypeSystem": "类型系统",
-      "BestPractices": "最佳实践"
-    },
-    "posts": [
-      {
-        "title": "现代React性能优化的5个关键策略",
-        "excerpt": "探索React应用性能优化的实用技巧，从组件设计到状态管理，提升你的应用性能和用户体验。",
-        "author": "张三",
-        "tags": ["React", "Performance", "Frontend"]
-      },
-      {
-        "title": "GSAP动画库实战：创建流畅的用户界面",
-        "excerpt": "深入了解GSAP动画库的强大功能，学习如何创建引人入胜的动画效果，提升用户体验。",
-        "author": "李四",
-        "tags": ["GSAP", "Animation", "UIDesign"]
-      },
-      {
-        "title": "响应式设计：从移动端到桌面端的完美适配",
-        "excerpt": "学习现代响应式设计原则和技术，确保你的网站在任何设备上都能提供出色的用户体验。",
-        "author": "王五",
-        "tags": ["Responsive", "CSS", "Mobile"]
-      },
-      {
-        "title": "TypeScript进阶：类型系统和最佳实践",
-        "excerpt": "掌握TypeScript的高级类型特性，学习如何编写类型安全的代码，提高开发效率和代码质量。",
-        "author": "赵六",
-        "tags": ["TypeScript", "TypeSystem", "BestPractices"]
-      }
-    ]
-  },
-  "projects": {
-    "title": "精选项目"
-  },
-  "scroll": {
-    "scrollHint": "↑↓ 滚动鼠标滚轮切换项目",
-    "items": [
-      {
-        "title": "创意设计趋势",
-        "description": "探索2024年最前沿的网页设计和UI/UX趋势，了解如何打造引人注目的用户体验。"
-      },
-      {
-        "title": "前端开发技巧",
-        "description": "掌握React、Vue等现代前端框架的高级技巧，提升开发效率和代码质量。"
-      },
-      {
-        "title": "响应式设计实践",
-        "description": "学习如何创建适配各种设备的响应式网站，提供一致的用户体验。"
-      },
-      {
-        "title": "性能优化策略",
-        "description": "深入了解网站性能优化的最佳实践，提升页面加载速度和用户体验。"
-      },
-      {
-        "title": "色彩理论与应用",
-        "description": "掌握色彩心理学和配色方案，为你的设计注入情感和专业感。"
-      },
-      {
-        "title": "微交互设计",
-        "description": "学习如何设计有效的微交互，提升用户参与度和产品体验。"
-      },
-      {
-        "title": "无障碍设计指南",
-        "description": "创建人人可用的网站，了解无障碍设计标准和最佳实践。"
-      },
-      {
-        "title": "动画效果原理",
-        "description": "深入理解动画原理，为你的网站添加流畅自然的动画效果。"
-      }
-    ]
-  },
-  "footer": {
+  "common": {
     "brand": "BlogSpark",
     "description": "记录生活，分享知识，探索创意的无限可能。",
     "quickLinks": "快速链接",
@@ -122,28 +14,527 @@
   "language": {
     "switch": "切换语言",
     "chinese": "中文",
-    "english": "English"
+    "english": "English",
+    "currentLang": "当前语言",
+    "switchTo": "切换到"
   },
-  "stickyNotes": {
+  "theme": {
+    "switch": "切换主题",
+    "light": "浅色主题",
+    "dark": "深色主题",
+    "currentTheme": "当前主题",
+    "switchToLight": "切换到浅色",
+    "switchToDark": "切换到深色"
+  },
+  "hero": {
+    "title": {
+      "line1": "探索技术前沿",
+      "line2": "技术博客"
+    },
+    "subtitle": {
+      "prefix": "分享技术热情，探索",
+      "words": {
+        "frontend": "前端开发",
+        "web3": "Web3",
+        "ai": "人工智能"
+      }
+    },
+    "buttons": {
+      "explore": "探索内容",
+      "messages": "留言交流"
+    },
+    "scrollIndicator": "向下滚动"
+  },
+  "header": {
+    "navigation": "导航",
+    "home": "首页",
+    "news": "行业动态",
+    "tech": "技术分享",
+    "funZone": "娱乐区",
+    "messages": "留言墙"
+  },
+  "funZone": {
+    "title": "代码打字挑战",
+    "subtitle": "在这个有趣的打字挑战中测试你的编码速度和准确性！",
+    "score": "得分",
+    "timeLeft": "剩余时间",
+    "challengeTitle": "准备好测试你的编码速度了吗？",
+    "challengeDescription": "尽可能快速准确地输入代码片段。每个正确的片段可获得10分！",
+    "startChallenge": "开始挑战",
+    "gameOver": "挑战完成！",
+    "points": "分",
+    "playAgain": "再玩一次",
+    "typeCode": "输入这段代码：",
+    "placeholder": "开始输入...",
+    "feedback": {
+      "excellent": "太棒了！你是编程大师！",
+      "good": "做得很好！继续练习！",
+      "keepTrying": "不错的努力！再试一次来提高！"
+    },
+    "achievements": {
+      "title": "成就",
+      "beginner": "初级程序员",
+      "beginnerDesc": "获得50分或更多",
+      "intermediate": "代码战士",
+      "intermediateDesc": "获得100分或更多",
+      "master": "代码大师",
+      "masterDesc": "获得200分或更多"
+    },
+    "tips": {
+      "title": "专业提示",
+      "description": "先注重准确性，再提高速度。练习越多，你会变得越好！"
+    }
+  },
+  "footer": {
+    "brand": {
+      "title": "Tech Blog",
+      "description": "专注于前端、Web3 和 AI 领域的技术分享平台"
+    },
+    "quickLinks": {
+      "title": "快速链接",
+      "home": "首页",
+      "news": "行业动态",
+      "tech": "技术分享",
+      "messages": "留言墙"
+    },
+    "followUs": {
+      "title": "关注我们"
+    },
+    "copyright": {
+      "madeWith": "Made with",
+      "by": "Tech Blog",
+      "rights": "© 2025 Tech Blog. All rights reserved."
+    }
+  },
+  "messageWall": {
     "title": "便签墙",
-    "description": "在这里留下你的足迹，分享你的想法和感受。每一张便签都是一个故事，每一次停留都是一份温暖。",
-    "addNote": "留下我的足迹",
-    "loading": "正在加载便签...",
-    "loadError": "加载便签失败，显示模拟数据",
-    "submitError": "提交便签失败，请稍后重试",
-    "validationError": "请填写完整的姓名和留言内容",
-    "formTitle": "留下你的足迹",
-    "nameLabel": "你的名字",
-    "namePlaceholder": "请输入你的名字",
-    "messageLabel": "留言内容",
-    "messagePlaceholder": "分享你的想法、感受或祝福...",
-    "submit": "发布便签",
-    "submitting": "发布中...",
-    "cancel": "取消",
-    "mockNotes": {
-      "note1": "这个博客真的很棒！学到了很多前端开发的知识，感谢分享！",
-      "note2": "便签墙的想法很有创意，让人感觉很温暖。希望能在这里认识更多朋友。",
-      "note3": "GSAP动画效果太酷了！请问有什么学习资源推荐吗？"
+    "subtitle": "在这里留下你的足迹，分享你的想法和感受。每一张便签都是一个故事，每一次停留都是一份温暖。",
+    "initialMessages": {
+      "message1": {
+        "name": "前端开发者",
+        "content": "这个博客真的很棒！学到了很多前端开发的知识，感谢分享！"
+      },
+      "message2": {
+        "name": "创意设计师",
+        "content": "便签墙的想法很有创意，让人感觉很温暖。希望能在这里认识更多朋友。"
+      },
+      "message3": {
+        "name": "技术爱好者",
+        "content": "GSAP动画效果太酷了！请问有什么学习资源推荐吗？"
+      },
+      "message4": {
+        "name": "React开发者",
+        "content": "React Hooks的文章写得很棒，我终于理解了Hooks的原理！"
+      },
+      "message5": {
+        "name": "Web3构建者",
+        "content": "Web3的内容很实用，我按照教程成功部署了第一个智能合约。"
+      },
+      "message6": {
+        "name": "UI/UX设计师",
+        "content": "视差效果真的很酷，为页面增加了更多的层次感。"
+      }
+    },
+    "adminMode": {
+      "title": "管理员模式",
+      "description": "管理员模式已激活。您现在可以删除消息。",
+      "activated": "管理员模式已激活",
+      "deactivated": "管理员模式已关闭",
+      "deleteButton": "删除消息",
+      "deleteConfirm": "确定要删除{{name}}的消息吗？"
+    },
+    "validation": {
+      "required": "请填写完整的姓名和留言内容"
+    },
+    "success": {
+      "posted": "消息发布成功",
+      "deleted": "消息删除成功"
+    },
+    "time": {
+      "justNow": "刚刚",
+      "minutesAgo": "{{count}}分钟前",
+      "hoursAgo": "{{count}}小时前",
+      "daysAgo": "{{count}}天前"
+    },
+    "form": {
+      "namePlaceholder": "请输入你的名字",
+      "messagePlaceholder": "分享你的想法、感受或祝福...",
+      "submit": "发布便签"
+    },
+    "empty": "还没有消息，成为第一个留言的人吧！"
+  },
+  "newsDetail": {
+    "backToNews": "返回行业动态",
+    "title": "React 19 正式发布",
+    "author": "React 团队",
+    "date": "2025年12月20日",
+    "readTime": "5 分钟阅读",
+    "intro": "React 团队今天正式发布了 React 19，这是 React 历史上最重要的更新之一。新版本带来了全新的编译器优化、增强的并发功能，以及开发者体验的全面提升。",
+    "features": {
+      "title": "主要新特性",
+      "compiler": {
+        "title": "1. React 编译器",
+        "description": "React 19 引入了全新的编译器，可以自动优化组件渲染性能。开发者不再需要手动使用 useMemo、useCallback 等优化钩子，编译器会智能地为你处理这项工作。"
+      },
+      "serverComponents": {
+        "title": "2. 增强的服务器组件",
+        "description": "服务器组件得到了显著增强，现在支持更复杂的数据流和状态管理。这使得构建高性能的服务器端渲染应用变得更加简单。"
+      },
+      "concurrentRendering": {
+        "title": "3. 并发渲染改进",
+        "description": "React 19 进一步优化了并发渲染机制，提供了更细粒度的控制。新的 startTransition API 让开发者能够更好地控制用户界面的优先级更新。"
+      },
+      "formHandling": {
+        "title": "4. 表单处理简化",
+        "description": "新版本引入了原生的表单处理能力，大大简化了表单状态管理和验证。内置的表单 Actions 让数据提交变得更加直观和类型安全。"
+      }
+    },
+    "performance": {
+      "title": "性能提升",
+      "description": "根据 React 团队的基准测试，React 19 在多个方面都有显著的性能提升：",
+      "firstRender": "首次渲染速度提升 40%",
+      "rerender": "重渲染性能提升 30%",
+      "bundleSize": "包体积减小 25%",
+      "memory": "内存占用降低 20%"
+    },
+    "migration": {
+      "title": "迁移指南",
+      "description": "React 团队承诺保持向后兼容性，大多数应用可以无缝升级到 React 19。对于使用了弃用 API 的项目，团队提供了详细的迁移工具和文档。"
+    },
+    "feedback": {
+      "title": "开发者反馈",
+      "description": "社区对 React 19 的反馈非常积极。许多开发者表示，新的编译器大大减少了他们在性能优化上花费的时间，而服务器组件的改进让构建全栈应用变得更加愉快。"
+    },
+    "conclusion": {
+      "title": "总结",
+      "description": "React 19 是一个里程碑式的版本，它不仅带来了强大的新特性，还保持了 React 一贯的简洁和优雅。对于前端开发者来说，这是一个值得兴奋的更新，也是学习和掌握现代 Web 开发的绝佳机会。"
+    },
+    "navigation": {
+      "title": "新闻导航",
+      "previous": "上一篇",
+      "next": "下一篇"
+    },
+    "relatedNews": "相关资讯",
+    "category": {
+      "frontend": "前端",
+      "ai": "AI"
+    },
+    "relatedItems": {
+      "tailwind": {
+        "title": "Tailwind CSS 4.0 发布"
+      },
+      "ai": {
+        "title": "AI 编程助手新标准"
+      }
+    }
+  },
+  "newsSection": {
+    "title": "行业动态",
+    "subtitle": "追踪前端、Web3、AI 领域的最新发展",
+    "all": "全部",
+    "readMore": "阅读更多",
+    "categories": {
+      "frontend": "前端",
+      "web3": "Web3",
+      "ai": "AI"
+    },
+    "pagination": {
+      "previous": "上一页",
+      "next": "下一页",
+      "stats": "共 {{total}} 条新闻，第 {{current}} / {{totalPages}} 页"
+    },
+    "noNews": "该分类暂无新闻",
+    "newsItems": {
+      "react19": {
+        "title": "React 19 正式发布",
+        "description": "Facebook 发布 React 19，带来革命性的 React 编译器和增强的服务器组件支持"
+      },
+      "gpt5": {
+        "title": "GPT-5 多模态能力突破",
+        "description": "OpenAI 宣布 GPT-5 在多模态理解方面取得重大突破，支持实时图像和视频分析"
+      },
+      "ethereum": {
+        "title": "以太坊完成重大升级",
+        "description": "以太坊成功完成 Dencun 升级，交易成本降低 90%"
+      },
+      "tailwind": {
+        "title": "Tailwind CSS 4.0 发布",
+        "description": "流行的 CSS 框架发布 4.0 版本，引入全新的容器查询和原生引擎支持"
+      },
+      "vite": {
+        "title": "Vite 6.0 性能突破",
+        "description": "下一代构建工具 Vite 6.0 发布，开发服务器速度提升 300%"
+      },
+      "typescript": {
+        "title": "TypeScript 5.8 装饰器稳定",
+        "description": "Microsoft 发布 TypeScript 5.8，装饰器功能终于达到稳定阶段"
+      },
+      "nextjs": {
+        "title": "Next.js 15 App Router 优化",
+        "description": "Vercel 发布 Next.js 15，App Router 性能提升 40%"
+      },
+      "chromium": {
+        "title": "Chromium 添加 WebAssembly GC",
+        "description": "Chrome 浏览器添加 WebAssembly GC 支持，显著提升 WASM 性能"
+      },
+      "apple": {
+        "title": "Apple VisionOS 2.0 开放开发者",
+        "description": "Apple 发布 VisionOS 2.0 开发者预览版，为 Web AR 开发开辟新可能"
+      },
+      "github": {
+        "title": "GitHub Copilot Chat 正式上线",
+        "description": "GitHub 的 AI 编程助手 Copilot Chat 正式发布，支持实时协作编程"
+      },
+      "firefox": {
+        "title": "Firefox 130 性能突破",
+        "description": "Mozilla 发布 Firefox 130，JavaScript 执行速度提升 25%"
+      },
+      "safari": {
+        "title": "Safari 18 WebKit 更新",
+        "description": "Apple 发布 Safari 18，WebKit 引擎添加新的 CSS 和 JavaScript 功能"
+      }
+    }
+  },
+  "articleList": {
+    "backButton": "返回首页",
+    "title": "技术文章",
+    "subtitle": "探索最新的前端、Web3 和 AI 技术",
+    "searchPlaceholder": "搜索文章...",
+    "allCategories": "所有分类",
+    "resultsCount": "显示 {{displayed}} / {{total}} 篇文章",
+    "readMore": "阅读更多",
+    "loading": "加载中...",
+    "allArticlesLoaded": "已显示全部文章",
+    "noArticlesFound": "没有找到匹配的文章",
+    "articles": {
+      "article1": {
+        "title": "深入理解 React Hooks 设计原理",
+        "excerpt": "从源码角度解析 Hooks 的实现机制，理解 useState、useEffect 等核心 API 的工作原理。",
+        "category": "React",
+        "readTime": "8 分钟"
+      },
+      "article2": {
+        "title": "Web3 智能合约开发实战",
+        "excerpt": "手把手教你使用 Solidity 开发第一个 DApp，包含完整的合约部署和前端交互代码。",
+        "category": "Web3",
+        "readTime": "15 分钟"
+      },
+      "article3": {
+        "title": "打造高性能前端应用的 10 个技巧",
+        "excerpt": "从代码分割、懒加载到性能监控，全面提升你的 Web 应用性能。",
+        "category": "性能优化",
+        "readTime": "12 分钟"
+      },
+      "article4": {
+        "title": "AI 辅助编程：提升开发效率的新范式",
+        "excerpt": "探索 AI 工具如何改变传统的编程工作流，让开发者专注于创造性工作。",
+        "category": "AI",
+        "readTime": "10 分钟"
+      },
+      "article5": {
+        "title": "TypeScript 高级类型系统深度解析",
+        "excerpt": "掌握 TypeScript 的高级类型特性，包括条件类型、映射类型和模板字面量类型。",
+        "category": "TypeScript",
+        "readTime": "18 分钟"
+      },
+      "article6": {
+        "title": "现代 CSS 布局技术完全指南",
+        "excerpt": "从 Flexbox 到 Grid，掌握现代 CSS 布局技术，构建响应式 Web 应用。",
+        "category": "CSS",
+        "readTime": "14 分钟"
+      },
+      "article7": {
+        "title": "Node.js 性能优化最佳实践",
+        "excerpt": "学习如何优化 Node.js 应用性能，包括内存管理和并发处理。",
+        "category": "Node.js",
+        "readTime": "16 分钟"
+      },
+      "article8": {
+        "title": "GraphQL vs REST：选择合适的 API 设计",
+        "excerpt": "比较 GraphQL 和 REST API，了解它们的优缺点，为你的项目选择合适的方案。",
+        "category": "API",
+        "readTime": "11 分钟"
+      },
+      "article9": {
+        "title": "Docker 容器化前端应用",
+        "excerpt": "学习如何使用 Docker 容器化前端应用，确保跨环境部署的一致性。",
+        "category": "DevOps",
+        "readTime": "13 分钟"
+      },
+      "article10": {
+        "title": "现代 Web 应用安全最佳实践",
+        "excerpt": "现代 Web 应用的基本安全实践，包括 XSS 保护和安全认证。",
+        "category": "安全",
+        "readTime": "17 分钟"
+      },
+      "article11": {
+        "title": "前端应用的微服务架构",
+        "excerpt": "设计和实现前端应用的微服务架构，提高可扩展性和可维护性。",
+        "category": "架构",
+        "readTime": "20 分钟"
+      },
+      "article12": {
+        "title": "渐进式 Web 应用：构建现代 Web 体验",
+        "excerpt": "创建提供原生应用般体验的渐进式 Web 应用，支持离线功能和推送通知。",
+        "category": "PWA",
+        "readTime": "15 分钟"
+      },
+      "article13": {
+        "title": "Vue 3 Composition API 完全指南",
+        "excerpt": "掌握 Vue 3 的 Composition API，使用现代 Vue.js 构建响应式、可维护的应用。",
+        "category": "Vue",
+        "readTime": "12 分钟"
+      },
+      "article14": {
+        "title": "区块链开发基础",
+        "excerpt": "了解区块链技术基础以及如何构建去中心化应用。",
+        "category": "区块链",
+        "readTime": "19 分钟"
+      },
+      "article15": {
+        "title": "面向前端开发者的机器学习",
+        "excerpt": "机器学习概念介绍以及如何将 ML 模型集成到 Web 应用中。",
+        "category": "机器学习",
+        "readTime": "22 分钟"
+      },
+      "article16": {
+        "title": "WebAssembly：高性能 Web 应用",
+        "excerpt": "学习 WebAssembly 基础以及如何使用它构建高性能 Web 应用。",
+        "category": "WebAssembly",
+        "readTime": "16 分钟"
+      },
+      "article17": {
+        "title": "现代 Web 应用的无服务器架构",
+        "excerpt": "使用现代云平台和边缘计算构建可扩展的无服务器应用。",
+        "category": "无服务器",
+        "readTime": "14 分钟"
+      },
+      "article18": {
+        "title": "使用 WebSockets 实现实时通信",
+        "excerpt": "使用 WebSockets 和现代消息传递协议在 Web 应用中实现实时功能。",
+        "category": "实时",
+        "readTime": "13 分钟"
+      },
+      "article19": {
+        "title": "现代 JavaScript 应用测试策略",
+        "excerpt": "全面的测试策略，包括单元测试、集成测试和端到端测试。",
+        "category": "测试",
+        "readTime": "15 分钟"
+      },
+      "article20": {
+        "title": "Web 应用可访问性最佳实践",
+        "excerpt": "构建适用于所有人的可访问 Web 应用，遵循 WCAG 指南和现代标准。",
+        "category": "可访问性",
+        "readTime": "11 分钟"
+      },
+      "performance": {
+        "title": "打造高性能前端应用的 10 个技巧",
+        "excerpt": "从代码分割、懒加载到性能监控，全面提升你的 Web 应用性能。",
+        "category": "性能优化",
+        "readTime": "12 分钟"
+      },
+      "web3": {
+        "title": "Web3 智能合约开发实战",
+        "excerpt": "手把手教你使用 Solidity 开发第一个 DApp，包含完整的合约部署和前端交互代码。",
+        "category": "Web3",
+        "readTime": "15 分钟"
+      },
+      "typescript": {
+        "title": "TypeScript 高级类型系统深度解析",
+        "excerpt": "掌握 TypeScript 的高级类型特性，包括条件类型、映射类型和模板字面量类型。",
+        "category": "TypeScript",
+        "readTime": "18 分钟"
+      },
+      "hooks": {
+        "title": "深入理解 React Hooks 设计原理",
+        "excerpt": "从源码角度解析 Hooks 的实现机制，理解 useState、useEffect 等核心 API 的工作原理。",
+        "category": "React",
+        "readTime": "8 分钟"
+      },
+      "ai": {
+        "title": "AI 辅助编程：提升开发效率的新范式",
+        "excerpt": "探索 AI 工具如何改变传统的编程工作流，让开发者专注于创造性工作。",
+        "category": "AI",
+        "readTime": "10 分钟"
+      }
+    }
+  },
+  "techSection": {
+    "title": "技术分享",
+    "subtitle": "深度技术文章，助你成为更好的开发者",
+    "readArticle": "阅读文章",
+    "viewMoreArticles": "查看更多文章",
+    "articles": {
+      "hooks": {
+        "title": "深入理解 React Hooks 设计原理",
+        "excerpt": "从源码角度解析 Hooks 的实现机制，理解 useState、useEffect 等核心 API 的工作原理。",
+        "category": "React",
+        "readTime": "8 分钟"
+      },
+      "web3": {
+        "title": "Web3 智能合约开发实战",
+        "excerpt": "手把手教你使用 Solidity 开发第一个 DApp，包含完整的合约部署和前端交互代码。",
+        "category": "Web3",
+        "readTime": "15 分钟"
+      },
+      "performance": {
+        "title": "打造高性能前端应用的 10 个技巧",
+        "excerpt": "从代码分割、懒加载到性能监控，全面提升你的 Web 应用性能。",
+        "category": "性能优化",
+        "readTime": "12 分钟"
+      },
+      "ai": {
+        "title": "AI 辅助编程：提升开发效率的新范式",
+        "excerpt": "探索 AI 工具如何改变传统的编程工作流，让开发者专注于创造性工作。",
+        "category": "人工智能",
+        "readTime": "10 分钟"
+      }
+    }
+  },
+  "articleDetail": {
+    "backButton": "返回文章列表",
+    "title": "深入理解 React Hooks 设计原理",
+    "category": "React",
+    "author": "技术博主",
+    "date": "2025年12月20日",
+    "readTime": "8 分钟阅读",
+    "content": {
+      "hooksNeeded": {
+        "title": "为什么需要 Hooks？",
+        "paragraph1": "在 React 16.8 之前，函数组件被称为\"无状态组件\"，它们无法拥有自己的状态，也无法使用生命周期方法。这意味着如果你需要在组件中使用状态或副作用，就必须将函数组件改写为类组件。",
+        "paragraph2": "这种限制带来了诸多不便：类组件的代码往往更加冗长，this 的绑定问题让新手困惑，而且在大型应用中，逻辑复用变得困难。Hooks 的出现就是为了解决这些问题。"
+      },
+      "useState": {
+        "title": "useState 的实现原理",
+        "description": "useState 是最基础也是最常用的 Hook。它的核心思想是在函数组件中维护一个状态数组，每次调用 useState 时，React 会按照调用顺序在数组中存储和读取状态。",
+        "code": "function useState(initialValue) {\n  const currentIndex = hookIndex++;\n  hooks[currentIndex] = hooks[currentIndex] || initialValue;\n  \n  const setState = (newValue) => {\n    hooks[currentIndex] = newValue;\n    render();\n  };\n  \n  return [hooks[currentIndex], setState];\n}"
+      },
+      "useEffect": {
+        "title": "useEffect 的工作机制",
+        "paragraph1": "useEffect 允许你在函数组件中执行副作用操作。它在组件渲染到屏幕之后异步执行，这样不会阻塞浏览器的绘制过程。",
+        "paragraph2": "React 会比较依赖数组中的值是否发生变化，如果发生变化就会执行 effect。这个比较是浅比较，使用 Object.is 来判断。"
+      },
+      "customHooks": {
+        "title": "自定义 Hooks",
+        "paragraph1": "自定义 Hooks 是 React Hooks 最强大的特性之一。通过提取组件逻辑到可复用的函数中，我们可以在不同组件之间共享状态逻辑。",
+        "paragraph2": "自定义 Hook 本质上就是一个函数，它的名字以 \"use\" 开头，内部可以调用其他 Hooks。这种模式让代码复用变得优雅而自然。"
+      },
+      "conclusion": {
+        "title": "总结",
+        "description": "React Hooks 彻底改变了我们编写 React 组件的方式。它让函数组件拥有了类组件的所有能力，同时保持了函数式编程的简洁性。理解 Hooks 的设计原理，能够帮助我们写出更好的 React 代码。"
+      }
+    },
+    "navigation": {
+      "title": "文章导航",
+      "previous": "上一篇",
+      "next": "下一篇"
+    },
+    "relatedArticles": {
+      "title": "相关文章",
+      "articles": [
+        { "title": "打造高性能前端应用的 10 个技巧", "category": "性能优化" },
+        { "title": "Web3 智能合约开发实战", "category": "Web3" }
+      ]
     }
   }
 }

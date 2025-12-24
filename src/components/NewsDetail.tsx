@@ -1,23 +1,25 @@
 import { motion } from "motion/react";
 import { ArrowLeft, Calendar, Clock, User, Heart, Share2, Bookmark } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function NewsDetail() {
+  const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-20">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.a
           href="#news"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
-          className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 mb-8"
+          className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 mb-8"
         >
           <ArrowLeft className="w-5 h-5" />
-          返回行业动态
+          {t('newsDetail.backToNews')}
         </motion.a>
 
         {/* News Article */}
@@ -25,7 +27,7 @@ export function NewsDetail() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white rounded-2xl shadow-lg overflow-hidden"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden"
         >
           {/* Hero Image */}
           <div className="relative h-96 overflow-hidden">
@@ -46,7 +48,7 @@ export function NewsDetail() {
                 transition={{ delay: 0.4 }}
                 className="inline-block px-4 py-1 bg-blue-600 text-white rounded-full mb-4"
               >
-                前端
+                {t('newsDetail.category.frontend')}
               </motion.span>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -54,26 +56,26 @@ export function NewsDetail() {
                 transition={{ delay: 0.5 }}
                 className="text-4xl text-white mb-4"
               >
-                React 19 正式发布
+                {t('newsDetail.title')}
               </motion.h1>
             </div>
           </div>
 
           {/* Meta Info */}
-          <div className="p-8 border-b border-gray-200">
+          <div className="p-8 border-b border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between flex-wrap gap-4">
-              <div className="flex items-center gap-6 text-gray-600">
+              <div className="flex items-center gap-6 text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-2">
                   <User className="w-5 h-5" />
-                  <span>React 团队</span>
+                  <span>{t('newsDetail.author')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
-                  <span>2025年12月20日</span>
+                  <span>{t('newsDetail.date')}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5" />
-                  <span>5 分钟阅读</span>
+                  <span>{t('newsDetail.readTime')}</span>
                 </div>
               </div>
 
@@ -82,7 +84,7 @@ export function NewsDetail() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setIsLiked(!isLiked)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-red-50 transition-colors"
+                  className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                 >
                   <Heart
                     className={`w-5 h-5 ${
@@ -95,7 +97,7 @@ export function NewsDetail() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => setIsBookmarked(!isBookmarked)}
-                  className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
                   <Bookmark
                     className={`w-5 h-5 ${
@@ -107,7 +109,7 @@ export function NewsDetail() {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
                   <Share2 className="w-5 h-5 text-gray-400" />
                 </motion.button>
@@ -116,91 +118,111 @@ export function NewsDetail() {
           </div>
 
           {/* Content */}
-          <div className="p-8 md:p-12 prose prose-lg max-w-none">
-            <p className="text-xl text-gray-700 leading-relaxed">
-              React 团队今天正式发布了 React 19，这是 React 历史上最重要的更新之一。
-              新版本带来了全新的编译器优化、并发特性增强以及开发者体验的全面提升。
+          <div className="p-8 md:p-12 prose prose-lg dark:prose-invert max-w-none">
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              {t('newsDetail.intro')}
             </p>
 
-            <h2>主要新特性</h2>
+            <h2>{t('newsDetail.features.title')}</h2>
 
-            <h3>1. React 编译器</h3>
+            <h3>{t('newsDetail.features.compiler.title')}</h3>
             <p>
-              React 19 引入了全新的编译器，能够自动优化组件渲染性能。开发者不再需要手动使用
-              useMemo、useCallback 等优化 Hooks，编译器会智能地为你完成这些工作。
+              {t('newsDetail.features.compiler.description')}
             </p>
 
-            <h3>2. 服务器组件增强</h3>
+            <h3>{t('newsDetail.features.serverComponents.title')}</h3>
             <p>
-              服务器组件（Server Components）得到了大幅增强，现在支持更复杂的数据流和状态管理。
-              这使得构建高性能的服务端渲染应用变得更加简单。
+              {t('newsDetail.features.serverComponents.description')}
             </p>
 
-            <h3>3. 并发渲染改进</h3>
+            <h3>{t('newsDetail.features.concurrentRendering.title')}</h3>
             <p>
-              React 19 进一步优化了并发渲染机制，提供了更细粒度的控制。新的 startTransition API
-              让开发者能够更好地控制用户界面的优先级更新。
+              {t('newsDetail.features.concurrentRendering.description')}
             </p>
 
-            <h3>4. 表单处理简化</h3>
+            <h3>{t('newsDetail.features.formHandling.title')}</h3>
             <p>
-              新版本引入了原生的表单处理能力，大大简化了表单状态管理和验证。内置的表单 Actions
-              让数据提交变得更加直观和类型安全。
+              {t('newsDetail.features.formHandling.description')}
             </p>
 
-            <h2>性能提升</h2>
+            <h2>{t('newsDetail.performance.title')}</h2>
             <p>
-              根据 React 团队的基准测试，React 19 在多个方面都有显著的性能提升：
+              {t('newsDetail.performance.description')}
             </p>
             <ul>
-              <li>首次渲染速度提升 40%</li>
-              <li>重渲染性能提升 30%</li>
-              <li>包体积减小 25%</li>
-              <li>内存占用降低 20%</li>
+              <li>{t('newsDetail.performance.firstRender')}</li>
+              <li>{t('newsDetail.performance.rerender')}</li>
+              <li>{t('newsDetail.performance.bundleSize')}</li>
+              <li>{t('newsDetail.performance.memory')}</li>
             </ul>
 
-            <h2>迁移指南</h2>
+            <h2>{t('newsDetail.migration.title')}</h2>
             <p>
-              React 团队承诺保持向后兼容性，大多数应用可以无缝升级到 React 19。
-              对于使用了弃用 API 的项目，团队提供了详细的迁移工具和文档。
+              {t('newsDetail.migration.description')}
             </p>
 
-            <h2>开发者反馈</h2>
+            <h2>{t('newsDetail.feedback.title')}</h2>
             <p>
-              社区对 React 19 的反馈非常积极。许多开发者表示，新的编译器大大减少了他们在性能优化上花费的时间，
-              而服务器组件的改进让构建全栈应用变得更加愉快。
+              {t('newsDetail.feedback.description')}
             </p>
 
-            <h2>总结</h2>
+            <h2>{t('newsDetail.conclusion.title')}</h2>
             <p>
-              React 19 是一个里程碑式的版本，它不仅带来了强大的新特性，还保持了 React 一贯的简洁和优雅。
-              对于前端开发者来说，这是一个值得兴奋的更新，也是学习和掌握现代 Web 开发的绝佳机会。
+              {t('newsDetail.conclusion.description')}
             </p>
           </div>
 
           {/* Related News */}
-          <div className="p-8 bg-gray-50">
-            <h3 className="text-2xl mb-6">相关资讯</h3>
+          <div className="p-8 bg-gray-50 dark:bg-gray-900">
+            <h3 className="text-2xl mb-6 text-gray-900 dark:text-white">{t('newsDetail.navigation.title')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {[
-                { title: "Tailwind CSS 4.0 发布", category: "前端" },
-                { title: "AI 编程助手新标准", category: "AI" },
-              ].map((news, index) => (
-                <motion.a
-                  key={index}
-                  href="#news-detail"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.6 + index * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                  className="p-6 bg-white rounded-xl shadow-md hover:shadow-lg transition-all"
-                >
-                  <span className="text-sm text-indigo-600 mb-2 block">
-                    {news.category}
+              {/* Previous News */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.6 }}
+                whileHover={{ scale: 1.02 }}
+                className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group"
+              >
+                <div className="flex items-center mb-3">
+                  <svg className="w-5 h-5 mr-2 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                  <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors">
+                    {t('newsDetail.navigation.previous')}
                   </span>
-                  <h4 className="text-lg">{news.title}</h4>
-                </motion.a>
-              ))}
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  {t('newsDetail.category.frontend')}
+                </p>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  {t('newsDetail.relatedItems.tailwind.title')}
+                </h4>
+              </motion.div>
+
+              {/* Next News */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
+                whileHover={{ scale: 1.02 }}
+                className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group"
+              >
+                <div className="flex items-center mb-3">
+                  <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors">
+                    {t('newsDetail.navigation.next')}
+                  </span>
+                  <svg className="w-5 h-5 ml-2 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
+                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                  {t('newsDetail.category.ai')}
+                </p>
+                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  {t('newsDetail.relatedItems.ai.title')}
+                </h4>
+              </motion.div>
             </div>
           </div>
         </motion.article>

@@ -1,8 +1,10 @@
 import { motion } from "motion/react";
 import { Trophy, Target, Gamepad2, Star, Zap } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 export function FunZone() {
+  const { t } = useTranslation();
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(30);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -74,7 +76,7 @@ export function FunZone() {
   };
 
   return (
-    <section id="fun-zone" className="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 relative overflow-hidden">
+    <section id="fun-zone" className="py-20 bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-indigo-900/20 relative overflow-hidden">
       {/* Animated Background */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
@@ -99,14 +101,14 @@ export function FunZone() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <Gamepad2 className="w-8 h-8 text-purple-600" />
-            <h2 className="text-4xl">趣味挑战</h2>
-          </div>
-          <p className="text-xl text-gray-600">
-            测试你的代码打字速度，挑战自我！
-          </p>
-        </motion.div>
+            <div className="flex items-center justify-center gap-2 mb-4">
+              <Gamepad2 className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+              <h2 className="text-4xl text-gray-900 dark:text-white">{t('funZone.title')}</h2>
+            </div>
+            <p className="text-xl text-gray-600 dark:text-gray-300">
+              {t('funZone.subtitle')}
+            </p>
+          </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
           {/* Game Area */}
@@ -117,12 +119,12 @@ export function FunZone() {
             transition={{ duration: 0.6 }}
             className="lg:col-span-2 h-full"
           >
-            <div className="bg-white rounded-2xl shadow-2xl overflow-hidden h-full">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl overflow-hidden h-full">
               {/* Game Header */}
               <div className="bg-gradient-to-r from-purple-600 to-pink-600 p-6 text-white">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-sm opacity-80 mb-1">得分</div>
+                    <div className="text-sm opacity-80 mb-1">{t('funZone.score')}</div>
                     <motion.div
                       key={score}
                       initial={{ scale: 1.3 }}
@@ -133,7 +135,7 @@ export function FunZone() {
                     </motion.div>
                   </div>
                   <div>
-                    <div className="text-sm opacity-80 mb-1">剩余时间</div>
+                    <div className="text-sm opacity-80 mb-1">{t('funZone.timeLeft')}</div>
                     <motion.div
                       animate={{
                         scale: timeLeft <= 5 && isPlaying ? [1, 1.1, 1] : 1,
@@ -158,9 +160,9 @@ export function FunZone() {
                     >
                       <Target className="w-24 h-24 mx-auto text-purple-600 mb-6" />
                     </motion.div>
-                    <h3 className="text-2xl mb-4">代码打字挑战</h3>
-                    <p className="text-gray-600 mb-8">
-                      在 30 秒内尽可能多地输入正确的代码片段
+                    <h3 className="text-2xl mb-4 text-gray-900 dark:text-white">{t('funZone.challengeTitle')}</h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-8">
+                      {t('funZone.challengeDescription')}
                     </p>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -168,7 +170,7 @@ export function FunZone() {
                       onClick={startGame}
                       className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl text-lg hover:shadow-xl transition-shadow"
                     >
-                      开始挑战
+                      {t('funZone.startChallenge')}
                     </motion.button>
                   </div>
                 ) : !isPlaying && timeLeft === 0 ? (
@@ -180,16 +182,16 @@ export function FunZone() {
                     >
                       <Trophy className="w-24 h-24 mx-auto text-yellow-500 mb-6" />
                     </motion.div>
-                    <h3 className="text-2xl mb-2">挑战结束！</h3>
+                    <h3 className="text-2xl mb-2 text-gray-900 dark:text-white">{t('funZone.gameOver')}</h3>
                     <p className="text-4xl mb-4 bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                      {score} 分
+                      {score} {t('funZone.points')}
                     </p>
-                    <p className="text-gray-600 mb-8">
+                    <p className="text-gray-600 dark:text-gray-300 mb-8">
                       {score >= 200
-                        ? "🎉 太厉害了！你是真正的代码高手！"
+                        ? `🎉 ${t('funZone.feedback.excellent')}`
                         : score >= 100
-                        ? "👍 做得很好！继续保持！"
-                        : "💪 不错的开始，再试一次吧！"}
+                        ? `👍 ${t('funZone.feedback.good')}`
+                        : `💪 ${t('funZone.feedback.keepTrying')}`}
                     </p>
                     <motion.button
                       whileHover={{ scale: 1.05 }}
@@ -197,14 +199,14 @@ export function FunZone() {
                       onClick={startGame}
                       className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl text-lg hover:shadow-xl transition-shadow"
                     >
-                      再玩一次
+                      {t('funZone.playAgain')}
                     </motion.button>
                   </div>
                 ) : (
                   <div>
                     <div className="mb-6">
-                      <label className="block text-sm text-gray-600 mb-2">
-                        请输入以下代码：
+                      <label className="block text-sm text-gray-600 dark:text-gray-400 mb-2">
+                        {t('funZone.typeCode')}
                       </label>
                       <motion.div
                         key={targetCode}
@@ -221,11 +223,11 @@ export function FunZone() {
                       value={currentCode}
                       onChange={handleInput}
                       autoFocus
-                      className="w-full px-4 py-4 border-2 border-purple-300 rounded-xl focus:border-purple-500 focus:ring-4 focus:ring-purple-100 outline-none transition-all text-lg font-mono"
-                      placeholder="在这里输入..."
+                      className="w-full px-4 py-4 border-2 border-purple-300 dark:border-purple-600 rounded-xl focus:border-purple-500 focus:ring-4 focus:ring-purple-100 dark:focus:ring-purple-900/30 outline-none transition-all text-lg font-mono bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
+                      placeholder={t('funZone.placeholder')}
                     />
 
-                    <div className="mt-4 h-2 bg-gray-200 rounded-full overflow-hidden">
+                    <div className="mt-4 h-2 bg-gray-200 dark:bg-gray-600 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{
@@ -248,10 +250,10 @@ export function FunZone() {
             transition={{ duration: 0.6 }}
             className="h-full"
           >
-            <div className="bg-white rounded-2xl shadow-2xl p-6 h-full flex flex-col">
-              <h3 className="text-xl mb-6 flex items-center gap-2">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 h-full flex flex-col">
+              <h3 className="text-xl mb-6 flex items-center gap-2 text-gray-900 dark:text-white">
                 <Star className="w-6 h-6 text-yellow-500" />
-                成就系统
+                {t('funZone.achievements.title')}
               </h3>
 
               <div className="space-y-4">
@@ -272,8 +274,8 @@ export function FunZone() {
                       <Zap className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">初出茅庐</div>
-                      <div className="text-sm text-gray-600">得分达到 50</div>
+                      <div className="font-semibold text-gray-900 dark:text-white">{t('funZone.achievements.beginner')}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{t('funZone.achievements.beginnerDesc')}</div>
                     </div>
                   </div>
                 </motion.div>
@@ -295,8 +297,8 @@ export function FunZone() {
                       <Target className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">小有成就</div>
-                      <div className="text-sm text-gray-600">得分达到 100</div>
+                      <div className="font-semibold text-gray-900 dark:text-white">{t('funZone.achievements.intermediate')}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{t('funZone.achievements.intermediateDesc')}</div>
                     </div>
                   </div>
                 </motion.div>
@@ -318,18 +320,18 @@ export function FunZone() {
                       <Trophy className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <div className="font-semibold">代码大师</div>
-                      <div className="text-sm text-gray-600">得分达到 200</div>
+                      <div className="font-semibold text-gray-900 dark:text-white">{t('funZone.achievements.master')}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-400">{t('funZone.achievements.masterDesc')}</div>
                     </div>
                   </div>
                 </motion.div>
               </div>
 
               {/* Tips */}
-              <div className="mt-6 p-4 bg-indigo-50 rounded-xl">
-                <div className="text-sm mb-2">💡 小贴士</div>
-                <p className="text-sm text-gray-600">
-                  每输入正确一个代码片段得 10 分。专注和准确性是关键！
+              <div className="mt-6 p-4 bg-indigo-50 dark:bg-indigo-900/20 rounded-xl">
+                <div className="text-sm mb-2 text-gray-900 dark:text-white">💡 {t('funZone.tips.title')}</div>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
+                  {t('funZone.tips.description')}
                 </p>
               </div>
             </div>
