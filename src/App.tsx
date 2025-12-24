@@ -22,6 +22,15 @@ function App() {
     // Handle hash changes for navigation
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1); // Remove the # symbol
+      
+      // Immediately scroll to top before page change
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'instant' // Use instant to avoid animation delay
+      });
+      
+      // Then update the page state
       if (hash.startsWith("article-detail") || hash.startsWith("news-detail") || hash.startsWith("article-list")) {
         setCurrentPage(hash);
       } else {
