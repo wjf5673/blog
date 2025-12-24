@@ -48,7 +48,7 @@ export function Footer() {
           >
             <h3 className="text-xl mb-4">关注我们</h3>
             <div className="flex gap-4">
-              {socialLinks.map((link, index) => {
+              {socialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
                   <motion.a
