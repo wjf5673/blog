@@ -1,101 +1,85 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useRef } from "react";
-import { MessageCircle, Send, Trash2, User, ChevronLeft, ChevronRight, Settings } from "lucide-react";
+import { MessageCircle, Send, Trash2, User, ChevronLeft, ChevronRight, Settings, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useTranslation } from "react-i18next";
-
-interface Message {
-  id: number;
-  name: string;
-  content: string;
-  timestamp: Date;
-  color: string;
-}
-
-const avatarColors = [
-  "from-red-400 to-pink-500",
-  "from-blue-400 to-indigo-500",
-  "from-green-400 to-emerald-500",
-  "from-yellow-400 to-orange-500",
-  "from-purple-400 to-pink-500",
-  "from-cyan-400 to-blue-500",
-];
+import { getMessages, submitMessage, deleteMessage as deleteMessageApi, getAllMessages } from '../utils/apiService';
+import { getRandomAvatarColor } from '../utils/imageUtils';
 
 const MESSAGES_PER_PAGE = 5;
 
 export function MessageWall() {
   const { t, i18n } = useTranslation();
   
-  // Function to get initial messages with current language
-  const getInitialMessages = (): Message[] => [
-    {
-      id: 1,
-      name: t('messageWall.initialMessages.message1.name'),
-      content: t('messageWall.initialMessages.message1.content'),
-      timestamp: new Date("2025-12-22T10:30:00"),
-      color: avatarColors[0],
-    },
-    {
-      id: 2,
-      name: t('messageWall.initialMessages.message2.name'),
-      content: t('messageWall.initialMessages.message2.content'),
-      timestamp: new Date("2025-12-22T11:15:00"),
-      color: avatarColors[1],
-    },
-    {
-      id: 3,
-      name: t('messageWall.initialMessages.message3.name'),
-      content: t('messageWall.initialMessages.message3.content'),
-      timestamp: new Date("2025-12-22T12:00:00"),
-      color: avatarColors[2],
-    },
-    {
-      id: 4,
-      name: t('messageWall.initialMessages.message4.name'),
-      content: t('messageWall.initialMessages.message4.content'),
-      timestamp: new Date("2025-12-22T13:00:00"),
-      color: avatarColors[3],
-    },
-    {
-      id: 5,
-      name: t('messageWall.initialMessages.message5.name'),
-      content: t('messageWall.initialMessages.message5.content'),
-      timestamp: new Date("2025-12-22T14:00:00"),
-      color: avatarColors[4],
-    },
-    {
-      id: 6,
-      name: t('messageWall.initialMessages.message6.name'),
-      content: t('messageWall.initialMessages.message6.content'),
-      timestamp: new Date("2025-12-22T15:00:00"),
-      color: avatarColors[5],
-    },
-  ];
-
-  const [messages, setMessages] = useState<Message[]>(getInitialMessages());
-  
-  // Update messages when language changes
-  useEffect(() => {
-    // Only update initial messages (ids 1-6), keep user-added messages
-    setMessages(prevMessages => {
-      const userMessages = prevMessages.filter(msg => msg.id > 6);
-      return [...getInitialMessages(), ...userMessages];
-    });
-  }, [i18n.language]);
-
+  const [messages, setMessages] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [totalPages, setTotalPages] = useState(1);
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [submitting, setSubmitting] = useState(false);
   
   // Admin mode states
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [clickCount, setClickCount] = useState(0);
   const clickTimerRef = useRef<number | null>(null);
+  
+  // 存储用户名到颜色的映射，确保同一用户始终使用相同颜色
+  const [userColorMap, setUserColorMap] = useState<Record<string, string>>({});
 
-  const totalPages = Math.ceil(messages.length / MESSAGES_PER_PAGE);
-  const startIndex = (currentPage - 1) * MESSAGES_PER_PAGE;
-  const endIndex = startIndex + MESSAGES_PER_PAGE;
-  const currentMessages = messages.slice(startIndex, endIndex);
+  // Fetch messages from API
+  const fetchMessages = async (page: number) => {
+    setLoading(true);
+    try {
+      // 获取分页的留言数据
+      const result = await getMessages({ 
+        page, 
+        limit: MESSAGES_PER_PAGE
+      });
+      
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+      
+      if (result.data) {
+        setMessages(result.data);
+        
+        // 为所有没有颜色的用户生成并保存颜色
+        const newUserColors: Record<string, string> = {};
+        result.data.forEach((message: any) => {
+          if (!message.color && !userColorMap[message.name]) {
+            newUserColors[message.name] = getRandomAvatarColor();
+          }
+        });
+        
+        if (Object.keys(newUserColors).length > 0) {
+          setUserColorMap(prev => ({
+            ...prev,
+            ...newUserColors
+          }));
+        }
+        
+        // 获取所有留言数据以计算总页数
+        const allMessagesResult = await getAllMessages();
+        if (allMessagesResult.data) {
+          const totalMessages = allMessagesResult.data.length;
+          const calculatedTotalPages = Math.ceil(totalMessages / MESSAGES_PER_PAGE);
+          setTotalPages(calculatedTotalPages || 1); // 确保至少为1
+        }
+      }
+    } catch (error) {
+      console.error('Failed to fetch messages:', error);
+      toast.error(t('messageWall.errors.fetchFailed'));
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Initial fetch and when page changes
+  useEffect(() => {
+    fetchMessages(currentPage);
+  }, [currentPage, i18n.language]);
 
   // Admin mode click handler
   const handleTitleClick = () => {
@@ -132,7 +116,7 @@ export function MessageWall() {
     };
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name.trim() || !content.trim()) {
@@ -140,50 +124,99 @@ export function MessageWall() {
       return;
     }
 
-    const newMessage: Message = {
-      id: Date.now(),
-      name: name.trim(),
-      content: content.trim(),
-      timestamp: new Date(),
-      color: avatarColors[Math.floor(Math.random() * avatarColors.length)],
-    };
-
-    setMessages([newMessage, ...messages]);
-    setName("");
-    setContent("");
-    setCurrentPage(1);
-    toast.success(t('messageWall.success.posted'));
+    setSubmitting(true);
+    try {
+      const result = await submitMessage({
+        name: name.trim(),
+        content: content.trim()
+      });
+      
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+      
+      if (result.data) {
+        // 为新用户生成并保存颜色
+        if (!userColorMap[name.trim()]) {
+          setUserColorMap(prev => ({
+            ...prev,
+            [name.trim()]: getRandomAvatarColor()
+          }));
+        }
+        
+        // 提交成功后，回到第一页并重新获取数据
+        setCurrentPage(1);
+        await fetchMessages(1);
+        
+        setName("");
+        setContent("");
+        toast.success(t('messageWall.success.posted'));
+      }
+    } catch (error) {
+      console.error('Failed to submit message:', error);
+      toast.error(t('messageWall.errors.submitFailed'));
+    } finally {
+      setSubmitting(false);
+    }
   };
 
-  const deleteMessage = (id: number) => {
-    setMessages(messages.filter((msg) => msg.id !== id));
-    
-    // Adjust current page if needed
-    const newTotalPages = Math.ceil((messages.length - 1) / MESSAGES_PER_PAGE);
-    if (currentPage > newTotalPages && newTotalPages > 0) {
-      setCurrentPage(newTotalPages);
+  const deleteMessage = async (id: string, name: string) => {
+    if (!window.confirm(t('messageWall.adminMode.deleteConfirm', { name }))) {
+      return;
     }
     
-    toast.success(t('messageWall.success.deleted'));
-  };
-
-  const formatTime = (date: Date) => {
-    const now = new Date();
-    const diff = now.getTime() - date.getTime();
-    const minutes = Math.floor(diff / 60000);
-    const hours = Math.floor(diff / 3600000);
-    const days = Math.floor(diff / 86400000);
-
-    if (minutes < 1) return t('messageWall.time.justNow');
-    if (minutes < 60) return t('messageWall.time.minutesAgo', { count: minutes });
-    if (hours < 24) return t('messageWall.time.hoursAgo', { count: hours });
-    return t('messageWall.time.daysAgo', { count: days });
+    try {
+      const result = await deleteMessageApi(id);
+      
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+      
+      // 从列表中移除消息
+      setMessages(messages.filter((msg) => msg.id !== id));
+      
+      // 如果当前页没有消息了且不是第一页，返回上一页
+      if (messages.length === 1 && currentPage > 1) {
+        setCurrentPage(currentPage - 1);
+      } else {
+        // 否则重新获取当前页数据
+        fetchMessages(currentPage);
+      }
+      
+      toast.success(t('messageWall.success.deleted'));
+    } catch (error) {
+      console.error('Failed to delete message:', error);
+      toast.error(t('messageWall.errors.deleteFailed'));
+    }
   };
 
   const goToPage = (page: number) => {
     setCurrentPage(page);
     // Smooth scroll to messages section
     document.getElementById('messages-list')?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  };
+
+  // Get avatar color for a message
+  const getAvatarColor = (message: any) => {
+    // 如果API返回了color属性，使用它
+    if (message.color) {
+      return message.color;
+    }
+    
+    // 否则根据name生成一个固定的颜色
+    if (!userColorMap[message.name]) {
+      // 为新用户生成一个颜色并保存到映射中
+      setUserColorMap(prev => ({
+        ...prev,
+        [message.name]: getRandomAvatarColor()
+      }));
+      return getRandomAvatarColor(); // 返回新生成的颜色
+    }
+    
+    // 返回已保存的颜色
+    return userColorMap[message.name];
   };
 
   return (
@@ -228,6 +261,7 @@ export function MessageWall() {
                 placeholder={t('messageWall.form.namePlaceholder')}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900/30 outline-none transition-all bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 maxLength={20}
+                disabled={submitting}
               />
             </div>
             <div>
@@ -238,6 +272,7 @@ export function MessageWall() {
                 rows={4}
                 className="w-full px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-indigo-900/30 outline-none transition-all resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                 maxLength={200}
+                disabled={submitting}
               />
               <div className="text-right text-sm text-gray-500 dark:text-gray-400 mt-1">
                 {content.length}/200
@@ -245,78 +280,90 @@ export function MessageWall() {
             </div>
             <motion.button
               type="submit"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              className="w-full py-3 bg-indigo-600 dark:bg-indigo-500 text-white rounded-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2"
+              whileHover={{ scale: submitting ? 1 : 1.02 }}
+              whileTap={{ scale: submitting ? 1 : 0.98 }}
+              className="w-full py-3 bg-indigo-600 dark:bg-indigo-500 text-white rounded-xl hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              disabled={submitting}
             >
-              <Send className="w-5 h-5" />
-              {t('messageWall.form.submit')}
+              {submitting ? (
+                <>
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  {t('messageWall.form.submitting')}
+                </>
+              ) : (
+                <>
+                  <Send className="w-5 h-5" />
+                  {t('messageWall.form.submit')}
+                </>
+              )}
             </motion.button>
           </form>
         </motion.div>
 
         {/* Messages List */}
         <div id="messages-list" className="space-y-6 mb-8">
-          <AnimatePresence mode="wait">
-            {currentMessages.map((message, index) => (
-              <motion.div
-                key={message.id}
-                initial={{ opacity: 0, x: -50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 50 }}
-                transition={{ duration: 0.4, delay: index * 0.05 }}
-                whileHover={{ scale: 1.01 }}
-                className={`bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all group ${
-                  isAdminMode ? 'border-2 border-red-200 dark:border-red-800' : ''
-                }`}
-              >
-                <div className="flex items-start gap-4">
-                  <motion.div
-                    whileHover={{ rotate: 360 }}
-                    transition={{ duration: 0.6 }}
-                    className={`w-12 h-12 rounded-full bg-gradient-to-br ${message.color} flex items-center justify-center flex-shrink-0`}
-                  >
-                    <User className="w-6 h-6 text-white" />
-                  </motion.div>
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+            </div>
+          ) : (
+            <AnimatePresence mode="wait">
+              {messages.map((message, index) => (
+                <motion.div
+                  key={message.id}
+                  initial={{ opacity: 0, x: -50 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 50 }}
+                  transition={{ duration: 0.4, delay: index * 0.05 }}
+                  whileHover={{ scale: 1.01 }}
+                  className={`bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-md hover:shadow-lg transition-all group ${
+                    isAdminMode ? 'border-2 border-red-200 dark:border-red-800' : ''
+                  }`}
+                >
+                  <div className="flex items-start gap-4">
+                    <motion.div
+                      whileHover={{ rotate: 360 }}
+                      transition={{ duration: 0.6 }}
+                      className={`w-12 h-12 rounded-full bg-gradient-to-br ${getAvatarColor(message)} flex items-center justify-center flex-shrink-0`}
+                    >
+                      <User className="w-6 h-6 text-white" />
+                    </motion.div>
 
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-3">
-                        <h4 className="font-semibold text-gray-900 dark:text-white">{message.name}</h4>
-                        <span className="text-sm text-gray-500 dark:text-gray-400">
-                          {formatTime(message.timestamp)}
-                        </span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-center gap-3">
+                          <h4 className="font-semibold text-gray-900 dark:text-white">{message.name}</h4>
+                          <span className="text-sm text-gray-500 dark:text-gray-400">
+                            {message.formattedTimestamp}
+                          </span>
+                        </div>
+                        
+                        {isAdminMode && (
+                          <motion.button
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                            onClick={() => deleteMessage(message.id.toString(), message.name)}
+                            className="opacity-100 text-red-500 hover:text-red-600 transition-colors"
+                            title={t('messageWall.adminMode.deleteButton')}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </motion.button>
+                        )}
                       </div>
                       
-                      {isAdminMode && (
-                        <motion.button
-                          whileHover={{ scale: 1.1 }}
-                          whileTap={{ scale: 0.9 }}
-                          onClick={() => {
-                            if (window.confirm(t('messageWall.adminMode.deleteConfirm', { name: message.name }))) {
-                              deleteMessage(message.id);
-                            }
-                          }}
-                          className="opacity-100 text-red-500 hover:text-red-600 transition-colors"
-                          title={t('messageWall.adminMode.deleteButton')}
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </motion.button>
-                      )}
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                        {message.content}
+                      </p>
                     </div>
-                    
-                    <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                      {message.content}
-                    </p>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </AnimatePresence>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          )}
         </div>
 
         {/* Pagination */}
-        {totalPages > 1 && (
+        {!loading && totalPages > 1 && (
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -370,7 +417,7 @@ export function MessageWall() {
           </motion.div>
         )}
 
-        {messages.length === 0 && (
+        {!loading && messages.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

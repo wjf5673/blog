@@ -2,134 +2,80 @@ import { motion } from "motion/react";
 import { useState, useEffect, useMemo } from "react";
 import { Cpu, Blocks, Code, TrendingUp, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { getNews } from "../utils/apiService";
 
 interface NewsItem {
   id: number;
   category: "frontend" | "web3" | "ai";
   title: string;
-  description: string;
-  image: string;
+  excerpt: string;
   date: string;
+  formattedDate: string;
+  image: string;
   link: string;
 }
 
 export default function NewsSection() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
+  const [loading, setLoading] = useState(true);
   const itemsPerPage = 6;
 
-  // 使用 useMemo 来确保新闻数据在语言变化时重新计算
-  const newsItems: NewsItem[] = useMemo(() => [
-    {
-      id: 1,
-      category: "frontend",
-      title: t('newsSection.newsItems.react19.title'),
-      description: t('newsSection.newsItems.react19.description'),
-      image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwxfHx8fDE3NjYzNTM1MDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-20",
-      link: "#news-detail",
-    },
-    {
-      id: 2,
-      category: "ai",
-      title: t('newsSection.newsItems.gpt5.title'),
-      description: t('newsSection.newsItems.gpt5.description'),
-      image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-19",
-      link: "#news-detail",
-    },
-    {
-      id: 3,
-      category: "web3",
-      title: t('newsSection.newsItems.ethereum.title'),
-      description: t('newsSection.newsItems.ethereum.description'),
-      image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-18",
-      link: "#news-detail",
-    },
-    {
-      id: 4,
-      category: "frontend",
-      title: t('newsSection.newsItems.tailwind.title'),
-      description: t('newsSection.newsItems.tailwind.description'),
-      image: "https://images.unsplash.com/photo-1595623654300-b27329804025?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWNobm9sb2d5JTIwY29kaW5nfGVufDF8fHx8MTc2NjM0NzI2NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-17",
-      link: "#news-detail",
-    },
-    {
-      id: 5,
-      category: "ai",
-      title: t('newsSection.newsItems.github.title'),
-      description: t('newsSection.newsItems.github.description'),
-      image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-16",
-      link: "#news-detail",
-    },
-    {
-      id: 6,
-      category: "web3",
-      title: t('newsSection.newsItems.ethereum.title'),
-      description: t('newsSection.newsItems.ethereum.description'),
-      image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-15",
-      link: "#news-detail",
-    },
-    {
-      id: 7,
-      category: "frontend",
-      title: t('newsSection.newsItems.vite.title'),
-      description: t('newsSection.newsItems.vite.description'),
-      image: "https://images.unsplash.com/photo-1595623654300-b27329804025?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0ZWNobm9sb2d5JTIwY29kaW5nfGVufDF8fHx8MTc2NjM0NzI2NXww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-14",
-      link: "#news-detail",
-    },
-    {
-      id: 8,
-      category: "ai",
-      title: t('newsSection.newsItems.gpt5.title'),
-      description: t('newsSection.newsItems.gpt5.description'),
-      image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-13",
-      link: "#news-detail",
-    },
-    {
-      id: 9,
-      category: "web3",
-      title: t('newsSection.newsItems.ethereum.title'),
-      description: t('newsSection.newsItems.ethereum.description'),
-      image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-12",
-      link: "#news-detail",
-    },
-    {
-      id: 10,
-      category: "frontend",
-      title: t('newsSection.newsItems.nextjs.title'),
-      description: t('newsSection.newsItems.nextjs.description'),
-      image: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwxfHx8fDE3NjYzNTM1MDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-11",
-      link: "#news-detail",
-    },
-    {
-      id: 11,
-      category: "ai",
-      title: t('newsSection.newsItems.apple.title'),
-      description: t('newsSection.newsItems.apple.description'),
-      image: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-10",
-      link: "#news-detail",
-    },
-    {
-      id: 12,
-      category: "web3",
-      title: t('newsSection.newsItems.chromium.title'),
-      description: t('newsSection.newsItems.chromium.description'),
-      image: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      date: "2025-12-09",
-      link: "#news-detail",
-    },
-  ], [t]);
+  // 分类对应的图片
+  const categoryImages = {
+    frontend: "https://images.unsplash.com/photo-1593720213428-28a5b9e94613?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwxfHx8fDE3NjYzNTM1MDd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+    web3: "https://images.unsplash.com/photo-1590286162167-70fb467846ae?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxibG9ja2NoYWluJTIwY3J5cHRvfGVufDF8fHx8MTc2NjM4MzgzN3ww&ixlib=rb-4.1.0&q=80&w=1080",
+    ai: "https://images.unsplash.com/photo-1697577418970-95d99b5a55cf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhcnRpZmljaWFsJTIwaW50ZWxsaWdlbmNlfGVufDF8fHx8MTc2NjI4OTUwNnww&ixlib=rb-4.1.0&q=80&w=1080"
+  };
+
+  // 获取新闻数据
+  useEffect(() => {
+    const fetchNews = async () => {
+      try {
+        setLoading(true);
+        const result = await getNews({ page: 1, limit: 20 }); // 获取更多数据用于分页
+        
+        if (result.error) {
+          console.error('Failed to fetch news:', result.error);
+          return;
+        }
+        
+        if (result.data && result.data.length > 0) {
+          // 处理新闻数据
+          const processedNews = result.data.map((item: any) => {
+            // 确定分类
+            let category: "frontend" | "web3" | "ai" = "frontend";
+            if (item.category === "web3" || item.category === "区块链") {
+              category = "web3";
+            } else if (item.category === "ai" || item.category === "人工智能") {
+              category = "ai";
+            }
+            
+            return {
+              id: item.id,
+              category,
+              title: item.title,
+              excerpt: item.excerpt,
+              date: item.date,
+              formattedDate: item.formattedDate,
+              image: categoryImages[category],
+              link: `#news-detail?id=${item.id}`,
+            };
+          });
+          
+          setNewsItems(processedNews);
+        }
+      } catch (error) {
+        console.error('Failed to fetch news:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNews();
+  }, [i18n.language]); // 添加语言依赖，当语言变化时重新获取数据
 
   const categoryConfig = {
     frontend: { icon: Code, color: "text-blue-600", darkColor: "dark:text-blue-400", bg: "bg-blue-50", darkBg: "dark:bg-blue-900/30" },
@@ -217,7 +163,7 @@ export default function NewsSection() {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => setSelectedCategory(null)}
-            className={`px-6 py-2 rounded-full transition-all ${
+            className={`px-6 py-2 rounded-full transition-all cursor-pointer ${
               selectedCategory === null
                 ? "bg-indigo-600 text-white"
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
@@ -233,7 +179,7 @@ export default function NewsSection() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setSelectedCategory(key)}
-                className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 ${
+                className={`px-6 py-2 rounded-full transition-all flex items-center gap-2 cursor-pointer ${
                   selectedCategory === key
                     ? "bg-indigo-600 text-white"
                     : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
@@ -248,52 +194,74 @@ export default function NewsSection() {
 
         {/* News Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {paginatedNews.map((item, index) => {
-            const config = categoryConfig[item.category];
-            const Icon = config.icon;
-            
-            return (
-              <motion.article
-                key={item.id}
+          {loading ? (
+            // 加载状态
+            Array.from({ length: 6 }).map((_, index) => (
+              <motion.div
+                key={`skeleton-${index}`}
+                className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg"
                 initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ y: -10 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group"
               >
-                <div className="relative overflow-hidden h-48">
-                  <motion.img
-                    whileHover={{ scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                    src={item.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className={`absolute top-4 left-4 px-3 py-1 rounded-full ${config.bg} ${config.darkBg} flex items-center gap-1`}>
-                    <Icon className={`w-4 h-4 ${config.color} ${config.darkColor}`} />
-                    <span className={`text-sm ${config.color} ${config.darkColor}`}>
-                      {t(`newsSection.categories.${item.category}`)}
-                    </span>
-                  </div>
-                </div>
-                
+                <div className="h-48 bg-gray-200 dark:bg-gray-700 animate-pulse"></div>
                 <div className="p-6">
-                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{item.date}</div>
-                  <h3 className="text-xl mb-2 text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-6">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-6">{item.description}</p>
-                  <a
-                    href={item.link}
-                    className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all"
-                  >
-                    {t('newsSection.readMore')} <ExternalLink className="w-4 h-4" />
-                  </a>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2 animate-pulse"></div>
+                  <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-4 animate-pulse"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2 animate-pulse"></div>
                 </div>
-              </motion.article>
-            );
-          })}
+              </motion.div>
+            ))
+          ) : (
+            // 实际内容
+            paginatedNews.map((item, index) => {
+              const config = categoryConfig[item.category];
+              const Icon = config.icon;
+              
+              return (
+                <motion.article
+                  key={item.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                  whileHover={{ y: -10 }}
+                  className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow group"
+                >
+                  <div className="relative overflow-hidden h-48">
+                    <motion.img
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.6 }}
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className={`absolute top-4 left-4 px-3 py-1 rounded-full ${config.bg} ${config.darkBg} flex items-center gap-1`}>
+                      <Icon className={`w-4 h-4 ${config.color} ${config.darkColor}`} />
+                      <span className={`text-sm ${config.color} ${config.darkColor}`}>
+                        {t(`newsSection.categories.${item.category}`)}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <div className="p-6">
+                    <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">{item.formattedDate}</div>
+                    <h3 className="text-xl mb-2 text-gray-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-6">
+                      {item.title}
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 leading-6">{item.excerpt}</p>
+                    <a
+                      href={item.link}
+                      className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:gap-3 transition-all"
+                    >
+                      {t('newsSection.readMore')} <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                </motion.article>
+              );
+            })
+          )}
         </div>
 
         {/* 分页控件 */}
@@ -311,7 +279,7 @@ export default function NewsSection() {
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                 currentPage === 1
                   ? "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                  : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
               }`}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -325,7 +293,7 @@ export default function NewsSection() {
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 rounded-lg font-medium transition-all ${
+                  className={`w-10 h-10 rounded-lg font-medium transition-all cursor-pointer ${
                     currentPage === page
                       ? "bg-indigo-600 text-white"
                       : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
@@ -344,7 +312,7 @@ export default function NewsSection() {
               className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all ${
                 currentPage === totalPages
                   ? "bg-gray-100 dark:bg-gray-800 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                  : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 cursor-pointer"
               }`}
             >
               {t('newsSection.pagination.next')}

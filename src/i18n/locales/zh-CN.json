@@ -159,7 +159,8 @@
     "form": {
       "namePlaceholder": "请输入你的名字",
       "messagePlaceholder": "分享你的想法、感受或祝福...",
-      "submit": "发布便签"
+      "submit": "发布便签",
+      "submitting": "发布中..."
     },
     "empty": "还没有消息，成为第一个留言的人吧！"
   },

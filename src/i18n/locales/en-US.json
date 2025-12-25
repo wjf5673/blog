@@ -159,7 +159,8 @@
     "form": {
       "namePlaceholder": "Enter your name",
       "messagePlaceholder": "Share your thoughts, feelings or wishes...",
-      "submit": "Post Note"
+      "submit": "Post Note",
+      "submitting": "Posting..."
     },
     "empty": "No messages yet. Be the first to leave a message!"
   },
