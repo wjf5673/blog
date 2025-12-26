@@ -1,14 +1,46 @@
 import { motion } from "motion/react";
-import { Github, Twitter, Linkedin, Mail, Heart } from "lucide-react";
+import { Github, Send, MessageCircle, Mail, Heart } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 export function Footer() {
   const { t } = useTranslation();
+  
+  // 处理复制联系方式的函数
+  const handleCopyContact = async (contact: string, type: string) => {
+    try {
+      await navigator.clipboard.writeText(contact);
+      toast.success(t('footer.toast.copySuccess', { type }));
+    } catch (err) {
+      toast.error(t('footer.toast.copyFailed', { type }));
+    }
+  };
+  
   const socialLinks = [
-    { icon: Github, href: "#", label: "GitHub" },
-    { icon: Twitter, href: "#", label: "Twitter" },
-    { icon: Linkedin, href: "#", label: "LinkedIn" },
-    { icon: Mail, href: "#", label: "Email" },
+    { 
+      icon: Github, 
+      contact: "https://github.com/wjf5673", 
+      label: t('footer.socialLabels.github'),
+      title: t('footer.socialLinks.github')
+    },
+    { 
+      icon: Send, 
+      contact: "18305975673", 
+      label: t('footer.socialLabels.telegram'),
+      title: t('footer.socialLinks.telegram')
+    },
+    { 
+      icon: MessageCircle, 
+      contact: "wujianfei7378", 
+      label: t('footer.socialLabels.wechat'),
+      title: t('footer.socialLinks.wechat')
+    },
+    { 
+      icon: Mail, 
+      contact: "985842837@qq.com", 
+      label: t('footer.socialLabels.email'),
+      title: t('footer.socialLinks.email')
+    },
   ];
 
   return (
@@ -53,17 +85,18 @@ export function Footer() {
               {socialLinks.map((link) => {
                 const Icon = link.icon;
                 return (
-                  <motion.a
+                  <motion.button
                     key={link.label}
-                    href={link.href}
+                    onClick={() => handleCopyContact(link.contact, link.label)}
                     whileHover={{ scale: 1.2, rotate: 360 }}
                     whileTap={{ scale: 0.9 }}
                     transition={{ duration: 0.3 }}
-                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors"
+                    className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-indigo-600 transition-colors cursor-pointer"
+                    title={link.title}
                     aria-label={link.label}
                   >
                     <Icon className="w-5 h-5" />
-                  </motion.a>
+                  </motion.button>
                 );
               })}
             </div>

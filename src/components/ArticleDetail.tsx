@@ -1,19 +1,183 @@
-import { motion } from "motion/react";
-import { ArrowLeft, Calendar, Clock, User, Heart, Share2, Bookmark } from "lucide-react";
-import { useState } from "react";
+import { motion, AnimatePresence } from "motion/react";
+import { ArrowLeft, Calendar, Clock, User, Heart, Share2 } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import { getArticles, likeContent } from "../utils/apiService";
+import { toast } from "sonner";
+
+interface ArticleItem {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: string;
+  author: string;
+  date: string;
+  formattedDate: string;
+  readTime: string;
+  likes: number;
+  imageUrl: string;
+  tags: string[];
+}
 
 export function ArticleDetail() {
-  const { t } = useTranslation();
-  const [isLiked, setIsLiked] = useState(false);
-  const [isBookmarked, setIsBookmarked] = useState(false);
+  const { t, i18n } = useTranslation();
+  const [currentArticle, setCurrentArticle] = useState<ArticleItem | null>(null);
+  const [prevArticle, setPrevArticle] = useState<ArticleItem | null>(null);
+  const [nextArticle, setNextArticle] = useState<ArticleItem | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [showFloatingHeart, setShowFloatingHeart] = useState(false);
+
+  // 从URL获取ID参数
+  const getArticleIdFromUrl = () => {
+    const hash = window.location.hash;
+    const params = new URLSearchParams(hash.split('?')[1]);
+    return params.get('id');
+  };
+
+  // 获取文章数据
+  useEffect(() => {
+    const fetchArticleData = async () => {
+      try {
+        setIsLoading(true);
+        const articleId = getArticleIdFromUrl();
+        
+        if (!articleId) {
+          setError(t('articleDetail.errors.missingId'));
+          setIsLoading(false);
+          return;
+        }
+
+        const { data, error } = await getArticles();
+        
+        if (error) {
+          setError(t('articleDetail.errors.fetchFailed'));
+          setIsLoading(false);
+          return;
+        }
+
+        if (!data || data.length === 0) {
+          setError(t('articleDetail.errors.noData'));
+          setIsLoading(false);
+          return;
+        }
+
+        // 找到当前文章
+        const currentIndex = data.findIndex(article => article.id === articleId);
+        
+        if (currentIndex === -1) {
+          setError(t('articleDetail.errors.notFound', { id: articleId }));
+          setIsLoading(false);
+          return;
+        }
+
+        // 设置当前文章和相邻文章
+        setCurrentArticle(data[currentIndex]);
+        setPrevArticle(currentIndex > 0 ? data[currentIndex - 1] : null);
+        setNextArticle(currentIndex < data.length - 1 ? data[currentIndex + 1] : null);
+        setError(null);
+      } catch (err) {
+        setError(t('articleDetail.errors.fetchError'));
+        console.error('Error fetching article data:', err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchArticleData();
+  }, [i18n.language]);
+
+  // 处理点赞功能
+  const handleLike = async () => {
+    if (!currentArticle) return;
+    
+    try {
+      const { error } = await likeContent(currentArticle.id);
+      
+      if (error) {
+        toast.error(t('articleDetail.toast.likeFailed'));
+        return;
+      }
+
+      // 显示飘心动画
+      setShowFloatingHeart(true);
+      setTimeout(() => setShowFloatingHeart(false), 1500);
+      
+      // 更新当前文章的点赞数
+      setCurrentArticle({
+        ...currentArticle,
+        likes: (currentArticle.likes || 0) + 1
+      });
+      
+      toast.success(t('articleDetail.toast.likeSuccess'));
+    } catch (err) {
+      console.error('Error liking article:', err);
+      toast.error(t('articleDetail.toast.likeFailed'));
+    }
+  };
+
+  // 处理分享功能
+  const handleShare = () => {
+    const currentUrl = window.location.href;
+    navigator.clipboard.writeText(currentUrl)
+      .then(() => {
+        toast.success(t('articleDetail.toast.shareSuccess'));
+      })
+      .catch(() => {
+        toast.error(t('articleDetail.toast.shareFailed'));
+      });
+  };
+
+  // 处理导航到其他文章
+  const navigateToArticle = (articleId: string) => {
+    window.location.hash = `article-detail?id=${articleId}`;
+  };
+
+  // 404页面
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-6xl font-bold text-gray-900 dark:text-white mb-4">404</h1>
+          <p className="text-xl text-gray-600 dark:text-gray-400 mb-8">{error}</p>
+          <motion.a
+              href="#articles"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-block px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+            >
+              {t('articleDetail.backToArticles')}
+            </motion.a>
+        </div>
+      </div>
+    );
+  }
+
+  // 加载状态
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">{t('articleDetail.loading')}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!currentArticle) {
+    return null;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.a
-          href="#tech"
+          href="#article-list"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 mb-8"
@@ -27,7 +191,7 @@ export function ArticleDetail() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden"
+          className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden relative"
         >
           {/* Hero Image */}
           <div className="relative h-96 overflow-hidden">
@@ -35,8 +199,8 @@ export function ArticleDetail() {
               initial={{ scale: 1.2 }}
               animate={{ scale: 1 }}
               transition={{ duration: 0.8 }}
-              src="https://images.unsplash.com/photo-1593720213428-28a5b9e94613?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3ZWIlMjBkZXZlbG9wbWVudHxlbnwxfHx8fDE3NjYzNTM1MDd8MA&ixlib=rb-4.1.0&q=80&w=1080"
-              alt="Article cover"
+              src={currentArticle.imageUrl}
+              alt={currentArticle.title}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
@@ -48,7 +212,7 @@ export function ArticleDetail() {
                 transition={{ delay: 0.4 }}
                 className="inline-block px-4 py-1 bg-indigo-600 text-white rounded-full mb-4"
               >
-                {t('articleDetail.category')}
+                {currentArticle.category}
               </motion.span>
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
@@ -56,7 +220,7 @@ export function ArticleDetail() {
                 transition={{ delay: 0.5 }}
                 className="text-4xl text-white mb-4"
               >
-                {t('articleDetail.title')}
+                {currentArticle.title}
               </motion.h1>
             </div>
           </div>
@@ -67,15 +231,15 @@ export function ArticleDetail() {
               <div className="flex items-center gap-6 text-gray-600 dark:text-gray-400">
                 <div className="flex items-center gap-2">
                   <User className="w-5 h-5" />
-                  <span>{t('articleDetail.author')}</span>
+                  <span>{currentArticle.author}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Calendar className="w-5 h-5" />
-                  <span>{t('articleDetail.date')}</span>
+                  <span>{currentArticle.formattedDate}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Clock className="w-5 h-5" />
-                  <span>{t('articleDetail.readTime')}</span>
+                  <span>{currentArticle.readTime}</span>
                 </div>
               </div>
 
@@ -83,34 +247,33 @@ export function ArticleDetail() {
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => setIsLiked(!isLiked)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                  onClick={handleLike}
+                  className="flex items-center gap-2 px-4 py-2 rounded-full hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors relative cursor-pointer"
                 >
-                  <Heart
-                    className={`w-5 h-5 ${isLiked ? "fill-red-500 text-red-500" : "text-gray-400"
-                      }`}
-                  />
-                  <span className={isLiked ? "text-red-500" : "text-gray-600"}>
-                    {isLiked ? "235" : "234"}
-                  </span>
+                  <Heart className="w-5 h-5 text-gray-400" />
+                  <span className="text-sm text-gray-600 dark:text-gray-400">{currentArticle.likes || 0}</span>
+                  
+                  {/* Floating Heart Animation */}
+                  <AnimatePresence>
+                    {showFloatingHeart && (
+                      <motion.div
+                        initial={{ y: 0, opacity: 1 }}
+                        animate={{ y: -50, opacity: 0 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        className="absolute top-0 left-1/2 transform -translate-x-1/2 pointer-events-none"
+                      >
+                        <Heart className="w-6 h-6 text-red-500 fill-red-500" />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 </motion.button>
 
                 <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => setIsBookmarked(!isBookmarked)}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <Bookmark
-                    className={`w-5 h-5 ${isBookmarked ? "fill-indigo-500 text-indigo-500" : "text-gray-400"
-                      }`}
-                  />
-                </motion.button>
-
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.9 }}
-                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                  onClick={handleShare}
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer"
                 >
                   <Share2 className="w-5 h-5 text-gray-400" />
                 </motion.button>
@@ -120,46 +283,10 @@ export function ArticleDetail() {
 
           {/* Article Content */}
           <div className="p-8 md:p-12 prose prose-lg dark:prose-invert max-w-none">
-            <h2>{t('articleDetail.content.hooksNeeded.title')}</h2>
-            <p>
-              {t('articleDetail.content.hooksNeeded.paragraph1')}
+            <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+              {currentArticle.excerpt}
             </p>
-
-            <p>
-              {t('articleDetail.content.hooksNeeded.paragraph2')}
-            </p>
-
-            <h2>{t('articleDetail.content.useState.title')}</h2>
-            <p>
-              {t('articleDetail.content.useState.description')}
-            </p>
-
-            <pre className="bg-gray-900 text-gray-100 p-6 rounded-xl overflow-x-auto">
-              {t('articleDetail.content.useState.code')}
-            </pre>
-
-            <h2>{t('articleDetail.content.useEffect.title')}</h2>
-            <p>
-              {t('articleDetail.content.useEffect.paragraph1')}
-            </p>
-
-            <p>
-              {t('articleDetail.content.useEffect.paragraph2')}
-            </p>
-
-            <h2>{t('articleDetail.content.customHooks.title')}</h2>
-            <p>
-              {t('articleDetail.content.customHooks.paragraph1')}
-            </p>
-
-            <p>
-              {t('articleDetail.content.customHooks.paragraph2')}
-            </p>
-
-            <h2>{t('articleDetail.content.conclusion.title')}</h2>
-            <p>
-              {t('articleDetail.content.conclusion.description')}
-            </p>
+            <div dangerouslySetInnerHTML={{ __html: currentArticle.content }} />
           </div>
 
           {/* Article Navigation */}
@@ -167,52 +294,58 @@ export function ArticleDetail() {
             <h3 className="text-2xl mb-6 text-gray-900 dark:text-white">{t('articleDetail.navigation.title')}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Previous Article */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6 }}
-                whileHover={{ scale: 1.02 }}
-                className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group"
-              >
-                <div className="flex items-center mb-3">
-                  <svg className="w-5 h-5 mr-2 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                  </svg>
-                  <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors">
-                    {t('articleDetail.navigation.previous')}
-                  </span>
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  {t('articleDetail.relatedArticles.articles.0.category')}
-                </p>
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                  {t('articleDetail.relatedArticles.articles.0.title')}
-                </h4>
-              </motion.div>
+              {prevArticle && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.6 }}
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => navigateToArticle(prevArticle.id)}
+                  className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                >
+                  <div className="flex items-center mb-3">
+                    <svg className="w-5 h-5 mr-2 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                    <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors">
+                      {t('articleDetail.navigation.previous')}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    {prevArticle.category}
+                  </p>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    {prevArticle.title}
+                  </h4>
+                </motion.div>
+              )}
 
               {/* Next Article */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.7 }}
-                whileHover={{ scale: 1.02 }}
-                className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group"
-              >
-                <div className="flex items-center mb-3">
-                  <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors">
-                    {t('articleDetail.navigation.next')}
-                  </span>
-                  <svg className="w-5 h-5 ml-2 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                  {t('articleDetail.relatedArticles.articles.1.category')}
-                </p>
-                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                  {t('articleDetail.relatedArticles.articles.1.title')}
-                </h4>
-              </motion.div>
+              {nextArticle && (
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.7 }}
+                  whileHover={{ scale: 1.02 }}
+                  onClick={() => navigateToArticle(nextArticle.id)}
+                  className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all cursor-pointer group"
+                >
+                  <div className="flex items-center mb-3">
+                    <span className="text-sm font-medium text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors">
+                      {t('articleDetail.navigation.next')}
+                    </span>
+                    <svg className="w-5 h-5 ml-2 text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                    {nextArticle.category}
+                  </p>
+                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                    {nextArticle.title}
+                  </h4>
+                </motion.div>
+              )}
             </div>
           </div>
         </motion.article>

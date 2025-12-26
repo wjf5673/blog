@@ -104,6 +104,22 @@
       "madeWith": "Made with",
       "by": "Tech Blog",
       "rights": "© 2025 Tech Blog. All rights reserved."
+    },
+    "toast": {
+      "copySuccess": "{{type}}已复制到剪贴板",
+      "copyFailed": "复制{{type}}失败"
+    },
+    "socialLinks": {
+      "github": "点击复制GitHub链接",
+      "telegram": "点击复制Telegram联系方式",
+      "wechat": "点击复制微信号",
+      "email": "点击复制邮箱地址"
+    },
+    "socialLabels": {
+      "github": "GitHub",
+      "telegram": "Telegram",
+      "wechat": "微信",
+      "email": "邮箱"
     }
   },
   "messageWall": {
@@ -166,6 +182,20 @@
   },
   "newsDetail": {
     "backToNews": "返回行业动态",
+    "loading": "加载中...",
+    "errors": {
+      "missingId": "非法路由，缺少新闻ID参数",
+      "fetchFailed": "获取新闻数据失败",
+      "noData": "没有找到新闻数据",
+      "notFound": "未找到ID为 {{id}} 的新闻",
+      "fetchError": "获取新闻数据时发生错误"
+    },
+    "toast": {
+      "shareSuccess": "链接已复制，快分享给好友吧！",
+      "shareFailed": "复制链接失败，请手动复制地址栏链接",
+      "likeSuccess": "点赞成功！",
+      "likeFailed": "点赞失败，请稍后再试"
+    },
     "title": "React 19 正式发布",
     "author": "React 团队",
     "date": "2025年12月20日",
@@ -494,6 +524,21 @@
   },
   "articleDetail": {
     "backButton": "返回文章列表",
+    "backToArticles": "返回文章列表",
+    "loading": "加载中...",
+    "errors": {
+      "missingId": "缺少文章ID参数",
+      "fetchFailed": "获取文章数据失败",
+      "noData": "没有找到文章数据",
+      "notFound": "未找到ID为 {{id}} 的文章",
+      "fetchError": "获取文章时发生错误"
+    },
+    "toast": {
+      "likeSuccess": "点赞成功！",
+      "likeFailed": "点赞失败，请重试",
+      "shareSuccess": "链接已复制到剪贴板",
+      "shareFailed": "复制链接失败，请重试"
+    },
     "title": "深入理解 React Hooks 设计原理",
     "category": "React",
     "author": "技术博主",

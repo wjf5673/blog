@@ -295,6 +295,21 @@ export const del = <T = unknown>(
   return apiRequest<T>(endpoint, { ...config, method: 'DELETE' });
 };
 
+/**
+ * PATCH请求
+ * @param endpoint API端点
+ * @param data 请求数据
+ * @param config 请求配置
+ * @returns Promise<ApiResponse<T>>
+ */
+export const patch = <T = unknown>(
+  endpoint: string,
+  data?: unknown,
+  config: RequestConfig = {}
+): Promise<ApiResponse<T>> => {
+  return apiRequest<T>(endpoint, { ...config, method: 'PATCH', body: data });
+};
+
 // 导出错误类型和错误类，供外部使用
 export { ApiError, ErrorType };
 export type { ApiResponse, RequestConfig };

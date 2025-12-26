@@ -1,4 +1,4 @@
-import { get, post, del } from './api';
+import { get, post, put, del } from './api';
 import { getImageUrl } from './imageUtils';
 import { formatRelativeTime, formatReadTime, formatDate } from './timeUtils';
 
@@ -121,11 +121,11 @@ export const getAllArticles = async (): Promise<{ data: any[] | null; error: str
 export const getArticleDetail = async (id: string): Promise<{ data: any | null; error: string | null }> => {
   try {
     const language = getCurrentLanguage();
-    const response = await get(`/content/${id}`);
+    const response = await get(`/content?id=${id}`);
     
     // 处理国际化数据
-    if (response.data) {
-      const processedData = processI18nContent(response.data, language);
+    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+      const processedData = processI18nContent(response.data[0], language);
       return { data: processedData, error: null };
     }
     
@@ -184,11 +184,11 @@ export const getNews = async (params?: {
 export const getNewsDetail = async (id: string): Promise<{ data: any | null; error: string | null }> => {
   try {
     const language = getCurrentLanguage();
-    const response = await get(`/content/${id}`);
+    const response = await get(`/content?id=${id}`);
     
     // 处理国际化数据
-    if (response.data) {
-      const processedData = processI18nContent(response.data, language);
+    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+      const processedData = processI18nContent(response.data[0], language);
       return { data: processedData, error: null };
     }
     
@@ -279,7 +279,24 @@ export const submitMessage = async (message: {
 // 点赞内容
 export const likeContent = async (id: string): Promise<{ data: any | null; error: string | null }> => {
   try {
-    const response = await post(`/content/${id}/like`);
+    // 首先获取当前内容，使用查询参数而不是路径参数
+    const getResponse = await get(`/content?id=${id}`);
+    
+    if (!getResponse.success || !getResponse.data || !Array.isArray(getResponse.data) || getResponse.data.length === 0) {
+      return { data: null, error: 'Failed to fetch content for liking' };
+    }
+    
+    // 获取第一个匹配的内容
+    const currentContent = getResponse.data[0];
+    
+    // 增加点赞数
+    const currentLikes = currentContent.likes || 0;
+    const updatedData = {
+      likes: currentLikes + 1
+    };
+    
+    // 使用PUT方法更新内容
+    const response = await put(`/content/${id}`, updatedData);
     
     // 直接返回API响应，但确保格式一致
     if (response.data) {
@@ -314,11 +331,21 @@ export const deleteMessage = async (id: string): Promise<{ data: any | null; err
 export const getArticleCategories = async (): Promise<{ data: string[] | null; error: string | null }> => {
   try {
     const language = getCurrentLanguage();
-    const response = await get(`/content/categories?type=article&language=${language}`);
     
-    // 确保返回格式一致
+    // MockAPI.io 不支持查询参数过滤，需要获取所有数据然后在前端过滤
+    const response = await get('/content');
+    
     if (response.data && Array.isArray(response.data)) {
-      return { data: response.data as string[], error: null };
+      // 首先过滤出文章类型的数据
+      const articleData = response.data.filter((item: any) => item.type === 'article');
+      
+      // 处理国际化数据
+      const processedData = articleData.map((item: any) => processI18nContent(item, language));
+      
+      // 提取所有分类并去重
+      const categories = [...new Set(processedData.map((item: any) => item.category).filter(Boolean))];
+      
+      return { data: categories, error: null };
     }
     
     return { data: null, error: null };

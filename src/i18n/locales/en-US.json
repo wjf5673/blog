@@ -104,6 +104,22 @@
       "madeWith": "Made with",
       "by": "Tech Blog",
       "rights": "© 2025 Tech Blog. All rights reserved."
+    },
+    "toast": {
+      "copySuccess": "{{type}} copied to clipboard",
+      "copyFailed": "Failed to copy {{type}}"
+    },
+    "socialLinks": {
+      "github": "Click to copy GitHub link",
+      "telegram": "Click to copy Telegram contact",
+      "wechat": "Click to copy WeChat ID",
+      "email": "Click to copy email address"
+    },
+    "socialLabels": {
+      "github": "GitHub",
+      "telegram": "Telegram",
+      "wechat": "WeChat",
+      "email": "Email"
     }
   },
   "messageWall": {
@@ -166,6 +182,20 @@
   },
   "newsDetail": {
     "backToNews": "Back to Industry News",
+    "loading": "Loading...",
+    "errors": {
+      "missingId": "Invalid route, missing news ID parameter",
+      "fetchFailed": "Failed to fetch news data",
+      "noData": "No news data found",
+      "notFound": "News with ID {{id}} not found",
+      "fetchError": "Error occurred while fetching news data"
+    },
+    "toast": {
+      "shareSuccess": "Link copied, share it with friends!",
+      "shareFailed": "Failed to copy link, please manually copy from address bar",
+      "likeSuccess": "Liked successfully!",
+      "likeFailed": "Like failed, please try again later"
+    },
     "title": "React 19 Officially Released",
     "author": "React Team",
     "date": "December 20, 2025",
@@ -494,6 +524,21 @@
   },
   "articleDetail": {
     "backButton": "Back to Article List",
+    "backToArticles": "Back to Article List",
+    "loading": "Loading...",
+    "errors": {
+      "missingId": "Missing article ID parameter",
+      "fetchFailed": "Failed to fetch article data",
+      "noData": "No article data found",
+      "notFound": "Article with ID {{id}} not found",
+      "fetchError": "An error occurred while fetching the article"
+    },
+    "toast": {
+      "likeSuccess": "Liked successfully!",
+      "likeFailed": "Failed to like, please try again",
+      "shareSuccess": "Link copied to clipboard",
+      "shareFailed": "Failed to copy link, please try again"
+    },
     "title": "Deep Understanding of React Hooks Design Principles",
     "category": "React",
     "author": "Tech Blogger",

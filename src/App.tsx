@@ -23,7 +23,6 @@ function App() {
     // Handle hash changes for navigation
     const handleHashChange = () => {
       const hash = window.location.hash.slice(1); // Remove the # symbol
-      
       // Immediately scroll to top before page change
       window.scrollTo({
         top: 0,
@@ -48,13 +47,13 @@ function App() {
 
   // Render different pages based on currentPage
   const renderPage = () => {
-    if (currentPage === "article-detail") {
+    if (currentPage.startsWith("article-detail")) {
       return <ArticleDetail />;
     }
-    if (currentPage === "article-list") {
+    if (currentPage.startsWith("article-list")) {
       return <ArticleList />;
     }
-    if (currentPage === "news-detail") {
+    if (currentPage.startsWith("news-detail")) {
       return <NewsDetail />;
     }
     
