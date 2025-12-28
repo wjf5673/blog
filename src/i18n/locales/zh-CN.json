@@ -174,7 +174,9 @@
     "preview": "预览",
     "previewModal": {
       "title": "内容预览",
-      "close": "关闭"
+      "close": "关闭",
+      "backToEdit": "返回修改",
+      "publishNow": "直接发布"
     },
     "noContent": "暂无内容",
     "edit": "编辑",

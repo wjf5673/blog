@@ -27,17 +27,77 @@ interface FormData {
   };
 }
 
-// 处理内容中的代码块
-const processContent = (content: string) => {
-  if (!content) return '';
+// 处理HTML内容，将代码块转换为SyntaxHighlighter组件
+const processContent = (html: string) => {
+  if (!html) return null;
   
-  // 匹配代码块 ```language\ncode\n``` 
-  const codeBlockRegex = /```([\w-]*)\n([\s\S]*?)```/g;
+  // 使用正则表达式匹配代码块
+  const codeBlockRegex = /<pre><code class="language-([^"]*)">([\s\S]*?)<\/code><\/pre>/g;
+  const parts = [];
+  let lastIndex = 0;
+  let match;
   
-  return content.replace(codeBlockRegex, (_, language, code) => {
-    const lang = language || 'text';
-    return `<div class="code-block-wrapper" data-lang="${lang}" data-code="${encodeURIComponent(code)}"></div>`;
-  });
+  // 分割HTML内容，分离代码块和非代码块部分
+  while ((match = codeBlockRegex.exec(html)) !== null) {
+    // 添加代码块之前的内容
+    if (match.index > lastIndex) {
+      const beforeContent = html.substring(lastIndex, match.index);
+      if (beforeContent.trim()) {
+        parts.push(
+          <div 
+            key={`before-${lastIndex}`}
+            dangerouslySetInnerHTML={{ __html: beforeContent }}
+          />
+        );
+      }
+    }
+    
+    // 添加代码块
+    const language = match[1] || 'javascript';
+    const codeText = match[2]
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&amp;/g, '&')
+      .replace(/&quot;/g, '"')
+      .replace(/&#39;/g, "'");
+    
+    parts.push(
+      <SyntaxHighlighter
+        key={`code-${match.index}`}
+        language={language}
+        style={oneDark}
+        customStyle={{
+          margin: '8px 0',
+          borderRadius: '4px',
+          fontSize: '12px'
+        }}
+      >
+        {codeText}
+      </SyntaxHighlighter>
+    );
+    
+    lastIndex = codeBlockRegex.lastIndex;
+  }
+  
+  // 添加最后一个代码块之后的内容
+  if (lastIndex < html.length) {
+    const afterContent = html.substring(lastIndex);
+    if (afterContent.trim()) {
+      parts.push(
+        <div 
+          key={`after-${lastIndex}`}
+          dangerouslySetInnerHTML={{ __html: afterContent }}
+        />
+      );
+    }
+  }
+  
+  // 如果没有找到代码块，直接返回原始HTML
+  if (parts.length === 0) {
+    return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  }
+  
+  return parts;
 };
 
 const NewsArticlePublish: React.FC = () => {
@@ -168,6 +228,74 @@ const NewsArticlePublish: React.FC = () => {
       }
       
       toast.success(t('publish.success.published'));
+      
+      // 重置表单
+      setFormData({
+        type: 'article',
+        translations: {
+          'zh-CN': {
+            title: '',
+            author: '',
+            excerpt: '',
+            category: '',
+            content: ''
+          },
+          'en-US': {
+            title: '',
+            author: '',
+            excerpt: '',
+            category: '',
+            content: ''
+          }
+        }
+      });
+      
+    } catch (error) {
+      console.error('发布失败:', error);
+      toast.error(t('publish.errors.publishFailed'));
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handlePublishFromPreview = async () => {
+    // 基本验证
+    if (!formData.translations['zh-CN'].title || !formData.translations['en-US'].title) {
+      toast.error(t('publish.errors.titleRequired'));
+      return;
+    }
+    
+    if (!formData.translations['zh-CN'].content || !formData.translations['en-US'].content) {
+      toast.error(t('publish.errors.contentRequired'));
+      return;
+    }
+    
+    if (!formData.translations['zh-CN'].category || !formData.translations['en-US'].category) {
+      toast.error(t('publish.errors.categoryRequired'));
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      // 构建提交数据
+      const submitData = {
+        type: formData.type,
+        translations: formData.translations,
+        readTime: readTime
+      };
+      
+      // 调用发布API
+      const { error } = await publishContent(submitData);
+      
+      if (error) {
+        throw new Error(error);
+      }
+      
+      toast.success(t('publish.success.published'));
+      
+      // 关闭预览弹框
+      setShowPreviewModal(false);
       
       // 重置表单
       setFormData({
@@ -669,37 +797,11 @@ const NewsArticlePublish: React.FC = () => {
                             {t('publish.content.label')}:
                           </span>
                           <div className="text-sm text-gray-900 dark:text-white ml-2 flex-1 prose prose-sm dark:prose-invert max-h-40 overflow-y-auto p-2 border border-gray-200 dark:border-gray-700 rounded">
-                            {(() => {
-                              const processedContent = processContent(formData.translations['zh-CN'].content);
-                              const parts = processedContent.split(/<div class="code-block-wrapper" data-lang="([^"]+)" data-code="([^"]+)"><\/div>/g);
-                              
-                              return parts.map((part, index) => {
-                                if (index % 3 === 1) {
-                                  return null; // Skip the matched wrapper div
-                                } else if (index % 3 === 2) {
-                                  const lang = parts[index - 1];
-                                  const code = decodeURIComponent(parts[index]);
-                                  return (
-                                    <SyntaxHighlighter
-                                      key={index}
-                                      language={lang}
-                                      style={oneDark}
-                                      customStyle={{
-                                        margin: '8px 0',
-                                        borderRadius: '4px',
-                                        fontSize: '12px'
-                                      }}
-                                    >
-                                      {code}
-                                    </SyntaxHighlighter>
-                                  );
-                                } else {
-                                  return part ? <div key={index}>{part}</div> : null;
-                                }
-                              });
-                            })()}
-                            {!formData.translations['zh-CN'].content && t('publish.noContent')}
-                          </div>
+                             {formData.translations['zh-CN'].content 
+                               ? processContent(formData.translations['zh-CN'].content)
+                               : <div>{t('publish.noContent')}</div>
+                             }
+                           </div>
                         </div>
                       </div>
                       <div className="px-4 py-3">
@@ -708,37 +810,11 @@ const NewsArticlePublish: React.FC = () => {
                             {t('publish.content.label')}:
                           </span>
                           <div className="text-sm text-gray-900 dark:text-white ml-2 flex-1 prose prose-sm dark:prose-invert max-h-40 overflow-y-auto p-2 border border-gray-200 dark:border-gray-700 rounded">
-                            {(() => {
-                              const processedContent = processContent(formData.translations['en-US'].content);
-                              const parts = processedContent.split(/<div class="code-block-wrapper" data-lang="([^"]+)" data-code="([^"]+)"><\/div>/g);
-                              
-                              return parts.map((part, index) => {
-                                if (index % 3 === 1) {
-                                  return null; // Skip the matched wrapper div
-                                } else if (index % 3 === 2) {
-                                  const lang = parts[index - 1];
-                                  const code = decodeURIComponent(parts[index]);
-                                  return (
-                                    <SyntaxHighlighter
-                                      key={index}
-                                      language={lang}
-                                      style={oneDark}
-                                      customStyle={{
-                                        margin: '8px 0',
-                                        borderRadius: '4px',
-                                        fontSize: '12px'
-                                      }}
-                                    >
-                                      {code}
-                                    </SyntaxHighlighter>
-                                  );
-                                } else {
-                                  return part ? <div key={index}>{part}</div> : null;
-                                }
-                              });
-                            })()}
-                            {!formData.translations['en-US'].content && t('publish.noContent')}
-                          </div>
+                             {formData.translations['en-US'].content 
+                               ? processContent(formData.translations['en-US'].content)
+                               : <div>{t('publish.noContent')}</div>
+                             }
+                           </div>
                         </div>
                       </div>
                     </div>
@@ -755,12 +831,19 @@ const NewsArticlePublish: React.FC = () => {
                   </div>
                 </div>
                 
-                <div className="mt-6 flex justify-end">
+                <div className="mt-6 flex justify-end space-x-3">
                   <button
                     onClick={() => setShowPreviewModal(false)}
                     className="px-4 py-2 bg-gray-500 text-white text-sm font-medium rounded-md hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 cursor-pointer"
                   >
-                    {t('publish.previewModal.close')}
+                    {t('publish.previewModal.backToEdit')}
+                  </button>
+                  <button
+                    onClick={handlePublishFromPreview}
+                    disabled={isSubmitting}
+                    className="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isSubmitting ? t('publish.publishing') : t('publish.previewModal.publishNow')}
                   </button>
                 </div>
               </div>
