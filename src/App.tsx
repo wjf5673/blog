@@ -11,6 +11,7 @@ import { Footer } from "./components/Footer";
 import { ArticleDetail } from "./components/ArticleDetail";
 import { ArticleList } from "./components/ArticleList";
 import { NewsDetail } from "./components/NewsDetail";
+import NewsArticlePublish from "./components/NewsArticlePublish";
 import { ThemeProvider } from "./contexts/ThemeContext";
 
 function App() {
@@ -31,7 +32,10 @@ function App() {
       });
       
       // Then update the page state
-      if (hash.startsWith("article-detail") || hash.startsWith("news-detail") || hash.startsWith("article-list")) {
+      if (hash.startsWith("article-detail") || 
+          hash.startsWith("news-detail") || 
+          hash.startsWith("article-list") ||
+          hash.startsWith("publish")) {
         setCurrentPage(hash);
       } else {
         setCurrentPage("home");
@@ -55,6 +59,9 @@ function App() {
     }
     if (currentPage.startsWith("news-detail")) {
       return <NewsDetail />;
+    }
+    if (currentPage.startsWith("publish")) {
+      return <NewsArticlePublish />;
     }
     
     // Default home page

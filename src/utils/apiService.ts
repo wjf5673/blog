@@ -372,3 +372,43 @@ export const getNewsCategories = async (): Promise<{ data: string[] | null; erro
     return { data: null, error: 'Failed to fetch news categories' };
   }
 };
+
+// 发布内容（新闻或文章）
+export const publishContent = async (content: {
+  type: 'news' | 'article';
+  translations: {
+    'zh-CN': {
+      title: string;
+      author: string;
+      excerpt: string;
+      category: string;
+      content: string;
+    };
+    'en-US': {
+      title: string;
+      author: string;
+      excerpt: string;
+      category: string;
+      content: string;
+    };
+  };
+  readTime: number;
+}): Promise<{ data: any | null; error: string | null }> => {
+  try {
+    const response = await post('/content', {
+      ...content,
+      likes: 0,
+      date: new Date().toISOString()
+    });
+    
+    // 处理返回的内容数据
+    if (response.data) {
+      return { data: response.data, error: null };
+    }
+    
+    return { data: null, error: null };
+  } catch (error) {
+    console.error('Failed to publish content:', error);
+    return { data: null, error: 'Failed to publish content' };
+  }
+};

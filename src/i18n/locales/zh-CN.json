@@ -51,7 +51,7 @@
     "news": "行业动态",
     "tech": "技术分享",
     "funZone": "娱乐区",
-    "messages": "留言墙"
+    "messages": "便签墙"
   },
   "funZone": {
     "title": "代码打字挑战",
@@ -120,6 +120,74 @@
       "telegram": "Telegram",
       "wechat": "微信",
       "email": "邮箱"
+    }
+  },
+  "publish": {
+    "pageTitle": "发布新闻/文章",
+    "description": "创建并发布新的新闻或文章内容，支持中英文双语版本。",
+    "backToHome": "返回首页",
+    "type": {
+      "label": "内容类型",
+      "article": "文章",
+      "news": "新闻"
+    },
+    "chineseSection": "中文内容",
+    "englishSection": "英文内容",
+    "title": {
+      "label": "标题",
+      "placeholder": {
+        "zh": "请输入中文标题",
+        "en": "请输入英文标题"
+      }
+    },
+    "author": {
+      "label": "作者",
+      "placeholder": {
+        "zh": "请输入中文作者名",
+        "en": "请输入英文作者名"
+      }
+    },
+    "excerpt": {
+      "label": "摘要",
+      "placeholder": {
+        "zh": "请输入中文摘要",
+        "en": "请输入英文摘要"
+      }
+    },
+    "category": {
+      "label": "类别",
+      "selectPlaceholder": "请选择类别",
+      "placeholder": {
+        "zh": "请输入中文类别",
+        "en": "请输入英文类别"
+      }
+    },
+    "content": {
+      "label": "正文内容",
+      "placeholder": {
+        "zh": "请输入中文正文内容",
+        "en": "请输入英文正文内容"
+      }
+    },
+    "readTime": "预计阅读时长",
+    "seconds": "秒",
+    "preview": "预览",
+    "previewModal": {
+      "title": "内容预览",
+      "close": "关闭"
+    },
+    "noContent": "暂无内容",
+    "edit": "编辑",
+    "publish": "发布",
+    "publishing": "发布中...",
+    "errors": {
+      "titleRequired": "请输入中英文标题",
+      "contentRequired": "请输入中英文正文内容",
+      "categoryRequired": "请选择或输入中英文类别",
+      "publishFailed": "发布失败，请重试"
+    },
+    "success": {
+      "published": "发布成功！"
     }
   },
   "messageWall": {

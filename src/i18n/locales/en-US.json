@@ -122,6 +122,74 @@
       "email": "Email"
     }
   },
+  "publish": {
+    "pageTitle": "Publish News/Article",
+    "description": "Create and publish new news or articles with bilingual Chinese and English support.",
+    "backToHome": "Back to Home",
+    "type": {
+      "label": "Content Type",
+      "article": "Article",
+      "news": "News"
+    },
+    "chineseSection": "Chinese Content",
+    "englishSection": "English Content",
+    "title": {
+      "label": "Title",
+      "placeholder": {
+        "zh": "Enter Chinese title",
+        "en": "Enter English title"
+      }
+    },
+    "author": {
+      "label": "Author",
+      "placeholder": {
+        "zh": "Enter Chinese author name",
+        "en": "Enter English author name"
+      }
+    },
+    "excerpt": {
+      "label": "Excerpt",
+      "placeholder": {
+        "zh": "Enter Chinese excerpt",
+        "en": "Enter English excerpt"
+      }
+    },
+    "category": {
+      "label": "Category",
+      "selectPlaceholder": "Select a category",
+      "placeholder": {
+        "zh": "Enter Chinese category",
+        "en": "Enter English category"
+      }
+    },
+    "content": {
+      "label": "Content",
+      "placeholder": {
+        "zh": "Enter Chinese content",
+        "en": "Enter English content"
+      }
+    },
+    "readTime": "Estimated reading time",
+    "seconds": "seconds",
+    "preview": "Preview",
+    "previewModal": {
+      "title": "Content Preview",
+      "close": "Close"
+    },
+    "noContent": "No content",
+    "edit": "Edit",
+    "publish": "Publish",
+    "publishing": "Publishing...",
+    "errors": {
+      "titleRequired": "Please enter both Chinese and English titles",
+      "contentRequired": "Please enter both Chinese and English content",
+      "categoryRequired": "Please select or enter both Chinese and English categories",
+      "publishFailed": "Publishing failed, please try again"
+    },
+    "success": {
+      "published": "Published successfully!"
+    }
+  },
   "messageWall": {
     "title": "Sticky Note Wall",
     "subtitle": "Leave your footprint here, share your thoughts and feelings. Every note is a story, every visit is a warmth.",
