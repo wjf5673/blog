@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { getArticles, likeContent } from "../utils/apiService";
 import { toast } from "sonner";
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 interface ArticleItem {
   id: string;
@@ -132,6 +134,76 @@ export function ArticleDetail() {
   // 处理导航到其他文章
   const navigateToArticle = (articleId: string) => {
     window.location.hash = `article-detail?id=${articleId}`;
+  };
+
+  // 处理HTML内容，将代码块转换为SyntaxHighlighter组件
+  const processContent = (html: string) => {
+    if (!html) return null;
+    
+    // 使用正则表达式匹配代码块
+    const codeBlockRegex = /<pre><code class="language-([^"]*)">([\s\S]*?)<\/code><\/pre>/g;
+    const parts = [];
+    let lastIndex = 0;
+    let match;
+    
+    // 分割HTML内容，分离代码块和非代码块部分
+    while ((match = codeBlockRegex.exec(html)) !== null) {
+      // 添加代码块之前的内容
+      if (match.index > lastIndex) {
+        const beforeContent = html.substring(lastIndex, match.index);
+        if (beforeContent.trim()) {
+          parts.push(
+            <div 
+              key={`before-${lastIndex}`}
+              dangerouslySetInnerHTML={{ __html: beforeContent }}
+            />
+          );
+        }
+      }
+      
+      // 添加代码块
+      const language = match[1] || 'javascript';
+      const codeText = match[2]
+        .replace(/&lt;/g, '<')
+        .replace(/&gt;/g, '>')
+        .replace(/&amp;/g, '&')
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'");
+      
+      parts.push(
+        <SyntaxHighlighter
+          key={`code-${match.index}`}
+          language={language}
+          style={oneDark}
+          PreTag="pre"
+          className="rounded-lg my-4"
+        >
+          {codeText}
+        </SyntaxHighlighter>
+      );
+      
+      lastIndex = codeBlockRegex.lastIndex;
+    }
+    
+    // 添加最后一个代码块之后的内容
+    if (lastIndex < html.length) {
+      const afterContent = html.substring(lastIndex);
+      if (afterContent.trim()) {
+        parts.push(
+          <div 
+            key={`after-${lastIndex}`}
+            dangerouslySetInnerHTML={{ __html: afterContent }}
+          />
+        );
+      }
+    }
+    
+    // 如果没有找到代码块，直接返回原始HTML
+    if (parts.length === 0) {
+      return <div dangerouslySetInnerHTML={{ __html: html }} />;
+    }
+    
+    return parts;
   };
 
   // 404页面
@@ -286,7 +358,7 @@ export function ArticleDetail() {
             <p className="text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
               {currentArticle.excerpt}
             </p>
-            <div dangerouslySetInnerHTML={{ __html: currentArticle.content }} />
+            {processContent(currentArticle.content)}
           </div>
 
           {/* Article Navigation */}

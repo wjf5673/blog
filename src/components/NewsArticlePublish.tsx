@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { toast } from 'sonner';
 import { motion } from 'motion/react';
 import { ArrowLeft, Save, Eye, Clock, X } from 'lucide-react';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { publishContent } from '../utils/apiService';
 
 interface FormData {
@@ -24,6 +26,19 @@ interface FormData {
     };
   };
 }
+
+// 处理内容中的代码块
+const processContent = (content: string) => {
+  if (!content) return '';
+  
+  // 匹配代码块 ```language\ncode\n``` 
+  const codeBlockRegex = /```([\w-]*)\n([\s\S]*?)```/g;
+  
+  return content.replace(codeBlockRegex, (_, language, code) => {
+    const lang = language || 'text';
+    return `<div class="code-block-wrapper" data-lang="${lang}" data-code="${encodeURIComponent(code)}"></div>`;
+  });
+};
 
 const NewsArticlePublish: React.FC = () => {
   const { t } = useTranslation();
@@ -653,13 +668,38 @@ const NewsArticlePublish: React.FC = () => {
                           <span className="text-sm font-medium text-gray-500 dark:text-gray-400 w-16 flex-shrink-0 mb-1">
                             {t('publish.content.label')}:
                           </span>
-                          <div 
-                            className="text-sm text-gray-900 dark:text-white ml-2 flex-1 prose prose-sm dark:prose-invert max-h-40 overflow-y-auto p-2 border border-gray-200 dark:border-gray-700 rounded"
-                            dangerouslySetInnerHTML={{ 
-                              __html: formData.translations['zh-CN'].content 
-                                ? formData.translations['zh-CN'].content : t('publish.noContent')
-                            }}
-                          />
+                          <div className="text-sm text-gray-900 dark:text-white ml-2 flex-1 prose prose-sm dark:prose-invert max-h-40 overflow-y-auto p-2 border border-gray-200 dark:border-gray-700 rounded">
+                            {(() => {
+                              const processedContent = processContent(formData.translations['zh-CN'].content);
+                              const parts = processedContent.split(/<div class="code-block-wrapper" data-lang="([^"]+)" data-code="([^"]+)"><\/div>/g);
+                              
+                              return parts.map((part, index) => {
+                                if (index % 3 === 1) {
+                                  return null; // Skip the matched wrapper div
+                                } else if (index % 3 === 2) {
+                                  const lang = parts[index - 1];
+                                  const code = decodeURIComponent(parts[index]);
+                                  return (
+                                    <SyntaxHighlighter
+                                      key={index}
+                                      language={lang}
+                                      style={oneDark}
+                                      customStyle={{
+                                        margin: '8px 0',
+                                        borderRadius: '4px',
+                                        fontSize: '12px'
+                                      }}
+                                    >
+                                      {code}
+                                    </SyntaxHighlighter>
+                                  );
+                                } else {
+                                  return part ? <div key={index}>{part}</div> : null;
+                                }
+                              });
+                            })()}
+                            {!formData.translations['zh-CN'].content && t('publish.noContent')}
+                          </div>
                         </div>
                       </div>
                       <div className="px-4 py-3">
@@ -667,13 +707,38 @@ const NewsArticlePublish: React.FC = () => {
                           <span className="text-sm font-medium text-gray-500 dark:text-gray-400 w-16 flex-shrink-0 mb-1">
                             {t('publish.content.label')}:
                           </span>
-                          <div 
-                            className="text-sm text-gray-900 dark:text-white ml-2 flex-1 prose prose-sm dark:prose-invert max-h-40 overflow-y-auto p-2 border border-gray-200 dark:border-gray-700 rounded"
-                            dangerouslySetInnerHTML={{ 
-                              __html: formData.translations['en-US'].content 
-                                ? formData.translations['en-US'].content : t('publish.noContent')
-                            }}
-                          />
+                          <div className="text-sm text-gray-900 dark:text-white ml-2 flex-1 prose prose-sm dark:prose-invert max-h-40 overflow-y-auto p-2 border border-gray-200 dark:border-gray-700 rounded">
+                            {(() => {
+                              const processedContent = processContent(formData.translations['en-US'].content);
+                              const parts = processedContent.split(/<div class="code-block-wrapper" data-lang="([^"]+)" data-code="([^"]+)"><\/div>/g);
+                              
+                              return parts.map((part, index) => {
+                                if (index % 3 === 1) {
+                                  return null; // Skip the matched wrapper div
+                                } else if (index % 3 === 2) {
+                                  const lang = parts[index - 1];
+                                  const code = decodeURIComponent(parts[index]);
+                                  return (
+                                    <SyntaxHighlighter
+                                      key={index}
+                                      language={lang}
+                                      style={oneDark}
+                                      customStyle={{
+                                        margin: '8px 0',
+                                        borderRadius: '4px',
+                                        fontSize: '12px'
+                                      }}
+                                    >
+                                      {code}
+                                    </SyntaxHighlighter>
+                                  );
+                                } else {
+                                  return part ? <div key={index}>{part}</div> : null;
+                                }
+                              });
+                            })()}
+                            {!formData.translations['en-US'].content && t('publish.noContent')}
+                          </div>
                         </div>
                       </div>
                     </div>
