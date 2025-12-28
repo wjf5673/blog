@@ -128,9 +128,9 @@ const NewsArticlePublish: React.FC = () => {
 
   // 新闻类别选项
   const newsCategories = [
-    { value: 'frontend', label: '前端' },
-    { value: 'web3', label: 'Web3' },
-    { value: 'ai', label: 'AI' }
+    { value: 'Frontend', label: '前端' },
+    { value: 'Web3', label: 'Web3' },
+    { value: 'AI', label: 'AI' }
   ];
 
   // 计算阅读时长（基于中文和英文内容的总字数）
@@ -460,7 +460,7 @@ const NewsArticlePublish: React.FC = () => {
                       >
                         <option value="">{t('publish.category.selectPlaceholder')}</option>
                         {newsCategories.map(category => (
-                          <option key={category.value} value={category.value}>
+                          <option key={category.label} value={category.label}>
                             {category.label}
                           </option>
                         ))}
@@ -579,7 +579,7 @@ const NewsArticlePublish: React.FC = () => {
                         <option value="">{t('publish.category.selectPlaceholder')}</option>
                         {newsCategories.map(category => (
                           <option key={category.value} value={category.value}>
-                            {category.value.charAt(0).toUpperCase() + category.value.slice(1)}
+                            {category.value}
                           </option>
                         ))}
                       </select>
