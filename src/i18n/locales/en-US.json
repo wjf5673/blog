@@ -563,6 +563,8 @@
     "subtitle": "In-depth technical articles to help you become a better developer",
     "readArticle": "Read Article",
     "viewMoreArticles": "View More Articles",
+    "noArticles": "No Articles",
+    "noArticlesDescription": "No articles have been published yet. Please check back later.",
     "articles": {
       "hooks": {
         "title": "Deep Understanding of React Hooks Design Principles",

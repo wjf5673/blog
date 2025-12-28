@@ -563,6 +563,8 @@
     "subtitle": "深度技术文章，助你成为更好的开发者",
     "readArticle": "阅读文章",
     "viewMoreArticles": "查看更多文章",
+    "noArticles": "暂无文章",
+    "noArticlesDescription": "目前还没有发布任何文章，请稍后再来查看。",
     "articles": {
       "hooks": {
         "title": "深入理解 React Hooks 设计原理",

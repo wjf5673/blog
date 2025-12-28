@@ -204,6 +204,26 @@ export function TechSection() {
               );
             })
           )}
+          
+          {/* 空状态提示 */}
+          {!loading && articles.length === 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="col-span-full flex flex-col items-center justify-center py-16"
+            >
+              <div className="p-4 bg-gray-100 dark:bg-gray-700 rounded-full mb-4">
+                <BookOpen className="w-12 h-12 text-gray-400 dark:text-gray-500" />
+              </div>
+              <h3 className="text-xl font-medium text-gray-900 dark:text-white mb-2">
+                {t('techSection.noArticles')}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-400 text-center max-w-md">
+                {t('techSection.noArticlesDescription')}
+              </p>
+            </motion.div>
+          )}
         </div>
 
         {/* 只有文章数量大于4时才显示查看更多按钮 */}
