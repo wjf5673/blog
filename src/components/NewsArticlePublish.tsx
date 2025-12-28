@@ -146,7 +146,7 @@ const NewsArticlePublish: React.FC = () => {
       };
       
       // 调用发布API
-      const { data, error } = await publishContent(submitData);
+      const { error } = await publishContent(submitData);
       
       if (error) {
         throw new Error(error);
