@@ -120,6 +120,20 @@
       "telegram": "Telegram",
       "wechat": "WeChat",
       "email": "Email"
+    },
+    "miniProgram": {
+      "title": "Utility Mini Program",
+      "name": "Daily Toolbox",
+      "description": "Integrate various practical tools for your daily life",
+      "qrCodeClickHint": "Please scan the QR code with WeChat to experience the mini program",
+      "scanTitle": "Scan QR code to experience the mini program",
+      "closeModal": "Close",
+      "features": {
+        "feature1": "Image to text with multi-language recognition",
+        "feature2": "Support 20+ languages translation including Chinese, English, Japanese, Korean",
+        "feature3": "Record health data and provide health advice",
+        "feature4": "Real-time query of fuel prices for all provinces nationwide"
+      }
     }
   },
   "publish": {
