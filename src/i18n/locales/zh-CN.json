@@ -124,6 +124,7 @@
   },
   "publish": {
     "pageTitle": "发布新闻/文章",
+    "editPageTitle": "编辑新闻/文章",
     "description": "创建并发布新的新闻或文章内容，支持中英文双语版本。",
     "backToHome": "返回首页",
     "type": {
@@ -181,15 +182,32 @@
     "noContent": "暂无内容",
     "edit": "编辑",
     "publish": "发布",
+    "update": "更新",
     "publishing": "发布中...",
+    "updating": "更新中...",
+    "editId": {
+      "label": "内容ID",
+      "placeholder": "请输入要编辑的内容ID"
+    },
+    "search": "查询",
+    "searching": "查询中...",
+    "delete": "删除",
+    "confirmDelete": "确定要删除这条内容吗？",
     "errors": {
       "titleRequired": "请输入中英文标题",
       "contentRequired": "请输入中英文正文内容",
       "categoryRequired": "请选择或输入中英文类别",
-      "publishFailed": "发布失败，请重试"
+      "publishFailed": "发布失败，请重试",
+      "idRequired": "请输入内容ID",
+      "contentNotFound": "未找到指定ID的内容",
+      "searchFailed": "查询失败，请重试",
+      "deleteFailed": "删除失败，请重试"
     },
     "success": {
-      "published": "发布成功！"
+      "published": "发布成功！",
+      "updated": "更新成功！",
+      "deleted": "删除成功！",
+      "contentLoaded": "内容加载成功"
     }
   },
   "messageWall": {

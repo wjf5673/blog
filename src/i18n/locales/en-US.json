@@ -124,6 +124,7 @@
   },
   "publish": {
     "pageTitle": "Publish News/Article",
+    "editPageTitle": "Edit News/Article",
     "description": "Create and publish new news or articles with bilingual Chinese and English support.",
     "backToHome": "Back to Home",
     "type": {
@@ -181,15 +182,32 @@
     "noContent": "No content",
     "edit": "Edit",
     "publish": "Publish",
+    "update": "Update",
     "publishing": "Publishing...",
+    "updating": "Updating...",
+    "editId": {
+      "label": "Content ID",
+      "placeholder": "Please enter content ID to edit"
+    },
+    "search": "Search",
+    "searching": "Searching...",
+    "delete": "Delete",
+    "confirmDelete": "Are you sure you want to delete this content?",
     "errors": {
       "titleRequired": "Please enter both Chinese and English titles",
       "contentRequired": "Please enter both Chinese and English content",
       "categoryRequired": "Please select or enter both Chinese and English categories",
-      "publishFailed": "Publishing failed, please try again"
+      "publishFailed": "Publishing failed, please try again",
+      "idRequired": "Please enter content ID",
+      "contentNotFound": "Content with specified ID not found",
+      "searchFailed": "Search failed, please try again",
+      "deleteFailed": "Deletion failed, please try again"
     },
     "success": {
-      "published": "Published successfully!"
+      "published": "Published successfully!",
+      "updated": "Updated successfully!",
+      "deleted": "Deleted successfully!",
+      "contentLoaded": "Content loaded successfully"
     }
   },
   "messageWall": {

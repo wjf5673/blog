@@ -88,6 +88,17 @@ export function ArticleDetail() {
     };
 
     fetchArticleData();
+    
+    // 监听hash变化
+    const handleHashChange = () => {
+      fetchArticleData();
+    };
+    
+    window.addEventListener('hashchange', handleHashChange);
+    
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
   }, [i18n.language]);
 
   // 处理点赞功能

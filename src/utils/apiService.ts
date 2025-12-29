@@ -412,3 +412,75 @@ export const publishContent = async (content: {
     return { data: null, error: 'Failed to publish content' };
   }
 };
+
+// 更新内容（新闻或文章）
+export const updateContent = async (id: string, content: {
+  type: 'news' | 'article';
+  translations: {
+    'zh-CN': {
+      title: string;
+      author: string;
+      excerpt: string;
+      category: string;
+      content: string;
+    };
+    'en-US': {
+      title: string;
+      author: string;
+      excerpt: string;
+      category: string;
+      content: string;
+    };
+  };
+  readTime: number;
+}): Promise<{ data: any | null; error: string | null }> => {
+  try {
+    const response = await put(`/content/${id}`, {
+      ...content
+    });
+    
+    // 处理返回的内容数据
+    if (response.data) {
+      return { data: response.data, error: null };
+    }
+    
+    return { data: null, error: null };
+  } catch (error) {
+    console.error('Failed to update content:', error);
+    return { data: null, error: 'Failed to update content' };
+  }
+};
+
+// 删除内容（新闻或文章）
+export const deleteContent = async (id: string): Promise<{ data: any | null; error: string | null }> => {
+  try {
+    const response = await del(`/content/${id}`);
+    
+    // 返回成功响应
+    if (response.data) {
+      return { data: response.data, error: null };
+    }
+    
+    return { data: null, error: null };
+  } catch (error) {
+    console.error('Failed to delete content:', error);
+    return { data: null, error: 'Failed to delete content' };
+  }
+};
+
+// 根据ID获取内容（用于编辑）
+export const getContentById = async (id: string): Promise<{ data: any | null; error: string | null }> => {
+  try {
+    const response = await get(`/content?id=${id}`);
+    
+    // 处理返回的内容数据
+    if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+      return { data: response.data[0], error: null };
+    }
+    
+    return { data: null, error: 'Content not found' };
+  } catch (error) {
+    console.error('Failed to fetch content by ID:', error);
+    return { data: null, error: 'Failed to fetch content' };
+  }
+};
