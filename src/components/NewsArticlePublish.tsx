@@ -250,7 +250,7 @@ const NewsArticlePublish: React.FC = () => {
         setIsSubmitting(true);
 
         try {
-            const { data, error } = await deleteContent(editId.trim());
+            const { error } = await deleteContent(editId.trim());
 
             if (error) {
                 throw new Error(error);
